@@ -1,0 +1,48 @@
+/**
+ * 该模块主要定义了常用的 vue 过渡动画
+ * 该模块定义的不是 scss 文件的变量
+ * 因此能通过项目入口文件 main.js 来全局引入
+**/
+
+/* 路由 transition */
+.router-enter-active,
+.router-leave-active {
+  transition: all 0.3s;
+}
+.router-enter {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+.router-leave-to {
+  display: none;
+}
+
+/* 全局 mask 渐变 transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 1s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* header 面包屑组件过渡 transition */
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all 0.5s;
+}
+
+.breadcrumb-enter,
+.breadcrumb-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.breadcrumb-move {
+  transition: all 0.5s;
+}
+
+.breadcrumb-leave-active {
+  position: absolute;
+}

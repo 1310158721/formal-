@@ -1,0 +1,11 @@
+/**
+ * 该模块主要定义了常用的 scss 混合，引入时需要用 @include XXX 来引用
+ * 该模块定义的是 scss 文件的变量
+ * 因此不能通过项目入口文件 main.js 来全局引入
+ * 只能通过在需要的地方局部引入
+**/
+
+// 两个颜色的渐变混合
+@mixin gradient($color1, $color2) {
+  background-image: linear-gradient(to right, $color1, $color2);
+}
