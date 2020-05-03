@@ -36,7 +36,7 @@ class MENULIST {
    * @param { 用户已有权限 } hasPermission 
    * @param { 所有的导航菜单 } menuList 
    */
-  _matchPermissionMenuList(hasPermission, menuList) {
+  _matchPermissionMenuList (hasPermission, menuList) {
     const len = menuList.length
     for (let i = len - 1; i >= 0; i--) {
       /**
@@ -56,12 +56,12 @@ class MENULIST {
       }
     }
   }
-  
+
   /**
    * 删除 menuList 每层多余空数组 children
    * @param { 需要处理的权限菜单 } menuList 
    */
-  _delEmptyArray(menuList) {
+  _delEmptyArray (menuList) {
     for (let t = 0; t < this.checkTime; t++) {
       for (let i = menuList.length - 1; i >= 0; i--) {
         if (menuList[i].children !== null) {
@@ -79,14 +79,31 @@ class MENULIST {
    * 查询已有的所有菜单
    * 用于创建用户时，给用户添加权限
    */
-  checkAllMenu() {
+  checkAllMenu () {
     this.app.get('/api/checkAllMenu', (req, res, next) => {
-      this.menuListModel.find()
-        .then((doc) => {
-          myRes(res, doc, 0, '查询成功')
+      const { token } = req.signedCookies
+      $axios.get(`http://127.0.0.1:${config.PORT}/api/checkUser`, { params: { token, inside: true } })
+        .then((response) => {
+          const { result, code } = response.data
+          if (code === 0) {
+            const { role, account } = result
+            let filter = [{ permission: 'default' }]
+            if (!(role === 'superadmin' || account === 'tanglihe')) {
+              filter = [{ permission: 'PERMISSION' }]
+            }
+            this.menuListModel
+              .find()
+              .nor(filter)
+              .then((doc) => {
+                myRes(res, doc, 0, '查询成功')
+              })
+              .catch((err) => {
+                myRes(res, err, 500, '数据库出错了')
+              })
+          }
         })
         .catch((err) => {
-          myRes(res, err, 500, '数据库出错了')
+          myRes(res, err, 400, '$axios 请求数据出错')
         })
     })
   }
@@ -96,7 +113,7 @@ class MENULIST {
    * 接收一个参数 token / id
    * 用于前端生成导航菜单
    */
-  checkUserMenu() {
+  checkUserMenu () {
     this.app.get('/api/checkUserMenu', (req, res, next) => {
       const { id = '' } = req.query
       const { token } = req.signedCookies
@@ -112,17 +129,16 @@ class MENULIST {
             if (code === 0) {
               const { hasPermission } = result
               // 查询已有的所有菜单
-              $axios.get(`http://127.0.0.1:${config.PORT}/api/checkAllMenu`)
-                .then((response) => {
-                  const { result, code } = response.data
-                  if (code === 0) {
-                    const menulist = result
-                    this._matchPermissionMenuList(hasPermission, menulist)
-                    this._delEmptyArray(menulist)
-                    myRes(res, menulist, 0, 'axios 查看所有的菜单信息成功')
-                  } else {
-                    myRes(res, null, 400, 'axios 查看所有的菜单信息成功，但 code 不为 0')
-                  }
+              this.menuListModel
+                .find()
+                .then((doc) => {
+                  const menulist = doc
+                  this._matchPermissionMenuList(hasPermission, menulist)
+                  this._delEmptyArray(menulist)
+                  myRes(res, menulist, 0, 'axios 查看所有的菜单信息成功')
+                })
+                .catch((err) => {
+                  myRes(res, err, 500, '数据库出错了')
                 })
             } else {
               myRes(res, null, 400, 'axios 查看用户信息成功，但 code 不为 0')
@@ -137,7 +153,7 @@ class MENULIST {
   }
 
   // 开启 api
-  openApi() {
+  openApi () {
     this.checkAllMenu()
     this.checkUserMenu()
   }

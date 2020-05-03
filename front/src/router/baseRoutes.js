@@ -183,6 +183,26 @@ const baseRoutes = [
         },
         component: () => import(/* webpackChunkName: "clipboard" */ '@/views/directives/clipboard/clipboard')
       },
+      {
+        title: '防抖',
+        icon: 'icon-fuzhi',
+        path: '/debounce',
+        name: 'debounce',
+        meta: {
+          title: '防抖'
+        },
+        component: () => import(/* webpackChunkName: "debounce" */ '@/views/directives/debounce/debounce')
+      },
+      {
+        title: '节流',
+        icon: 'icon-fuzhi',
+        path: '/throttle',
+        name: 'throttle',
+        meta: {
+          title: '节流'
+        },
+        component: () => import(/* webpackChunkName: "throttle" */ '@/views/directives/throttle/throttle')
+      },
       // 路由
       {
         title: '嵌套路由',

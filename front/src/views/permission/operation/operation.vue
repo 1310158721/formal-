@@ -138,7 +138,15 @@ export default {
   computed: {
     // 用户角色枚举
     roleEnum () {
-      return roleEnum
+      const userInfo = this.$store.state.userInfo
+      const { role, account } = userInfo
+      if (role === 'superadmin' || account === 'tanglihe') {
+        return roleEnum
+      } else if (role === 'admin') {
+        return roleEnum.filter((i) => i.value !== 'superadmin')
+      } else {
+        return roleEnum.filter((i) => !['superadmin', 'admin'].includes(i.value))
+      }
     }
   },
   methods: {

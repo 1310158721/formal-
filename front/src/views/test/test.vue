@@ -1,8 +1,7 @@
 <template>
-  <t-single-upload
-    :on-success='handleSuccess'
-    :imageSrc='imageSrc'
-  />
+  <div>
+    <el-button v-t-throttle='options' type="primary" size='small'>测试</el-button>
+  </div>
 </template>
 
 <script>
@@ -12,14 +11,17 @@ export default {
   props: {},
   data () {
     return {
-      imageSrc: ''
+      options: {
+        type: 'onclick',
+        fn: this.handleClick,
+        params: ['hahahah']
+      }
     }
   },
   computed: {},
   methods: {
-    handleSuccess (response) {
-      const { url } = response.result
-      this.imageSrc = url
+    handleClick (str) {
+      console.log(str)
     }
   },
   created () {},

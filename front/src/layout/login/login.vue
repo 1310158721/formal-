@@ -20,7 +20,7 @@
       </el-row>
     </el-form-item>
     <el-form-item>
-      <el-button :disabled="(!model.code || !model.account || !model.password)" type='primary' @click='submitForm("loginForm")'>
+      <el-button v-t-throttle='submitOptions' :disabled="(!model.code || !model.account || !model.password)" type='primary'>
         登录
       </el-button>
     </el-form-item>
@@ -63,6 +63,11 @@ export default {
             pattern: REGEXP.PASSWORD, message: '请输入4～10个数字/字母组合'
           }
         ]
+      },
+      submitOptions: {
+        type: 'onclick',
+        fn: this.submitForm,
+        params: ['loginForm']
       }
     }
   },

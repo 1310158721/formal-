@@ -1,6 +1,15 @@
 <template>
-  <div>
+  <!-- <div id='full-screen-wrapper' v-t-full-screen='options'>
     fullScreen
+  </div> -->
+  <div class="full-screen-wrapper">
+    <!-- 元素的背景色必须设置在 style -->
+    <div class="suqare" id="square-1" v-t-full-screen='options1' style="backgroundColor: rgb(0,0,255);">
+      {{ count1 % 2 === 0 ? 'square-1 退出全屏' : 'square-1 全屏状态' }}
+    </div>
+    <div class='suqare' id="square-2" v-t-full-screen='options2' style="backgroundColor: rgb(0,255,0);">
+      {{ count2 % 2 === 0 ? 'square-2 退出全屏' : 'square-2 全屏状态' }}
+    </div>
   </div>
 </template>
 
@@ -10,7 +19,22 @@ export default {
   components: {},
   props: {},
   data () {
-    return {}
+    return {
+      count1: 0,
+      count2: 0,
+      options1: {
+        fnCallback: () => {
+          this.count1++
+        },
+        dom: 'square-1'
+      },
+      options2: {
+        fnCallback: () => {
+          this.count2++
+        },
+        dom: 'square-2'
+      }
+    }
   },
   computed: {},
   methods: {},
@@ -20,4 +44,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.full-screen-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: lightblue;
+  .suqare {
+    width: 200px;
+    height: 200px;
+    background-color: black;
+    margin: 24px;
+  }
+}
+</style>

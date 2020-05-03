@@ -138,6 +138,18 @@
           "permission": "CLIPBOARD",
           "children": null,
           "buttons": null
+        },
+        {
+          "title": "防抖",
+          "permission": "DEBOUNCE",
+          "children": null,
+          "buttons": null
+        },
+        {
+          "title": "节流",
+          "permission": "THROTTLE",
+          "children": null,
+          "buttons": null
         }
       ]
     },
