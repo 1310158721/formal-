@@ -14,7 +14,7 @@ const pageHeaderRoutes = [
           title: '权限用户',
           isNotTabRoute: true
         },
-        component: () => import('@/views/permission/list/list')
+        component: () => import('@/views/permission/operation/operation')
       }
     ]
   }

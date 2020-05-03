@@ -3,7 +3,7 @@
     <TSider />
     <el-container class="base-layout-main">
       <THeader class="base-layout-header" />
-      <TMain />
+      <TMain class="base-layout-view" />
     </el-container>
   </el-container>
 </template>
@@ -34,14 +34,18 @@ export default {
 <style lang="scss" scoped>
 #base-layout-wrapper {
   width: 100vw;
+  min-width: 1080px;
   height: 100vh;
-  background-color: lightgreen;
   .base-layout-main {
     display: flex;
     flex-direction: column;
     .base-layout-header {
       height: 50px;
       width: 100%;
+    }
+    .base-layout-view {
+      padding: 24px;
+      box-sizing: border-box;
     }
   }
 }

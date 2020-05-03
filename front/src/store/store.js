@@ -5,6 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    // 模拟接口延迟 500 ms
+    apiDelay: 500,
     // 用户信息
     userInfo: null,
     // 菜单导航列表

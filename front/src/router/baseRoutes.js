@@ -159,7 +159,7 @@ const baseRoutes = [
         },
         component: () => import(/* webpackChunkName: "directives" */ '@/views/directives/directives'),
         redirect: {
-          path: '/full-screenb'
+          path: '/full-screen'
         }
       },
       // 指令 -> 全屏化
@@ -205,7 +205,10 @@ const baseRoutes = [
         meta: {
           title: '一级路由-1'
         },
-        component: () => import(/* webpackChunkName: "route-1-1" */ '@/views/route/route-1-1')
+        component: () => import(/* webpackChunkName: "route-1-1" */ '@/views/route/route-1-1'),
+        redirect: {
+          path: '/route-2-1'
+        }
       },
       // 路由 -> 一级路由
       {

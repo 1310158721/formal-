@@ -1,5 +1,8 @@
 <template>
-  <router-view />
+  <span>
+    <router-view />
+    <t-global-mask v-if='$store.state.globalMask' />
+  </span>
 </template>
 
 <script>

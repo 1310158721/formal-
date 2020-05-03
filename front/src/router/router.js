@@ -5,7 +5,7 @@ import baseRoutes from './baseRoutes'
 import devRoutes from './devRoutes'
 import pageHeaderRoutes from './pageHeader'
 import store from '@/store/store'
-import { getMenuList, checkUserPermission } from '@/apis/apis'
+import { checkUserMenu, checkUser } from '@/apis/apis'
 import jsCookie from 'js-cookie'
 
 // 页面加载进度条
@@ -75,13 +75,13 @@ router.beforeEach((to, from, next) => {
     store.commit('SETMENULIST', [])
   } else if (!store.state.menuList.length) {
     // 这两个接口应合并为一个同步请求
-    checkUserPermission().then((res) => {
+    checkUser({ token }).then((res) => {
       const { result, code } = res.data
       if (code === 0) {
         store.commit('SETUSERINFO', result)
       }
     })
-    getMenuList()
+    checkUserMenu()
       .then((res) => {
         const { result, code } = res.data
         if (code === 0) {
