@@ -17,3 +17,13 @@
 .mgr-24 {
   margin-right: 24px!important;
 }
+
+// mavon-editor 相关
+.markdown-body {
+  img {
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+    margin: 24px 0px;
+  }
+}

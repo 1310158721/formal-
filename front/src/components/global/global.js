@@ -5,9 +5,11 @@ import Vue from 'vue'
 
 // 列表
 import TGlobalMask from './mask'
+import TMavonEditor from './mavon-editor'
 
 const components = [
-  TGlobalMask
+  TGlobalMask,
+  TMavonEditor
 ]
 
 for (const i in components) {

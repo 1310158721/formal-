@@ -6,6 +6,10 @@ import store from './store/store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+// mavon-editor 编辑器
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
 import '@/assets/styles/css/index.css'
 import '@/assets/styles/scss/atom.scss'
 
@@ -21,6 +25,7 @@ import '@/components/global/global'
 import '@/http/interceptors'
 
 Vue.use(ElementUI)
+Vue.use(mavonEditor)
 
 Vue.config.productionTip = false
 

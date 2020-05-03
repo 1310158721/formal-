@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button v-t-throttle='options' type="primary" size='small'>测试</el-button>
+    test
   </div>
 </template>
 
@@ -10,20 +10,10 @@ export default {
   components: {},
   props: {},
   data () {
-    return {
-      options: {
-        type: 'onclick',
-        fn: this.handleClick,
-        params: ['hahahah']
-      }
-    }
+    return {}
   },
   computed: {},
-  methods: {
-    handleClick (str) {
-      console.log(str)
-    }
-  },
+  methods: {},
   created () {},
   mounted () {},
   watch: {}

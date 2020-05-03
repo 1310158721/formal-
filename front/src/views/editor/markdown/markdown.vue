@@ -1,6 +1,12 @@
 <template>
-  <div>
-    markdown
+  <div class="t-markdown-wrapper">
+    <el-button type='primary' size='small' @click='handleClick'>获取内容</el-button>
+    <t-mavon-editor class="t-mavon-editor-wrapper"
+      :defaultContent='render'
+      @change='editorChange'
+    />
+
+    <div class="markdown-body content-show" v-html='render' v-show='render'></div>
   </div>
 </template>
 
@@ -10,14 +16,37 @@ export default {
   components: {},
   props: {},
   data () {
-    return {}
+    return {
+      val: null,
+      render: ''
+    }
   },
   computed: {},
-  methods: {},
+  methods: {
+    editorChange (val, render) {
+      this.val = val
+      this.render = render
+    },
+    handleClick () {
+      console.log(this.val)
+      // console.log(this.render)
+    }
+  },
   created () {},
   mounted () {},
   watch: {}
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.t-markdown-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: lightblue;
+  .t-mavon-editor-wrapper {
+    width: 100%;
+    height: 500px;
+  }
+}
+</style>
