@@ -16,6 +16,9 @@ import '@/assets/styles/scss/atom.scss'
 // 导入指令配置
 import '@/assets/js/directives/directives'
 
+// 导入过滤器配置
+import '@/assets/js/filters/filters'
+
 // elementui 组件再次封装全局引入
 import '@/components/element/element'
 // 全局引入自定义组件

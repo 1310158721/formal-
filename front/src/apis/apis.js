@@ -51,3 +51,19 @@ export const checkAllMenu = async () => {
   const url = isMock ? `../mock/checkAllMenu.json?t=${Date.now()}` : '/checkAllMenu'
   return await axios.get(url)
 }
+
+// 待办事项
+export const nextTodoList = async (params) => {
+  const url = isMock ? `../mock/nextTodo/list.json?t=${Date.now()}` : '/checkUserNextList'
+  return await axios.get(url, { params })
+}
+
+// 新增待办事项
+export const createNextTodoList = async (params) => {
+  return await isMock ? axios.get(`../mock/nextTodo/create.json?t=${Date.now()}`, { params }) : axios.post('/createUserNextTodoItem', params)
+}
+
+// 删除待办事项
+export const deleteNextTodoList = async (params) => {
+  return await isMock ? axios.get(`../mock/nextTodo/delete.json?t=${Date.now()}`, { params }) : axios.get('/deleteUserNextTodoItem', { params })
+}

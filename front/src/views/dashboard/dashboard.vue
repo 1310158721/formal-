@@ -14,7 +14,9 @@ export default {
   },
   computed: {},
   methods: {},
-  created () {},
+  created () {
+    console.log(this.$store.state.userInfo.hasPermission.includes('NEXT'))
+  },
   mounted () {},
   watch: {}
 }

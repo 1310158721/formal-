@@ -94,6 +94,7 @@ class MENULIST {
             this.menuListModel
               .find()
               .nor(filter)
+              .sort({ order: 1 })
               .then((doc) => {
                 myRes(res, doc, 0, '查询成功')
               })
@@ -131,6 +132,7 @@ class MENULIST {
               // 查询已有的所有菜单
               this.menuListModel
                 .find()
+                .sort({ order: 1 })
                 .then((doc) => {
                   const menulist = doc
                   this._matchPermissionMenuList(hasPermission, menulist)

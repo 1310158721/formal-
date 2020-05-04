@@ -19,6 +19,16 @@ const baseRoutes = [
         },
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/dashboard')
       },
+      {
+        title: '待办事项',
+        icon: 'icon-ziyuan',
+        path: '/next-to-do',
+        name: 'next-to-do',
+        meta: {
+          title: '待办事项'
+        },
+        component: () => import(/* webpackChunkName: "next-to-do" */ '@/views/nextTodo/nextTodo')
+      },
       // 图表
       {
         title: '图表',

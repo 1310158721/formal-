@@ -24,6 +24,7 @@ class USER {
       createdTime: Number
     })
 
+    // 用户权限枚举
     this.roleEnum = [
       { label: '超级管理员', value: 'superadmin', roleDesc: '超级管理员' },
       { label: '管理员', value: 'admin', roleDesc: '管理员' },
