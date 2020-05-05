@@ -1,7 +1,5 @@
 <template>
-  <div>
-    test
-  </div>
+  <t-input-tags :dynamicTags='tags' @change='handleChange' />
 </template>
 
 <script>
@@ -10,10 +8,17 @@ export default {
   components: {},
   props: {},
   data () {
-    return {}
+    return {
+      tags: [2, 7]
+    }
   },
   computed: {},
-  methods: {},
+  methods: {
+    handleChange (tags) {
+      console.log(tags)
+      console.log(this.tags)
+    }
+  },
   created () {},
   mounted () {},
   watch: {}

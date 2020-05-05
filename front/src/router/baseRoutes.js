@@ -19,6 +19,7 @@ const baseRoutes = [
         },
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/dashboard')
       },
+      // 待办事项
       {
         title: '待办事项',
         icon: 'icon-ziyuan',
@@ -28,6 +29,40 @@ const baseRoutes = [
           title: '待办事项'
         },
         component: () => import(/* webpackChunkName: "next-to-do" */ '@/views/nextTodo/nextTodo')
+      },
+      // 文章
+      {
+        title: '文章',
+        icon: 'icon-ziyuan',
+        path: '/article',
+        name: 'article',
+        meta: {
+          title: '文章'
+        },
+        component: () => import(/* webpackChunkName: "article" */ '@/views/article/article'),
+        redirect: {
+          path: '/article-list'
+        }
+      },
+      {
+        title: '文章列表',
+        icon: 'icon-ziyuan',
+        path: '/article-list',
+        name: 'article-list',
+        meta: {
+          title: '文章列表'
+        },
+        component: () => import(/* webpackChunkName: "article-list" */ '@/views/article/articleList/articleList')
+      },
+      {
+        title: '创建文章',
+        icon: 'icon-ziyuan',
+        path: '/create-article',
+        name: 'create-article',
+        meta: {
+          title: '创建文章'
+        },
+        component: () => import(/* webpackChunkName: "createArticle" */ '@/views/article/createArticle/createArticle')
       },
       // 图表
       {

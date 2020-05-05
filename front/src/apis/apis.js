@@ -67,3 +67,31 @@ export const createNextTodoList = async (params) => {
 export const deleteNextTodoList = async (params) => {
   return await isMock ? axios.get(`../mock/nextTodo/delete.json?t=${Date.now()}`, { params }) : axios.get('/deleteUserNextTodoItem', { params })
 }
+
+// 创建文章
+export const createArticle = async (params) => {
+  return await isMock ? axios.get(`../mock/article/create.json?t=${Date.now()}`, { params }) : axios.post('/createArticle', params)
+}
+
+// 获取文章列表
+export const checkArticleList = async (params) => {
+  const url = isMock ? `../mock/article/list?t=${Date.now()}` : '/checkArticleList'
+  return await axios.get(url, { params })
+}
+
+// 删除文章列表
+export const deleteArticle = async (params) => {
+  const url = isMock ? `../mock/article/delete?t=${Date.now()}` : '/deleteArticle'
+  return await axios.get(url, { params })
+}
+
+// 查询单条文章数据
+export const checkArticleListItem = async (params) => {
+  const url = isMock ? `../mock/article/checkArticleListItem?t=${Date.now()}` : '/checkArticleListItem'
+  return await axios.get(url, { params })
+}
+
+// 更新单条文章数据
+export const updateArticleListItem = async (params) => {
+  return await isMock ? axios.get(`../mock/article/update.json?t=${Date.now()}`, { params }) : axios.post('/updateArticleListItem', params)
+}

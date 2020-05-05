@@ -8,12 +8,16 @@ import TTable from './t-table'
 import TSelect from './t-select'
 import TTree from './t-tree'
 import TSingleUpload from './t-single-upload'
+import TSwitch from './t-switch'
+import TInputTags from './t-input-tags'
 
 const components = [
   TTable,
   TSelect,
   TTree,
-  TSingleUpload
+  TSingleUpload,
+  TSwitch,
+  TInputTags
 ]
 
 for (const i in components) {

@@ -15,6 +15,15 @@ const pageHeaderRoutes = [
           isNotTabRoute: true
         },
         component: () => import('@/views/permission/operation/operation')
+      },
+      {
+        path: '/check-article',
+        name: 'check-article',
+        meta: {
+          title: '查看文章',
+          isNotTabRoute: true
+        },
+        component: () => import('@/views/article/checkArticle/checkArticle')
       }
     ]
   }

@@ -2,7 +2,6 @@ const config = require('../../config/config')
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { myRes } = require('../utils/res')
-const $axios = require('axios')
 
 // 声明一个 待办事项 相关信息的类
 class NEXTTODO {
@@ -110,7 +109,7 @@ class NEXTTODO {
               myRes(res, null, 0, '删除列表item成功')
             })
             .catch((err) => {
-              myRes(res, null, 400, '数据库出错了')
+              myRes(res, null, 400, '数据库出错了function')
             })
         }
       }
