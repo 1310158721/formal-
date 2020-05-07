@@ -45,6 +45,16 @@ const baseRoutes = [
         }
       },
       {
+        title: '文章操作',
+        icon: 'icon-ziyuan',
+        path: '/article-operation',
+        name: 'article-operation',
+        meta: {
+          title: '文章操作'
+        },
+        component: () => import(/* webpackChunkName: "articleOperation" */ '@/views/article/operation/operation')
+      },
+      {
         title: '文章列表',
         icon: 'icon-ziyuan',
         path: '/article-list',
@@ -52,17 +62,7 @@ const baseRoutes = [
         meta: {
           title: '文章列表'
         },
-        component: () => import(/* webpackChunkName: "article-list" */ '@/views/article/articleList/articleList')
-      },
-      {
-        title: '创建文章',
-        icon: 'icon-ziyuan',
-        path: '/create-article',
-        name: 'create-article',
-        meta: {
-          title: '创建文章'
-        },
-        component: () => import(/* webpackChunkName: "createArticle" */ '@/views/article/createArticle/createArticle')
+        component: () => import(/* webpackChunkName: "article-list" */ '@/views/article/list/list')
       },
       // 图表
       {

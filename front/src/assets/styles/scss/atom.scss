@@ -20,10 +20,14 @@
 
 // mavon-editor 相关
 .markdown-body {
+  height: auto!important;
   img {
     max-width: 200px;
     max-height: 200px;
     display: block;
     margin: 24px 0px;
+  }
+  pre {
+    padding: 0!important;
   }
 }

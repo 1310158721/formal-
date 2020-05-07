@@ -36,7 +36,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click='handleCheck(scope.row._id)'>查看</el-button>
+          <el-button type="text" size="small" @click='handleCheck(scope.row)'>查看</el-button>
           <el-button type="text" size="small" @click='handleDelete(scope.row._id)'>删除</el-button>
           <el-button type="text" size="small" @click='handleEdit(scope.row._id)'>编辑</el-button>
         </template>
@@ -132,13 +132,13 @@ export default {
     // 添加按钮
     handleCreateArticle () {
       this.$router.push({
-        path: '/create-article'
+        path: '/article-operation'
       })
     },
     // 编辑按钮
     handleEdit (id) {
       this.$router.push({
-        path: '/create-article',
+        path: '/article-operation',
         query: {
           mode: 'eidt',
           id
@@ -174,11 +174,12 @@ export default {
       this.params.keyword = null
       this.getList()
     },
-    handleCheck (id) {
+    handleCheck ({ _id, title }) {
+      window.sessionStorage.setItem('ARTICLETITLE', title)
       this.$router.push({
         path: '/check-article',
         query: {
-          id
+          id: _id
         }
       })
     }

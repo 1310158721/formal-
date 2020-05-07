@@ -30,6 +30,7 @@
     >
       <!-- 编辑文章时，等获取已有文章数据后，在渲染出来 -->
       <t-mavon-editor
+        class="t-mavon-editor-wrapper"
         v-if="isLoaded"
         :defaultContent="model.markdownValue"
         @change="markdownChange"
@@ -197,6 +198,9 @@ export default {
     height: 100%;
     /deep/.el-form-item__content {
       height: 100%;
+    }
+    .t-mavon-editor-wrapper {
+      height: 100%!important;
     }
   }
   .button-wrapper {
