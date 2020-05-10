@@ -1,7 +1,8 @@
-const config = require('../../config/config')
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { myRes } = require('../utils/res')
+const MYOSS = require('../../utils/oss');
+const myOss = new MYOSS();
 
 // 声明一个 文章 相关信息的类
 class ARTICLE {
@@ -15,11 +16,12 @@ class ARTICLE {
       tags: String,
       markdownValue: String,
       markdownRender: String,
-      createdTime: Number
+      createdTime: Number,
+      isTop: Number
     })
 
     // 数据库连接状态
-    this.db = mongoose.createConnection('mongodb://127.0.0.1:27017/formalAdminArticle', { useUnifiedTopology: true, useNewUrlParser: true })
+    this.db = mongoose.createConnection(`mongodb://127.0.0.1:${global.mongodbPort}/www_article`, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false })
   
     this.openApi()
   }
@@ -39,7 +41,8 @@ class ARTICLE {
           tags = '',
           markdownValue = '',
           markdownRender = '',
-          createdTime = Date.now()
+          createdTime = Date.now(),
+          isTop = 0
         } = req.body
         if (
           !title ||
@@ -51,7 +54,7 @@ class ARTICLE {
         } else {
           const articleModel = this.db.model(token, this.ArticleSchema)
           const articleData = new articleModel({
-            title, isPublish, tags, markdownValue, markdownRender, createdTime
+            title, isPublish, tags, markdownValue, markdownRender, createdTime, isTop
           })
           articleData
             .save()
@@ -149,7 +152,7 @@ class ARTICLE {
         } else {
           const articleModel = this.db.model(token, this.ArticleSchema)
           articleModel
-            .update({ _id: id }, {
+            .findByIdAndUpdate(id, {
               title,
               isPublish,
               tags,
@@ -182,17 +185,25 @@ class ARTICLE {
           keyword = ''
         } = req.query
         const articleModel = this.db.model(token, this.ArticleSchema)
-        const or = [
+        const $or = [
           { markdownValue: { $regex: keyword, $options: '$i' } },
           { title: { $regex: keyword, $options: '$i' } }
         ]
         articleModel
           .countDocuments()
-          .or(or)
+          .or($or)
+          .sort({
+            isTop: -1,
+            createdTime: -1
+          })
           .then((total) => {
             articleModel
               .find()
-              .or(or)
+              .or($or)
+              .sort({
+                isTop: -1,
+                createdTime: -1
+              })
               .limit(Number.parseInt(size))
               .skip((Number.parseInt(page) - 1) * Number.parseInt(size))
               .then((doc) => {
@@ -204,10 +215,149 @@ class ARTICLE {
               })
           })
           .catch((err) => {
-            myRes(res, err, 400, '数据库出错了')
+            myRes(res, err, 500, '数据库出错了')
           })
       }
     })
+  }
+
+  // 置顶列表 item
+  setTopArticleListItem () {
+    this.app.post('/api/setTopArticleListItem', (req, res, next) => {
+      const { token } = req.signedCookies
+      if (!token) {
+        myRes(res, null, 400, 'token 失效，请重新登录')
+      } else {
+        const { id } = req.body
+        if (!id) {
+          myRes(res, null, 400, '参数不能为空')
+        } else {
+          const articleModel = this.db.model(token, this.ArticleSchema)
+          articleModel
+            .findByIdAndUpdate(id, { isTop: Date.now() })
+            .then(() => {
+              myRes(res, null, 0, '置顶数据成功')
+            })
+            .catch((err) => {
+              myRes(res, err, 500, '数据库出错了')
+            })
+        }
+      }
+    })
+  }
+
+  // 取消置顶列表 item
+  cancelSetTopArticleListItem () {
+    this.app.post('/api/cancelSetTopArticleListItem', (req, res, next) => {
+      const { token } = req.signedCookies
+      if (!token) {
+        myRes(res, null, 400, 'token 失效，请重新登录')
+      } else {
+        const { id } = req.body
+        if (!id) {
+          myRes(res, null, 400, '参数不能为空')
+        } else {
+          const articleModel = this.db.model(token, this.ArticleSchema)
+          articleModel
+            .findByIdAndUpdate(id, { isTop: 0 })
+            .then(() => {
+              myRes(res, null, 0, '置顶数据成功')
+            })
+            .catch((err) => {
+              myRes(res, err, 500, '数据库出错了')
+            })
+        }
+      }
+    })
+  }
+
+  /**
+   * 定时删除阿里云OSS对象上的多余图片文件（article 文件夹）
+   */
+  deleteDbAllCollections() {
+    const directory = 'article'
+    const _this = this;
+    this.db.on('connected', function() {
+      console.log(
+        'Article 阿里云OSS checking____________________________________________'
+      );
+      let timer = setInterval(() => {
+        const collections = [];
+        // 查询所有用户的 article 集合
+        this.db.collections().then(data => {
+          if (data.length) {
+            data.map(i => {
+              collections.push(i.s.namespace.collection.replace(/s$/g, ''));
+            });
+
+            let len = collections.length;
+            let start = 0;
+            loop(start);
+            let content = [];
+            function loop(start) {
+              if (start >= len) {
+                let mongodbPhotos = '';
+                content.map(i => {
+                  if (i.markdownRender) {
+                    mongodbPhotos += i.markdownRender;
+                  }
+                });
+
+                myOss.setBuckName(global.buckName).then(() => {
+                  /**
+                   * 搜索 oss global.buckName（bucket） 是否存在 article 文件夹
+                   */
+                  myOss.listDir(directory + '/').then(result => {
+                    /**
+                     * oss 当前存在的图片
+                     */
+                    const OssHasPhotos = [];
+                    if (result.objects && result.objects.length) {
+                      /**
+                       * 获取所有 oss 当前存在的 图片
+                       */
+                      result.objects.forEach(obj => {
+                        OssHasPhotos.push(obj.name.replace(directory + '/', ''));
+                      });
+
+                      /**
+                       * 根据 oss 当前存在的 图片 与 对应数据库当前存在的所有图片 匹配，找出 oss 当前不被需要的图片
+                       */
+                      const unExist = OssHasPhotos.filter(
+                        item => !mongodbPhotos.includes(item)
+                      ).map(i => {
+                        i = directory + '/' + i;
+                        return i;
+                      });
+
+                      /**
+                       * Oss 删除当前不被需要的图片
+                       */
+                      myOss.deleteMulti(unExist).then(() => {
+                        console.log('Article 相关的多余图片已删除');
+                      });
+                    }
+                  });
+                });
+                return false;
+              }
+              const ArticleSchema = _this.db.model(
+                collections[start],
+                _this.ArticleSchema
+              );
+
+              ArticleSchema
+                .find()
+                .then(doc => {
+                  content = [...content, ...doc];
+                  start += 1;
+                  loop(start);
+                });
+            }
+          }
+        });
+      }, global.deleteOssPhotoTime);
+    });
   }
 
   openApi() {
@@ -216,6 +366,9 @@ class ARTICLE {
     this.deleteArticle()
     this.checkArticleListItem()
     this.updateArticleListItem()
+    this.setTopArticleListItem()
+    this.cancelSetTopArticleListItem()
+    this.deleteDbAllCollections()
   }
 }
 

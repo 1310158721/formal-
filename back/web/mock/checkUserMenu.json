@@ -1,0 +1,194 @@
+{
+  "result": [
+    {
+      "_id": "5ead36c2de8c2a62eadd1140",
+      "title": "首页",
+      "permission": "DASHBOARD",
+      "order": 1,
+      "children": null,
+      "disabled": true
+    },
+    {
+      "_id": "5eaec741de8c2a62eadd1156",
+      "title": "待办事项",
+      "order": 1,
+      "permission": "NEXTTODO",
+      "children": null,
+      "buttons": [
+        { "title": "新增", "permission": "NEXTTODOADD", "children": null },
+        { "title": "删除", "permission": "NEXTTODODELETE", "children": null }
+      ]
+    },
+    {
+      "_id": "5eaf83e1de8c2a62eadd1157",
+      "title": "文章",
+      "permission": "ARTICLE",
+      "children": [
+        {
+          "title": "文章操作",
+          "permission": "CREATEARTICLE",
+          "children": null,
+          "buttons": null
+        },
+        { "title": "文章列表", "permission": "ARTICLELIST", "children": null }
+      ],
+      "order": 1,
+      "buttons": null
+    },
+    {
+      "_id": "5ead36c2de8c2a62eadd1141",
+      "title": "编辑器",
+      "permission": "EDITOR",
+      "order": 2,
+      "children": [
+        { "title": "Markdown", "permission": "MARKDOWN", "children": null }
+      ]
+    },
+    {
+      "_id": "5ead36c2de8c2a62eadd1142",
+      "title": "图表",
+      "permission": "CHARTS",
+      "order": 3,
+      "children": [
+        { "title": "饼形", "permission": "PIE", "children": null },
+        { "title": "柱形", "permission": "BAR", "children": null }
+      ]
+    },
+    {
+      "_id": "5ead36c2de8c2a62eadd1143",
+      "title": "组件",
+      "permission": "COMPONENTS",
+      "order": 4,
+      "children": [
+        {
+          "title": "图片查看器",
+          "permission": "VIEWER",
+          "children": null,
+          "buttons": [
+            { "title": "BUTTON1", "permission": "VIEWER-BUTTON1" },
+            { "title": "BUTTON2", "permission": "VIEWER-BUTTON2" },
+            { "title": "BUTTON3", "permission": "VIEWER-BUTTON3" }
+          ]
+        },
+        {
+          "title": "列表拖拽",
+          "permission": "DRAGGER",
+          "children": null,
+          "buttons": [
+            { "title": "BUTTON1", "permission": "DRAGGER-BUTTON1" },
+            { "title": "BUTTON2", "permission": "DRAGGER-BUTTON2" },
+            { "title": "BUTTON3", "permission": "DRAGGER-BUTTON3" }
+          ]
+        },
+        {
+          "title": "二维码",
+          "permission": "QRCODE",
+          "children": null,
+          "buttons": [
+            { "title": "BUTTON1", "permission": "QRCODE-BUTTON1" },
+            { "title": "BUTTON2", "permission": "QRCODE-BUTTON2" },
+            { "title": "BUTTON3", "permission": "QRCODE-BUTTON3" }
+          ]
+        },
+        { "title": "树形控件", "permission": "TREE", "children": null },
+        { "title": "文件上传", "permission": "UPLOAD", "children": null }
+      ]
+    },
+    {
+      "_id": "5ead36c2de8c2a62eadd1144",
+      "title": "指令",
+      "permission": "DIRECTIVES",
+      "order": 5,
+      "children": [
+        {
+          "title": "全屏化",
+          "permission": "FULLSCREEN",
+          "children": null,
+          "buttons": [
+            { "title": "BUTTON1", "permission": "FULLSCREEN-BUTTON1" },
+            { "title": "BUTTON2", "permission": "FULLSCREEN-BUTTON2" },
+            { "title": "BUTTON3", "permission": "FULLSCREEN-BUTTON3" }
+          ]
+        },
+        {
+          "title": "复制粘贴",
+          "permission": "CLIPBOARD",
+          "children": null,
+          "buttons": null
+        },
+        {
+          "title": "防抖",
+          "permission": "DEBOUNCE",
+          "children": null,
+          "buttons": null
+        },
+        {
+          "title": "节流",
+          "permission": "THROTTLE",
+          "children": null,
+          "buttons": null
+        }
+      ]
+    },
+    {
+      "_id": "5eb55d6a6d163caab1bfa00b",
+      "title": "常用插件",
+      "permission": "PLUGINS",
+      "order": 5,
+      "buttons": null,
+      "children": [
+        {
+          "title": "插件列表",
+          "permission": "PLUGINLIST",
+          "buttons": null,
+          "children": null
+        }
+      ]
+    },
+    {
+      "_id": "5ead36c2de8c2a62eadd1145",
+      "title": "嵌套路由",
+      "permission": "NESTEDROUTES",
+      "order": 6,
+      "children": [
+        {
+          "title": "一级路由-1",
+          "permission": "ROUTES-1-1",
+          "children": [
+            {
+              "title": "二级路由-1",
+              "permission": "ROUTES-2-1",
+              "children": null
+            },
+            {
+              "title": "二级路由-2",
+              "permission": "ROUTES-2-2",
+              "children": null
+            }
+          ]
+        },
+        { "title": "一级路由-2", "permission": "ROUTES-1-2", "children": null }
+      ]
+    },
+    {
+      "_id": "5ead36c2de8c2a62eadd1146",
+      "title": "权限",
+      "permission": "PERMISSION",
+      "order": 7,
+      "children": [
+        {
+          "title": "用户列表",
+          "permission": "USERSLIST",
+          "children": null,
+          "buttons": [
+            { "title": "编辑", "permission": "USERSLISTEDIT" },
+            { "title": "删除", "permission": "USERSLISTDELETE" },
+            { "title": "新增", "permission": "USERSLISTADD" }
+          ]
+        }
+      ]
+    }
+  ],
+  "code": 0,
+  "msg": "axios 查看所有的菜单信息成功"
+}

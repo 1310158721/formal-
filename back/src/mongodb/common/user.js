@@ -1,8 +1,9 @@
-const config = require('../../config/config')
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { myRes } = require('../utils/res')
 const $axios = require('axios')
+const MYOSS = require('../../utils/oss');
+const myOss = new MYOSS();
 
 // 声明一个用户相关信息的类
 class USER {
@@ -32,7 +33,7 @@ class USER {
     ]
 
     // 数据库连接状态
-    this.db = mongoose.createConnection('mongodb://127.0.0.1:27017/formalAdminCommon', { useUnifiedTopology: true, useNewUrlParser: true })
+    this.db = mongoose.createConnection(`mongodb://127.0.0.1:${global.mongodbPort}/www_public`, { useUnifiedTopology: true, useNewUrlParser: true })
 
     // 用户数据模型 => 对应到数据库的某张表
     this.userModel = this.db.model('alluser', this.userSchema)
@@ -274,7 +275,7 @@ class USER {
        * 先查询符合条件的条数
        * 在查询符合条件的结果
        */
-      $axios.get(`http://127.0.0.1:${config.PORT}/api/checkUser`, { params: { token, inside: true } })
+      $axios.get(`http://127.0.0.1:${global.PORT}/api/checkUser`, { params: { token, inside: true } })
         .then((response) => {
           const { result, code } = response.data
           if (code === 0) {
@@ -325,6 +326,54 @@ class USER {
     })
   }
 
+  /**
+   * 定时删除阿里云OSS对象上的多余图片文件（avatar 文件夹）
+   */
+  deleteAliOssPhotos() {
+    console.log(
+      'avatar 阿里云OSS checking____________________________________________'
+    );
+    let timer = null;
+    // 设置定时器
+    timer = setInterval(() => {
+      this.userModel
+      .find({})
+      .then(doc => {
+        // 查找对应数据库获取当前正在用的所有图片地址
+        let mongodbPhotos = '';
+        doc.map(i => {
+          mongodbPhotos += i.avatar;
+        });
+
+        myOss.setBuckName(global.buckName).then(() => {
+          // 搜索 oss global.buckName 是否存在 avatar 文件夹
+          myOss.listDir('avatar/').then(result => {
+            // oss 当前存在的图片
+            const OssHasPhotos = [];
+            if (result.objects && result.objects.length) {
+              // 获取所有 oss 当前存在的 图片
+              result.objects.forEach(obj => {
+                OssHasPhotos.push(obj.name.replace('avatar/', ''));
+              });
+              
+              // 根据 oss 当前存在的 图片 与 对应数据库当前存在的所有图片 匹配，找出 oss 当前不被需要的图片
+              const unExist = OssHasPhotos.filter(
+                item => !mongodbPhotos.includes(item)
+              ).map((i) => {
+                i = 'avatar/' + i;
+                return i;
+              });
+              // Oss 删除当前不被需要的图片
+              myOss.deleteMulti(unExist).then(() => {
+                console.log('Avatar 相关的多余图片已删除');
+              });
+            }
+          });
+        });
+      });
+    }, global.deleteOssPhotoTime);
+  }
+
   // 表示开启的 api
   openApi() {
     this.checkUser()
@@ -333,6 +382,7 @@ class USER {
     this.registerUser()
     this.deleteUser()
     this.updateUser()
+    this.deleteAliOssPhotos()
   }
 }
 

@@ -1,4 +1,3 @@
-const config = require('../../config/config')
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { myRes } = require('../utils/res')
@@ -22,7 +21,7 @@ class MENULIST {
     })
 
     // 数据库连接状态
-    this.db = mongoose.createConnection('mongodb://127.0.0.1:27017/formalAdminCommon', { useUnifiedTopology: true, useNewUrlParser: true })
+    this.db = mongoose.createConnection(`mongodb://127.0.0.1:${global.mongodbPort}/www_public`, { useUnifiedTopology: true, useNewUrlParser: true })
 
     // 用户数据模型 => 对应到数据库的某张表
     this.menuListModel = this.db.model('menulist', this.menuListSchema)
@@ -82,7 +81,7 @@ class MENULIST {
   checkAllMenu () {
     this.app.get('/api/checkAllMenu', (req, res, next) => {
       const { token } = req.signedCookies
-      $axios.get(`http://127.0.0.1:${config.PORT}/api/checkUser`, { params: { token, inside: true } })
+      $axios.get(`http://127.0.0.1:${global.PORT}/api/checkUser`, { params: { token, inside: true } })
         .then((response) => {
           const { result, code } = response.data
           if (code === 0) {
@@ -124,7 +123,7 @@ class MENULIST {
         // 优先 id 查询
         const conditions = id ? { _id: id } : { token }
         // 先获取用户的权限
-        $axios.get(`http://127.0.0.1:${config.PORT}/api/checkUser`, { params: Object.assign({}, conditions, { inside: true }) })
+        $axios.get(`http://127.0.0.1:${global.PORT}/api/checkUser`, { params: Object.assign({}, conditions, { inside: true }) })
           .then((response) => {
             const { result, code } = response.data
             if (code === 0) {

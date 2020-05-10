@@ -1,0 +1,15 @@
+{
+  "result": {
+    "list": [
+      {
+        "name": "插件名称1",
+        "url": "demo 链接1",
+        "createdTime": 1231242334534,
+        "desc": "简单描述1"
+      }
+    ],
+    "total": 1
+  },
+  "code": 0,
+  "msg": "请求成功"
+}

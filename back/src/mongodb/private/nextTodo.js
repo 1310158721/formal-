@@ -1,4 +1,3 @@
-const config = require('../../config/config')
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { myRes } = require('../utils/res')
@@ -15,7 +14,7 @@ class NEXTTODO {
     })
 
     // 数据库连接状态
-    this.db = mongoose.createConnection('mongodb://127.0.0.1:27017/formalAdminNextTodo', { useUnifiedTopology: true, useNewUrlParser: true })
+    this.db = mongoose.createConnection(`mongodb://127.0.0.1:${global.mongodbPort}/www_next_todo`, { useUnifiedTopology: true, useNewUrlParser: true })
   
     this.openApi()
   }

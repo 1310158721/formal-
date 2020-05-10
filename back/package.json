@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "supervisor main.js"
+    "start": "supervisor www.js"
   },
   "author": "",
   "license": "ISC",
