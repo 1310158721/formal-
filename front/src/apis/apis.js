@@ -95,3 +95,65 @@ export const checkArticleListItem = async (params) => {
 export const updateArticleListItem = async (params) => {
   return await isMock ? axios.get(`../mock/article/update.json?t=${Date.now()}`, { params }) : axios.post('/updateArticleListItem', params)
 }
+
+// 置顶单条文章列表信息
+export const setTopArticleListItem = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/article/top.json?t=${Date.now()}`, { params })
+    : axios.post('/setTopArticleListItem', params)
+}
+
+// 取消置顶单条文章列表信息
+export const cancelSetTopArticleListItem = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/article/top.json?t=${Date.now()}`, { params })
+    : axios.post('/cancelSetTopArticleListItem', params)
+}
+
+// 查看插件列表
+export const checkPluginList = async (params) => {
+  const url = isMock ? `../mock/plugins/list.json?t=${Date.now()}` : '/checkPluginList'
+  return await axios.get(url, { params })
+}
+
+// 新增插件列表信息
+export const createPluginListItem = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/plugins/create.json?t=${Date.now()}`, { params })
+    : axios.post('/createPluginListItem', params)
+}
+
+// 删除插件列表信息
+export const deletePluginListItem = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/plugins/delete.json?t=${Date.now()}`, { params })
+    : axios.post('/deletePluginListItem', params)
+}
+
+// 查看单条插件列表信息
+export const checkPluginListItem = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/plugins/check.json?t=${Date.now()}`, { params })
+    : axios.get('/checkPluginListItem', { params })
+}
+
+// 更新单条插件列表信息
+export const updatePluginListItem = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/plugins/update.json?t=${Date.now()}`, { params })
+    : axios.post('/updatePluginListItem', params)
+}
+
+// 置顶单条插件列表信息
+export const setTopPluginListItem = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/plugins/top.json?t=${Date.now()}`, { params })
+    : axios.post('/setTopPluginListItem', params)
+}
+
+// 取消置顶单条插件列表信息
+export const cancelSetTopPluginListItem = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/plugins/top.json?t=${Date.now()}`, { params })
+    : axios.post('/cancelSetTopPluginListItem', params)
+}

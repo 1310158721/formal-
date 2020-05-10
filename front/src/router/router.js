@@ -96,6 +96,14 @@ router.beforeEach((to, from, next) => {
         }
       })
   } else {
+    if (to.path === '/logout') {
+      jsCookie.remove('token')
+      // 清除用户相关数据
+      store.commit('SETUSERINFO', null)
+      // 清除权限菜单数据
+      store.commit('SETMENULIST', [])
+      next({ path: '/login' })
+    }
     // tabRoutes 中没有匹配到当前路由时，便添加当前路由
     if (!tabRoutes.filter((i) => to.path === i.path).length) {
       // 是否为菜单栏上面的路由

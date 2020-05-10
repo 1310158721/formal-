@@ -7,6 +7,7 @@
       closable
       @close="handleClose(tag)"
       :effect='effect'
+      :disable-transitions='disableTransitions'
       v-bind="$attrs"
       v-on='$listeners'
     >
@@ -62,6 +63,10 @@ export default {
     dynamicTags: {
       type: Array,
       default: () => [1, 2, 3, 4]
+    },
+    disableTransitions: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {

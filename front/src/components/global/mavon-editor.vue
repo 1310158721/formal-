@@ -25,7 +25,7 @@ export default {
   props: {
     action: {
       type: String,
-      default: '../tools/upload'
+      default: '../api/upload'
     },
     defaultContent: {
       type: String,
@@ -34,6 +34,11 @@ export default {
     size: {
       type: Number,
       default: 1024
+    },
+    // 文件上传路径
+    directory: {
+      type: String,
+      default: 'article'
     }
   },
   data () {
@@ -88,7 +93,7 @@ export default {
         this.SETGLOBALMASK(true)
         const formData = new FormData()
         formData.append('file', file)
-        formData.append('directory', 'record')
+        formData.append('directory', this.directory)
         axios.post(this.action, formData, {
           headers: {
             'Content-type': 'multipart/form-data'

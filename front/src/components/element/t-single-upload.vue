@@ -22,7 +22,7 @@ export default {
   props: {
     action: {
       type: String,
-      default: '/tools/upload'
+      default: '/api/upload'
     },
     data: {
       type: Object,

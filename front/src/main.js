@@ -6,6 +6,10 @@ import store from './store/store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+// 图片查看器
+import Viewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
+
 // mavon-editor 编辑器
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
@@ -29,6 +33,11 @@ import '@/http/interceptors'
 
 Vue.use(ElementUI)
 Vue.use(mavonEditor)
+Vue.use(Viewer, {
+  defaultOptions: {
+    zIndex: 9999
+  }
+})
 
 Vue.config.productionTip = false
 

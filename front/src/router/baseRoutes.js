@@ -1,9 +1,42 @@
+import dashboard from '@/views/dashboard/dashboard'
+import layoutBase from '@/layout/base/base'
+import clipboard from '@/views/directives/clipboard/clipboard'
+import nextTodo from '@/views/nextTodo/nextTodo'
+import article from '@/views/article/article'
+import articleOperation from '@/views/article/operation/operation'
+import articleList from '@/views/article/list/list'
+import charts from '@/views/charts/charts'
+import pie from '@/views/charts/pie/pie'
+import bar from '@/views/charts/bar/bar'
+import editor from '@/views/editor/editor'
+import markdown from '@/views/editor/markdown/markdown'
+import component from '@/views/components/components'
+import dragger from '@/views/components/dragger/dragger'
+import viewer from '@/views/components/viewer/viewer'
+import qrcode from '@/views/components/qrcode/qrcode'
+import tree from '@/views/components/tree/tree'
+import upload from '@/views/components/upload/upload'
+import directives from '@/views/directives/directives'
+import fullscreen from '@/views/directives/fullScreen/fullScreen'
+import debounce from '@/views/directives/debounce/debounce'
+import throttle from '@/views/directives/throttle/throttle'
+import plugins from '@/views/plugins/plugins'
+import pluginList from '@/views/plugins/list/list'
+import route from '@/views/route/route'
+import route11 from '@/views/route/route-1-1'
+import route12 from '@/views/route/route-1-2'
+import route21 from '@/views/route/route-2-1'
+import route22 from '@/views/route/route-2-2'
+import permission from '@/views/permission/permission'
+import permissionList from '@/views/permission/list/list'
+
 const baseRoutes = [
   // 基本的 base 布局
   {
     path: '/',
     name: '',
-    component: () => import('@/layout/base/base'),
+    // component: () => import('@/layout/base/base'),
+    component: layoutBase,
     redirect: {
       path: '/dashboard'
     },
@@ -17,7 +50,8 @@ const baseRoutes = [
         meta: {
           title: '首页'
         },
-        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/dashboard')
+        // component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/dashboard')
+        component: dashboard
       },
       // 待办事项
       {
@@ -28,7 +62,8 @@ const baseRoutes = [
         meta: {
           title: '待办事项'
         },
-        component: () => import(/* webpackChunkName: "next-to-do" */ '@/views/nextTodo/nextTodo')
+        // component: () => import(/* webpackChunkName: "next-to-do" */ '@/views/nextTodo/nextTodo')
+        component: nextTodo
       },
       // 文章
       {
@@ -39,7 +74,7 @@ const baseRoutes = [
         meta: {
           title: '文章'
         },
-        component: () => import(/* webpackChunkName: "article" */ '@/views/article/article'),
+        component: article,
         redirect: {
           path: '/article-list'
         }
@@ -52,7 +87,7 @@ const baseRoutes = [
         meta: {
           title: '文章操作'
         },
-        component: () => import(/* webpackChunkName: "articleOperation" */ '@/views/article/operation/operation')
+        component: articleOperation
       },
       {
         title: '文章列表',
@@ -62,7 +97,7 @@ const baseRoutes = [
         meta: {
           title: '文章列表'
         },
-        component: () => import(/* webpackChunkName: "article-list" */ '@/views/article/list/list')
+        component: articleList
       },
       // 图表
       {
@@ -73,7 +108,7 @@ const baseRoutes = [
         meta: {
           title: '图表'
         },
-        component: () => import(/* webpackChunkName: "charts" */ '@/views/charts/charts'),
+        component: charts,
         redirect: {
           path: '/pie'
         }
@@ -87,7 +122,7 @@ const baseRoutes = [
         meta: {
           title: '饼形'
         },
-        component: () => import(/* webpackChunkName: "pie" */ '@/views/charts/pie/pie')
+        component: pie
       },
       // 图表 -> 柱形图
       {
@@ -98,7 +133,7 @@ const baseRoutes = [
         meta: {
           title: '柱形'
         },
-        component: () => import(/* webpackChunkName: "bar" */ '@/views/charts/bar/bar')
+        component: bar
       },
       // 编辑器
       {
@@ -112,7 +147,7 @@ const baseRoutes = [
         meta: {
           title: '编辑器'
         },
-        component: () => import(/* webpackChunkName: "editor" */ '@/views/editor/editor')
+        component: editor
       },
       {
         title: 'Markdown',
@@ -122,7 +157,7 @@ const baseRoutes = [
         meta: {
           title: 'Markdown'
         },
-        component: () => import(/* webpackChunkName: "markdown" */ '@/views/editor/markdown/markdown')
+        component: markdown
       },
       // 组件
       {
@@ -133,7 +168,7 @@ const baseRoutes = [
         meta: {
           title: '组件'
         },
-        component: () => import(/* webpackChunkName: "components" */ '@/views/components/components'),
+        component: component,
         redirect: {
           path: '/viewer'
         }
@@ -147,7 +182,7 @@ const baseRoutes = [
         meta: {
           title: '列表拖拽'
         },
-        component: () => import(/* webpackChunkName: "dragger" */ '@/views/components/dragger/dragger')
+        component: dragger
       },
       // 组件 -> 图片查看器
       {
@@ -158,7 +193,7 @@ const baseRoutes = [
         meta: {
           title: '图片查看器'
         },
-        component: () => import(/* webpackChunkName: "viewer" */ '@/views/components/viewer/viewer')
+        component: viewer
       },
       // 组件 -> 二维码
       {
@@ -169,7 +204,7 @@ const baseRoutes = [
         meta: {
           title: '二维码'
         },
-        component: () => import(/* webpackChunkName: "qrcode" */ '@/views/components/qrcode/qrcode')
+        component: qrcode
       },
       // 组件 -> 树形控件
       {
@@ -180,7 +215,7 @@ const baseRoutes = [
         meta: {
           title: '树形控件'
         },
-        component: () => import(/* webpackChunkName: "tree" */ '@/views/components/tree/tree')
+        component: tree
       },
       // 组件 -> 文件上传
       {
@@ -191,7 +226,7 @@ const baseRoutes = [
         meta: {
           title: '文件上传'
         },
-        component: () => import(/* webpackChunkName: "upload" */ '@/views/components/upload/upload')
+        component: upload
       },
       // 指令
       {
@@ -202,7 +237,7 @@ const baseRoutes = [
         meta: {
           title: '指令'
         },
-        component: () => import(/* webpackChunkName: "directives" */ '@/views/directives/directives'),
+        component: directives,
         redirect: {
           path: '/full-screen'
         }
@@ -216,7 +251,7 @@ const baseRoutes = [
         meta: {
           title: '全屏化'
         },
-        component: () => import(/* webpackChunkName: "fullScreen" */ '@/views/directives/fullScreen/fullScreen')
+        component: fullscreen
       },
       {
         title: '复制粘贴',
@@ -226,7 +261,7 @@ const baseRoutes = [
         meta: {
           title: '复制粘贴'
         },
-        component: () => import(/* webpackChunkName: "clipboard" */ '@/views/directives/clipboard/clipboard')
+        component: clipboard
       },
       {
         title: '防抖',
@@ -236,7 +271,7 @@ const baseRoutes = [
         meta: {
           title: '防抖'
         },
-        component: () => import(/* webpackChunkName: "debounce" */ '@/views/directives/debounce/debounce')
+        component: debounce
       },
       {
         title: '节流',
@@ -246,7 +281,32 @@ const baseRoutes = [
         meta: {
           title: '节流'
         },
-        component: () => import(/* webpackChunkName: "throttle" */ '@/views/directives/throttle/throttle')
+        component: throttle
+      },
+      // 常用插件
+      {
+        title: '常用插件',
+        icon: 'icon--luyouguanli',
+        path: '/plugins',
+        name: 'plugins',
+        meta: {
+          title: '常用插件'
+        },
+        component: plugins,
+        redirect: {
+          path: '/plugin-list'
+        }
+      },
+      {
+        title: '插件列表',
+        icon: 'icon--luyouguanli',
+        path: '/plugin-list',
+        name: 'plugin-list',
+        meta: {
+          title: '插件列表'
+        },
+        component: pluginList
+
       },
       // 路由
       {
@@ -257,7 +317,7 @@ const baseRoutes = [
         meta: {
           title: '嵌套路由'
         },
-        component: () => import(/* webpackChunkName: "route" */ '@/views/route/route'),
+        component: route,
         redirect: {
           path: '/route-2-1'
         }
@@ -270,7 +330,7 @@ const baseRoutes = [
         meta: {
           title: '一级路由-1'
         },
-        component: () => import(/* webpackChunkName: "route-1-1" */ '@/views/route/route-1-1'),
+        component: route11,
         redirect: {
           path: '/route-2-1'
         }
@@ -283,7 +343,7 @@ const baseRoutes = [
         meta: {
           title: '一级路由-2'
         },
-        component: () => import(/* webpackChunkName: "route-1-2" */ '@/views/route/route-1-2')
+        component: route12
       },
       // 路由 -> 二级路由
       {
@@ -293,7 +353,7 @@ const baseRoutes = [
         meta: {
           title: '二级路由-1'
         },
-        component: () => import(/* webpackChunkName: "route-2-1" */ '@/views/route/route-2-1')
+        component: route21
       },
       // 路由 -> 二级路由
       {
@@ -303,7 +363,7 @@ const baseRoutes = [
         meta: {
           title: '二级路由-2'
         },
-        component: () => import(/* webpackChunkName: "route-2-2" */ '@/views/route/route-2-2')
+        component: route22
       },
       // 权限
       {
@@ -314,7 +374,7 @@ const baseRoutes = [
         meta: {
           title: '嵌套路由'
         },
-        component: () => import(/* webpackChunkName: "permission" */ '@/views/permission/permission'),
+        component: permission,
         redirect: {
           path: '/permission-list'
         }
@@ -328,7 +388,7 @@ const baseRoutes = [
         meta: {
           title: '用户列表'
         },
-        component: () => import(/* webpackChunkName: "permission-list" */ '@/views/permission/list/list')
+        component: permissionList
       }
     ]
   }

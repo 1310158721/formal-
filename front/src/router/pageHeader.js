@@ -1,3 +1,7 @@
+import pageHeaderRoute from '@/layout/pageHeader/pageHeader'
+import permissionOperation from '@/views/permission/operation/operation'
+import checkArticle from '@/views/article/checkArticle/checkArticle'
+
 const pageHeaderRoutes = [
   {
     path: '/pageHeaderRoutes',
@@ -5,7 +9,7 @@ const pageHeaderRoutes = [
     meta: {
       isNotTabRoute: true
     },
-    component: () => import(/* webpackChunkName: "pageHeaderRoutes" */ '@/layout/pageHeader/pageHeader'),
+    component: pageHeaderRoute,
     children: [
       {
         path: '/permission-operation',
@@ -14,7 +18,7 @@ const pageHeaderRoutes = [
           title: '权限用户',
           isNotTabRoute: true
         },
-        component: () => import('@/views/permission/operation/operation')
+        component: permissionOperation
       },
       {
         path: '/check-article',
@@ -23,7 +27,7 @@ const pageHeaderRoutes = [
           title: '查看文章',
           isNotTabRoute: true
         },
-        component: () => import('@/views/article/checkArticle/checkArticle')
+        component: checkArticle
       }
     ]
   }

@@ -1,3 +1,5 @@
+import test from '@/views/test/test'
+
 const devRoutes = [
   {
     title: '测试',
@@ -7,7 +9,7 @@ const devRoutes = [
     meta: {
       title: '测试'
     },
-    component: () => import(/* webpackChunkName: "test" */ '@/views/test/test'),
+    component: test,
     children: []
   }
 ]

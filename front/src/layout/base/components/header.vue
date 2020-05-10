@@ -14,6 +14,7 @@
     <TMultilingual v-if="$store.state.isOpenMultilingual" />
     <TFullScreen v-if="$store.state.isOpenFullScreen" /> -->
     <!-- <headerHandle /> -->
+    <HeaderDropdown />
   </div>
 </template>
 
@@ -23,15 +24,17 @@ import TBreadcrumb from './breadcrumb'
 // import TFullScreen from './fullScreen'
 // import TMultilingual from './multilingual'
 // import TSearchRoutes from './searchRoutes'
+import HeaderDropdown from './headerDropdown'
 import EventBus from '@/assets/js/utils/event'
 export default {
   name: 't-header',
   components: {
     // headerHandle,
-    TBreadcrumb
+    TBreadcrumb,
     // TFullScreen,
     // TMultilingual,
     // TSearchRoutes
+    HeaderDropdown
   },
   props: {},
   data () {

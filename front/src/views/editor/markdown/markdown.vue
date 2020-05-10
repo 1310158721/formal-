@@ -28,8 +28,8 @@ export default {
       this.render = render
     },
     handleClick () {
-      console.log(this.val)
-      // console.log(this.render)
+      // console.log(this.val)
+      console.log(this.render)
     }
   },
   created () {},

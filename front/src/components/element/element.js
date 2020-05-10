@@ -10,6 +10,8 @@ import TTree from './t-tree'
 import TSingleUpload from './t-single-upload'
 import TSwitch from './t-switch'
 import TInputTags from './t-input-tags'
+import TDropdown from './t-dropdown'
+import TDialog from './t-dialog'
 
 const components = [
   TTable,
@@ -17,7 +19,9 @@ const components = [
   TTree,
   TSingleUpload,
   TSwitch,
-  TInputTags
+  TInputTags,
+  TDropdown,
+  TDialog
 ]
 
 for (const i in components) {

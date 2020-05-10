@@ -1,5 +1,5 @@
 <template>
-  <div class="check-article-wrapper">
+  <div class="check-article-wrapper" v-viewer>
     <t-mavon-editor class="markdown-body" v-html="markdownRender" />
   </div>
 </template>

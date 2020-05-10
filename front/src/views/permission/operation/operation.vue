@@ -27,6 +27,9 @@
             <t-single-upload
               :on-success='handleSuccess'
               :imageSrc='model.avatar'
+              :data="{
+                directory: 'avatar'
+              }"
             />
           </el-form-item>
           <el-form-item label="级别" prop="role">

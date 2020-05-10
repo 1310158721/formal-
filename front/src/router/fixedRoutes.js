@@ -1,8 +1,10 @@
+import login from '@/layout/login/login'
+
 const fixedRoutes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '@/layout/login/login')
+    component: login
   }
 ]
 

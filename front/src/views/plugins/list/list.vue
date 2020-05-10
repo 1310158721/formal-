@@ -1,76 +1,79 @@
 <template>
-  <t-table
-    class="list-wrapper"
-    :isLoading="isLoading"
-    :data="data"
-    :openFilter="true"
-    :pagination='pagination'
-    :sizeChange="handleSizeChange"
-    :currentChange="handleCurrentChange"
-    :row-class-name='setRowClass'
-  >
-    <template #filter>
-      <el-button class="mgr-24" type="primary" size="small" @click='handleCreateArticle'>
-        新增
-      </el-button>
-      <span class="space"></span>
-      <el-input class="input-w-300" size="small" type='text' v-model='params.keyword' @keydown.enter.native="handleSearch" @input.native='handleInput'>
-        <el-button size="small" type="primary" slot="append" icon="el-icon-search" @click='handleSearch'></el-button>
-      </el-input>
-    </template>
-    <template #table>
-      <el-table-column prop="title" label="标题" align="center" />
-      <el-table-column label="是否发布" align="center" width='96'>
-        <template slot-scope="scope">
-          <span>{{ scope.row.isPublish ? '是' : '否' }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="自定义类型" align="center" width='320'>
-        <template slot-scope="scope">
-          <el-tag class="table-tags" v-for="(tag, index) in scope.row.tags.split(',')" :key="tag" :type='tagTypes[index]'>{{ tag }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="创建时间" prop='createdTime' align="center" width='240'>
-        <template slot-scope="scope">
-          <span>{{ scope.row.createdTime | t-time-format }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" width="120">
+  <div class="plugin-list-wrapper">
+    <t-table
+      :isLoading="isLoading"
+      :data="data"
+      openFilter
+      :pagination="pagination"
+      :sizeChange="handleSizeChange"
+      :currentChange="handleCurrentChange"
+      :row-class-name='setRowClass'
+    >
+      <template #filter>
+        <el-button
+          class="mgr-24"
+          type="primary"
+          size="small"
+          @click="handleCreate"
+        >
+          新增
+        </el-button>
+        <span class="space"></span>
+        <el-input class="input-w-300" size="small" type='text' v-model='params.keyword' @keydown.enter.native="handleSearch">
+          <el-button size="small" type="primary" slot="append" icon="el-icon-search" @click='handleSearch'></el-button>
+        </el-input>
+      </template>
+      <template #table>
+        <el-table-column label="序号" align="center" width="60">
+          <template slot-scope="scope">
+            <span>{{ scope.$index + 1 }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="name" label="插件名称" align="center" width='180' />
+        <el-table-column prop="url" label="demo 链接" align="center" width='180' />
+        <el-table-column label="创建时间" align="center" width="250">
+          <template slot-scope="scope">
+            <span>{{ scope.row.createdTime |  t-time-format }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="desc" label="demo 描述" align="center" />
+        <el-table-column label="操作" align="center" width="120">
           <template slot-scope="scope">
             <t-dropdown trigger='click' class="list-dropdown" size='small' :dropdownItemEnum='dropdownItemEnum(scope.row)' />
           </template>
         </el-table-column>
-    </template>
-  </t-table>
+      </template>
+    </t-table>
+    <OperationDialog @dialogClose='dialogClose' :visible='visible' :id='id' />
+  </div>
 </template>
 
 <script>
-import { checkArticleList, deleteArticle, setTopArticleListItem, cancelSetTopArticleListItem } from '@/apis/apis'
-import { mapMutations } from 'vuex'
+import { checkPluginList, deletePluginListItem, setTopPluginListItem, cancelSetTopPluginListItem } from '@/apis/apis'
+import OperationDialog from '../components/operationDialog'
 export default {
-  name: 'articleList',
-  components: {},
+  name: 'PluginList',
+  components: {
+    OperationDialog
+  },
   props: {},
   data () {
     return {
+      id: '',
       isLoading: false,
       data: [],
-      pagination: {},
       params: {
         page: 1,
         size: 20,
         keyword: null
-      }
+      },
+      pagination: {},
+      visible: false
     }
   },
-  computed: {
-    tagTypes () {
-      return ['success', 'info', 'warning', 'dander']
-    }
-  },
+  computed: {},
   methods: {
-    ...mapMutations(['SETGLOBALMASK']),
-    dropdownItemEnum ({ _id, title, isTop }) {
+    dropdownItemEnum ({ _id, url, isTop }) {
       return [
         {
           label: '删除',
@@ -96,7 +99,7 @@ export default {
             command: 'check'
           },
           fnCallback: (command) => {
-            this.handleCheck(_id, title)
+            this.handleCheck(url)
           }
         },
         {
@@ -110,11 +113,10 @@ export default {
         }
       ]
     },
-    // 获取用户列表
     getList () {
       this.isLoading = true
       return new Promise((resolve) => {
-        checkArticleList(this.params).then(response => {
+        checkPluginList(this.params).then(response => {
           setTimeout(() => {
             const { result, code } = response.data
             if (code === 0) {
@@ -130,24 +132,9 @@ export default {
         })
       })
     },
-    // 删除用户接口
-    deleteArticle (id) {
-      this.SETGLOBALMASK(true)
-      deleteArticle({ id })
-        .then((response) => {
-          setTimeout(() => {
-            const { code, msg } = response.data
-            if (code === 0) {
-              this.SETGLOBALMASK(false)
-              this.$message.success(msg)
-              this.getList()
-            }
-          }, this.$store.state.apiDelay)
-        })
-    },
-    setTopArticleListItem (params) {
+    deletePluginListItem (params) {
       return new Promise((resolve) => {
-        setTopArticleListItem(params)
+        deletePluginListItem(params)
           .then((response) => {
             const { code } = response.data
             if (code === 0) {
@@ -159,9 +146,23 @@ export default {
           })
       })
     },
-    cancelSetTopArticleListItem (params) {
+    setTopPluginListItem (params) {
       return new Promise((resolve) => {
-        cancelSetTopArticleListItem(params)
+        setTopPluginListItem(params)
+          .then((response) => {
+            const { code } = response.data
+            if (code === 0) {
+              this.getList()
+                .then(() => {
+                  resolve()
+                })
+            }
+          })
+      })
+    },
+    cancelSetTopPluginListItem (params) {
+      return new Promise((resolve) => {
+        cancelSetTopPluginListItem(params)
           .then((response) => {
             const { code } = response.data
             if (code === 0) {
@@ -196,30 +197,21 @@ export default {
       this.params.page = val
       this.getList()
     },
-    // 添加按钮
-    handleCreateArticle () {
-      this.$router.push({
-        path: '/article-operation'
-      })
+    dialogClose (boolean = false) {
+      this.visible = false
+      boolean && this.getList()
     },
-    // 编辑按钮
-    handleEdit (id) {
-      this.$router.push({
-        path: '/article-operation',
-        query: {
-          mode: 'eidt',
-          id
-        }
-      })
+    handleCreate () {
+      this.id = ''
+      this.visible = true
     },
-    // 删除按钮
     handleDelete (id) {
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '温馨提示', {
+      this.$confirm('此操作将永久删除该数据, 是否继续?', '温馨提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.deleteArticle(id)
+        this.deletePluginListItem({ id })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -227,14 +219,12 @@ export default {
         })
       })
     },
-    handleCheck (_id, title) {
-      window.sessionStorage.setItem('ARTICLETITLE', title)
-      this.$router.push({
-        path: '/check-article',
-        query: {
-          id: _id
-        }
-      })
+    handleEdit (id) {
+      this.id = id
+      this.visible = true
+    },
+    handleCheck (url) {
+      this.$router.push(url)
     },
     handleSetTop (id) {
       this.$confirm('此操作将该数据置顶, 是否继续?', '温馨提示', {
@@ -242,7 +232,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.setTopArticleListItem({ id })
+        this.setTopPluginListItem({ id })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -256,7 +246,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.cancelSetTopArticleListItem({ id })
+        this.cancelSetTopPluginListItem({ id })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -268,16 +258,6 @@ export default {
     handleSearch () {
       this.getList()
     },
-    // 关键字 input 事件，清空 params.role
-    handleInput () {
-      // this.params.role = null
-      console.log('search')
-    },
-    // role 选择器改变了
-    selectHandleChange () {
-      this.params.keyword = null
-      this.getList()
-    },
     setRowClass ({ row }) {
       const { isTop } = row
       if (isTop) {
@@ -286,7 +266,6 @@ export default {
     }
   },
   created () {
-    // 获取列表数据
     this.getList()
   },
   mounted () {},
@@ -296,14 +275,14 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/scss/mixin.scss';
-.list-wrapper {
+.plugin-list-wrapper {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
   .space {
     flex: 1;
-  }
-  .table-tags {
-    margin: 0px 5px;
   }
   .list-dropdown {
     cursor: pointer;

@@ -194,13 +194,12 @@ export default {
   display: flex;
   flex-direction: column;
   .editor-wrapper {
-    flex: 1;
-    height: 100%;
+    height: 450px;
     /deep/.el-form-item__content {
       height: 100%;
-    }
-    .t-mavon-editor-wrapper {
-      height: 100%!important;
+      .t-mavon-editor-wrapper {
+        height: 100%!important;
+      }
     }
   }
   .button-wrapper {
