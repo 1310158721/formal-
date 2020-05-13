@@ -182,24 +182,39 @@ class ARTICLE {
         const {
           page = 1,
           size = 20,
-          keyword = ''
+          keyword = '',
+          tag = ''
         } = req.query
         const articleModel = this.db.model(token, this.ArticleSchema)
-        const $or = [
-          { markdownValue: { $regex: keyword, $options: '$i' } },
-          { title: { $regex: keyword, $options: '$i' } }
-        ]
+        
+        // 模糊搜索条件
+        const vagueConditions = {}
+
+        // 添加关键字模糊搜索
+        if (keyword) {
+          vagueConditions.$or = []
+          vagueConditions.$or.push(...[
+            { markdownValue: { $regex: keyword, $options: '$i' } },
+            { title: { $regex: keyword, $options: '$i' } }
+          ])
+        }
+
+        // 添加 role 模糊搜索
+        if (tag) {
+          vagueConditions.$or = []
+          // $eq 精确搜索
+          vagueConditions.$or.push({ tags: { $regex: tag, $options: '$i' } })
+        }
+
         articleModel
-          .countDocuments()
-          .or($or)
+          .countDocuments(vagueConditions)
           .sort({
             isTop: -1,
             createdTime: -1
           })
           .then((total) => {
             articleModel
-              .find()
-              .or($or)
+              .find(vagueConditions)
               .sort({
                 isTop: -1,
                 createdTime: -1
@@ -215,6 +230,7 @@ class ARTICLE {
               })
           })
           .catch((err) => {
+            console.log(err)
             myRes(res, err, 500, '数据库出错了')
           })
       }
@@ -267,6 +283,32 @@ class ARTICLE {
               myRes(res, err, 500, '数据库出错了')
             })
         }
+      }
+    })
+  }
+
+  // 获取自定义类型枚举
+  getArticleTagsEnum () {
+    this.app.post('/api/getArticleTagsEnum', (req, res, next) => {
+      const { token } = req.signedCookies
+      if (!token) {
+        myRes(res, null, 400, 'token 失效，请重新登录')
+      } else {
+        const articleModel = this.db.model(token, this.ArticleSchema)
+        articleModel
+          .find({}, { title: 0, isPublish: 0, markdownValue: 0, markdownRender: 0, createdTime: 0, isTop: 0, _id: 0, __v: 0 })
+          .then((doc) => {
+            // 过滤的代码应提取一个方法放到constructor上
+            let r = []
+            doc.map((i) => {
+              r = [...r, ...(i.tags.split(','))]
+            })
+            r = [...new Set(r)]
+            myRes(res, r, 0, '查询数据成功')
+          })
+          .catch((err) => {
+            myRes(res, err, 500, '数据库出错了')
+          })
       }
     })
   }
@@ -368,6 +410,7 @@ class ARTICLE {
     this.updateArticleListItem()
     this.setTopArticleListItem()
     this.cancelSetTopArticleListItem()
+    this.getArticleTagsEnum()
     this.deleteDbAllCollections()
   }
 }

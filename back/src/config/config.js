@@ -1,5 +1,5 @@
 // 模拟环境变量 true 正式环境，false 开发环境
-const env = true
+const env = false
 
 // 全局端口
 global.PORT = 8000

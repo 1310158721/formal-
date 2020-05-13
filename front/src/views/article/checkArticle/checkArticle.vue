@@ -53,14 +53,14 @@ export default {
   height: 100%;
   padding: 0px 150px;
   box-sizing: border-box;
-  background-color: rgba(0,0,0,.5);
+  background-color: #282c34;
   overflow: auto;
   .markdown-body {
     min-height: 100%;
     padding: 20px;
     box-sizing: border-box;
     border-radius: 0;
-    background-color: rgba(255,0,0,.1);
+    background-color: lightslategrey;
   }
 }
 </style>

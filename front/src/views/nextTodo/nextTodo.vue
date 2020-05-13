@@ -7,6 +7,7 @@
     :pagination='pagination'
     :sizeChange="handleSizeChange"
     :currentChange="handleCurrentChange"
+      :row-class-name='setRowClass'
   >
     <template #filter>
       <el-button class="mgr-24" type="primary" size="small" @click='createItem'>
@@ -18,6 +19,11 @@
       </el-input>
     </template>
     <template #table>
+      <el-table-column label="序号" align="center" width="60">
+          <template slot-scope="scope">
+            <span>{{ scope.$index + 1 }}</span>
+          </template>
+        </el-table-column>
       <el-table-column prop="desc" label="简述" align="center" />
       <el-table-column label="创建时间" align="center" width='250'>
         <template slot-scope="scope">
@@ -26,7 +32,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="120">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click='handleDelete(scope.row._id)'>删除</el-button>
+          <!-- <el-button type="text" size="small" @click='handleDelete(scope.row._id)'>删除</el-button> -->
+          <t-dropdown trigger='click' class="list-dropdown" size='small' :dropdownItemEnum='dropdownItemEnum(scope.row)' />
         </template>
       </el-table-column>
     </template>
@@ -34,7 +41,7 @@
 </template>
 
 <script>
-import { nextTodoList, createNextTodoList, deleteNextTodoList } from '@/apis/apis'
+import { nextTodoList, createNextTodoList, deleteNextTodoList, checkNextTodoList, updateNextTodoList, setNextTodoListItemTop, cancelNextTodoListItemTop } from '@/apis/apis'
 export default {
   name: 't-next-to-do',
   components: {},
@@ -58,6 +65,123 @@ export default {
   },
   computed: {},
   methods: {
+    dropdownItemEnum ({ _id, url, isTop }) {
+      return [
+        {
+          label: '删除',
+          attrs: {
+            command: 'delete'
+          },
+          fnCallback: (command) => {
+            this.handleDelete(_id)
+          }
+        },
+        {
+          label: '编辑',
+          attrs: {
+            command: 'edit'
+          },
+          fnCallback: (command) => {
+            this.handleEdit(_id)
+          }
+        },
+        {
+          label: isTop ? '取消置顶' : '置顶',
+          attrs: {
+            command: 'setTop'
+          },
+          fnCallback: (command) => {
+            isTop ? this.cancelSetTop(_id) : this.handleSetTop(_id)
+          }
+        }
+      ]
+    },
+    handleSetTop (id) {
+      this.$confirm('此操作将该数据置顶, 是否继续?', '温馨提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.setNextTodoListItemTop({ id })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    cancelSetTop (id) {
+      this.$confirm('此操作将取消该数据置顶, 是否继续?', '温馨提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.cancelNextTodoListItemTop({ id })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    setNextTodoListItemTop (params) {
+      return new Promise((resolve) => {
+        setNextTodoListItemTop(params)
+          .then((response) => {
+            const { code } = response.data
+            if (code === 0) {
+              this.getList()
+                .then(() => {
+                  resolve()
+                })
+            }
+          })
+      })
+    },
+    cancelNextTodoListItemTop (params) {
+      return new Promise((resolve) => {
+        cancelNextTodoListItemTop(params)
+          .then((response) => {
+            const { code } = response.data
+            if (code === 0) {
+              this.getList()
+                .then(() => {
+                  resolve()
+                })
+            }
+          })
+      })
+    },
+    handleEdit (id) {
+      checkNextTodoList({ id })
+        .then((response) => {
+          const { code, result } = response.data
+          if (code === 0) {
+            const { desc } = result
+            this.$prompt('请输入相关简述', '', {
+              inputValue: desc,
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              inputPattern: /^.{1,50}$/,
+              inputErrorMessage: '长度应在1～50间'
+            }).then(({ value }) => {
+              updateNextTodoList({ id, desc: value })
+                .then((resposne) => {
+                  const { code, msg } = resposne.data
+                  if (code === 0) {
+                    this.$message.success(msg)
+                    this.getList()
+                  }
+                })
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '取消输入'
+              })
+            })
+          }
+        })
+    },
     getList () {
       this.isLoading = true
       return new Promise((resolve) => {
@@ -105,6 +229,7 @@ export default {
     },
     createItem () {
       this.$prompt('请输入相关简述', '', {
+        inputValue: '',
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /^.{1,50}$/,
@@ -145,6 +270,12 @@ export default {
           message: '已取消删除'
         })
       })
+    },
+    setRowClass ({ row }) {
+      const { isTop } = row
+      if (isTop) {
+        return 'is-set-top'
+      }
     }
   },
   created () {
@@ -156,11 +287,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/scss/mixin.scss';
 .list-wrapper {
   width: 100%;
   height: 100%;
   .space {
     flex: 1;
+  }
+  .list-dropdown {
+    cursor: pointer;
+    width: 98px;
+  }
+  /deep/tr.is-set-top {
+    @include gradient(rgba(0,0,0,.2), #fff);
   }
 }
 </style>

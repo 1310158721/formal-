@@ -13,6 +13,7 @@
       <el-button class="mgr-24" type="primary" size="small" @click='handleCreateArticle'>
         新增
       </el-button>
+      <t-select class="select-w-120" v-if='tagsEnum.length' :data='tagsEnum' v-model='params.tag' @change='handleTagChange' />
       <span class="space"></span>
       <el-input class="input-w-300" size="small" type='text' v-model='params.keyword' @keydown.enter.native="handleSearch" @input.native='handleInput'>
         <el-button size="small" type="primary" slot="append" icon="el-icon-search" @click='handleSearch'></el-button>
@@ -27,7 +28,11 @@
       </el-table-column>
       <el-table-column label="自定义类型" align="center" width='320'>
         <template slot-scope="scope">
-          <el-tag class="table-tags" v-for="(tag, index) in scope.row.tags.split(',')" :key="tag" :type='tagTypes[index]'>{{ tag }}</el-tag>
+          <!-- 防止丑陋的动画 -->
+          <span v-for="(tag, index) in scope.row.tags.split(',')" :key="tag">
+            <el-tag class="table-tags" :type='tagTypes[index]'>{{ tag }}</el-tag>
+          </span>
+
         </template>
       </el-table-column>
       <el-table-column label="创建时间" prop='createdTime' align="center" width='240'>
@@ -45,7 +50,7 @@
 </template>
 
 <script>
-import { checkArticleList, deleteArticle, setTopArticleListItem, cancelSetTopArticleListItem } from '@/apis/apis'
+import { checkArticleList, deleteArticle, setTopArticleListItem, cancelSetTopArticleListItem, getArticleTagsEnum } from '@/apis/apis'
 import { mapMutations } from 'vuex'
 export default {
   name: 'articleList',
@@ -54,12 +59,14 @@ export default {
   data () {
     return {
       isLoading: false,
+      tagsEnum: [],
       data: [],
       pagination: {},
       params: {
         page: 1,
         size: 20,
-        keyword: null
+        keyword: null,
+        tag: null
       }
     }
   },
@@ -109,6 +116,19 @@ export default {
           }
         }
       ]
+    },
+    getArticleTagsEnum () {
+      return new Promise((resolve) => {
+        getArticleTagsEnum()
+          .then((response) => {
+            const { code, result } = response.data
+            if (code === 0) {
+              result.map((i) => {
+                this.tagsEnum.push({ label: i, value: i })
+              })
+            }
+          })
+      })
     },
     // 获取用户列表
     getList () {
@@ -266,12 +286,16 @@ export default {
     },
     // 关键字搜索
     handleSearch () {
+      this.params.tag = null
       this.getList()
     },
     // 关键字 input 事件，清空 params.role
     handleInput () {
-      // this.params.role = null
-      console.log('search')
+      this.params.tag = null
+    },
+    handleTagChange (val) {
+      this.params.keyword = null
+      this.getList()
     },
     // role 选择器改变了
     selectHandleChange () {
@@ -288,6 +312,7 @@ export default {
   created () {
     // 获取列表数据
     this.getList()
+    this.getArticleTagsEnum()
   },
   mounted () {},
   watch: {}

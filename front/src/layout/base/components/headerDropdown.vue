@@ -57,5 +57,8 @@ export default {
 .header-dropdown {
   width: 50px;
   height: 50px;
+  .el-avatar {
+    cursor: pointer
+  }
 }
 </style>

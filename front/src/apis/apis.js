@@ -68,6 +68,34 @@ export const deleteNextTodoList = async (params) => {
   return await isMock ? axios.get(`../mock/nextTodo/delete.json?t=${Date.now()}`, { params }) : axios.get('/deleteUserNextTodoItem', { params })
 }
 
+// 查看待办事项
+export const checkNextTodoList = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/nextTodo/delete.json?t=${Date.now()}`, { params })
+    : axios.post('/checkUserNextTodoItem', params)
+}
+
+// 更新待办事项
+export const updateNextTodoList = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/nextTodo/delete.json?t=${Date.now()}`, { params })
+    : axios.post('/updateUserNextTodoItem', params)
+}
+
+// 置顶待办事项
+export const setNextTodoListItemTop = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/nextTodo/top.json?t=${Date.now()}`, { params })
+    : axios.post('/setNextTodoListItemTop', params)
+}
+
+// 取消置顶待办事项
+export const cancelNextTodoListItemTop = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/nextTodo/top.json?t=${Date.now()}`, { params })
+    : axios.post('/cancelNextTodoListItemTop', params)
+}
+
 // 创建文章
 export const createArticle = async (params) => {
   return await isMock ? axios.get(`../mock/article/create.json?t=${Date.now()}`, { params }) : axios.post('/createArticle', params)
@@ -108,6 +136,13 @@ export const cancelSetTopArticleListItem = async (params) => {
   return await isMock
     ? axios.get(`../mock/article/top.json?t=${Date.now()}`, { params })
     : axios.post('/cancelSetTopArticleListItem', params)
+}
+
+// 获取文章所有 tags 枚举
+export const getArticleTagsEnum = async (params) => {
+  return await isMock
+    ? axios.get(`../mock/article/enum.json?t=${Date.now()}`, { params })
+    : axios.post('/getArticleTagsEnum', params)
 }
 
 // 查看插件列表

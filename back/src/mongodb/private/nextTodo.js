@@ -10,6 +10,7 @@ class NEXTTODO {
     // 用户数据结构
     this.nextToDoSchema = new Schema({
       desc: String,
+      isTop: Number,
       createdTime: Number
     })
 
@@ -38,10 +39,18 @@ class NEXTTODO {
         ]
         nexttodoModel
           .countDocuments()
+          .sort({
+            isTop: -1,
+            createdTime: -1
+          })
           .or(or)
           .then((total) => {
             nexttodoModel
               .find()
+              .sort({
+                isTop: -1,
+                createdTime: -1
+              })
               .or(or)
               .limit(Number.parseInt(size))
               .skip(Number.parseInt(page - 1) * Number.parseInt(size))
@@ -60,7 +69,7 @@ class NEXTTODO {
   /**
    * 根据当前用户的 token 新增待办事项列表
    */
-  createUserNextTodoItem() {
+  createItem() {
     this.app.post('/api/createUserNextTodoItem', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
@@ -73,6 +82,7 @@ class NEXTTODO {
           const nexttodoModel = this.db.model(token, this.nextToDoSchema)
           const nexttodoData = new nexttodoModel({
             desc,
+            isTop: 0,
             createdTime: Date.now()
           })
           nexttodoData
@@ -91,7 +101,7 @@ class NEXTTODO {
   /**
    * 根据当前用户的 token 及列表item的 ID 删除待办事项列表
    */
-  deleteUserNextTodoItem() {
+  deleteItem() {
     this.app.get('/api/deleteUserNextTodoItem', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
@@ -115,11 +125,125 @@ class NEXTTODO {
     })
   }
 
+  /**
+   * 根据当前用户的 token 及列表item的 ID 查看待办事项列表
+   */
+  checkItem() {
+    this.app.post('/api/checkUserNextTodoItem', (req, res, next) => {
+      const { token } = req.signedCookies
+      if (!token) {
+        myRes(res, null, 400, 'token 失效，请重新登录')
+      } else {
+        const { id = '' } = req.body
+        if (!id) {
+          myRes(res, null, 400, '参数不能为空')
+        } else {
+          const nexttodoModel = this.db.model(token, this.nextToDoSchema)
+          nexttodoModel
+            .findById(id)
+            .then((doc) => {
+              myRes(res, doc, 0, '查看列表item成功')
+            })
+            .catch((err) => {
+              myRes(res, null, 400, '数据库出错了function')
+            })
+        }
+      }
+    })
+  }
+
+  /**
+   * 根据当前用户的 token 及列表item的 ID 更新待办事项列表
+   */
+  updateItem() {
+    this.app.post('/api/updateUserNextTodoItem', (req, res, next) => {
+      const { token } = req.signedCookies
+      if (!token) {
+        myRes(res, null, 400, 'token 失效，请重新登录')
+      } else {
+        const { id = '', desc = '' } = req.body
+        if (!id || !desc) {
+          myRes(res, null, 400, '参数不能为空')
+        } else {
+          const nexttodoModel = this.db.model(token, this.nextToDoSchema)
+          nexttodoModel
+            .findByIdAndUpdate(id, {
+              desc
+            })
+            .then(() => {
+              myRes(res, null, 0, '更新列表item成功')
+            })
+            .catch((err) => {
+              myRes(res, null, 400, '数据库出错了function')
+            })
+        }
+      }
+    })
+  }
+
+  /**
+   * 根据当前用户的 token 置顶待办事项列表
+   */
+  setItemTop() {
+    this.app.post('/api/setNextTodoListItemTop', (req, res, next) => {
+      const { token } = req.signedCookies
+      if (!token) {
+        myRes(res, null, 400, 'token 失效，请重新登录')
+      } else {
+        const { id } = req.body
+        if (!id) {
+          myRes(res, null, 400, '参数不能为空')
+        } else {
+          const nexttodoModel = this.db.model(token, this.nextToDoSchema)
+          nexttodoModel
+            .findByIdAndUpdate(id, { isTop: Date.now() })
+            .then(() => {
+              myRes(res, null, 0, '置顶列表item成功')
+            })
+            .catch((err) => {
+              myRes(res, null, 400, '数据库出错了function')
+            })
+        }
+      }
+    })
+  }
+
+  /**
+   * 根据当前用户的 token 取消置顶待办事项列表
+   */
+  cancelItemTop() {
+    this.app.post('/api/cancelNextTodoListItemTop', (req, res, next) => {
+      const { token } = req.signedCookies
+      if (!token) {
+        myRes(res, null, 400, 'token 失效，请重新登录')
+      } else {
+        const { id } = req.body
+        if (!id) {
+          myRes(res, null, 400, '参数不能为空')
+        } else {
+          const nexttodoModel = this.db.model(token, this.nextToDoSchema)
+          nexttodoModel
+            .findByIdAndUpdate(id, { isTop: 0 })
+            .then(() => {
+              myRes(res, null, 0, '置顶列表item成功')
+            })
+            .catch((err) => {
+              myRes(res, null, 400, '数据库出错了function')
+            })
+        }
+      }
+    })
+  }
+
   // 表示开启的 api
   openApi() {
     this.checkUserNextList()
-    this.createUserNextTodoItem()
-    this.deleteUserNextTodoItem()
+    this.createItem()
+    this.deleteItem()
+    this.setItemTop()
+    this.cancelItemTop()
+    this.checkItem()
+    this.updateItem()
   }
 }
 

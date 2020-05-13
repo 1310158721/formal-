@@ -48,5 +48,6 @@ export default {
 }
 .default-text {
   color: #409eff;
+  cursor: pointer;
 }
 </style>
