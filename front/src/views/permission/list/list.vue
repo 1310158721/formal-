@@ -35,7 +35,7 @@
 
 <script>
 import { roleEnum } from '@/assets/js/contants/enum'
-import { checkAllUsers, deleteUser } from '@/apis/apis'
+import { USER } from '@/apis/apis'
 import { mapMutations } from 'vuex'
 export default {
   name: 'permissionList',
@@ -65,7 +65,7 @@ export default {
     getList () {
       this.isLoading = true
       return new Promise((resolve) => {
-        checkAllUsers(this.params).then(response => {
+        USER.checkAllUsers(this.params).then(response => {
           setTimeout(() => {
             const { result, code } = response.data
             if (code === 0) {
@@ -84,7 +84,7 @@ export default {
     // 删除用户接口
     deleteUser (id) {
       this.SETGLOBALMASK(true)
-      deleteUser({ id })
+      USER.deleteUser({ id })
         .then((response) => {
           setTimeout(() => {
             const { code, msg } = response.data

@@ -7,7 +7,7 @@
       :pagination="pagination"
       :sizeChange="handleSizeChange"
       :currentChange="handleCurrentChange"
-      :row-class-name='setRowClass'
+      :row-class-name="setRowClass"
     >
       <template #filter>
         <el-button
@@ -19,8 +19,20 @@
           新增
         </el-button>
         <span class="space"></span>
-        <el-input class="input-w-300" size="small" type='text' v-model='params.keyword' @keydown.enter.native="handleSearch">
-          <el-button size="small" type="primary" slot="append" icon="el-icon-search" @click='handleSearch'></el-button>
+        <el-input
+          class="input-w-300"
+          size="small"
+          type="text"
+          v-model="params.keyword"
+          @keydown.enter.native="handleSearch"
+        >
+          <el-button
+            size="small"
+            type="primary"
+            slot="append"
+            icon="el-icon-search"
+            @click="handleSearch"
+          ></el-button>
         </el-input>
       </template>
       <template #table>
@@ -29,27 +41,49 @@
             <span>{{ scope.$index + 1 }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="插件名称" align="center" width='180' />
-        <el-table-column prop="url" label="demo 链接" align="center" width='180' />
+        <el-table-column
+          prop="name"
+          label="插件名称"
+          align="center"
+          width="180"
+        />
+        <el-table-column
+          prop="url"
+          label="demo 链接"
+          align="center"
+          width="180"
+        />
         <el-table-column label="创建时间" align="center" width="250">
           <template slot-scope="scope">
-            <span>{{ scope.row.createdTime |  t-time-format }}</span>
+            <span>{{ scope.row.createdTime | timeFormat }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="desc" label="demo 描述" align="center" />
         <el-table-column label="操作" align="center" width="120">
           <template slot-scope="scope">
-            <t-dropdown trigger='click' class="list-dropdown" size='small' :dropdownItemEnum='dropdownItemEnum(scope.row)' />
+            <t-dropdown
+              trigger="click"
+              class="list-dropdown"
+              size="small"
+              :dropdownItemEnum="dropdownItemEnum(scope.row)"
+            />
           </template>
         </el-table-column>
       </template>
     </t-table>
-    <OperationDialog @dialogClose='dialogClose' :visible='visible' :id='id' />
+    <OperationDialog @dialogClose="dialogClose" :visible="visible" :id="id" />
   </div>
 </template>
 
 <script>
-import { checkPluginList, deletePluginListItem, setTopPluginListItem, cancelSetTopPluginListItem } from '@/apis/apis'
+
+import {
+  PLUGINS
+  // checkPluginList,
+  // deletePluginListItem,
+  // setTopPluginListItem,
+  // cancelSetTopPluginListItem
+} from '@/apis/apis'
 import OperationDialog from '../components/operationDialog'
 export default {
   name: 'PluginList',
@@ -80,7 +114,7 @@ export default {
           attrs: {
             command: 'delete'
           },
-          fnCallback: (command) => {
+          fnCallback: command => {
             this.handleDelete(_id)
           }
         },
@@ -89,7 +123,7 @@ export default {
           attrs: {
             command: 'edit'
           },
-          fnCallback: (command) => {
+          fnCallback: command => {
             this.handleEdit(_id)
           }
         },
@@ -98,7 +132,7 @@ export default {
           attrs: {
             command: 'check'
           },
-          fnCallback: (command) => {
+          fnCallback: command => {
             this.handleCheck(url)
           }
         },
@@ -107,7 +141,7 @@ export default {
           attrs: {
             command: 'setTop'
           },
-          fnCallback: (command) => {
+          fnCallback: command => {
             isTop ? this.cancelSetTop(_id) : this.handleSetTop(_id)
           }
         }
@@ -115,8 +149,8 @@ export default {
     },
     getList () {
       this.isLoading = true
-      return new Promise((resolve) => {
-        checkPluginList(this.params).then(response => {
+      return new Promise(resolve => {
+        PLUGINS.checkPluginList(this.params).then(response => {
           setTimeout(() => {
             const { result, code } = response.data
             if (code === 0) {
@@ -133,45 +167,39 @@ export default {
       })
     },
     deletePluginListItem (params) {
-      return new Promise((resolve) => {
-        deletePluginListItem(params)
-          .then((response) => {
-            const { code } = response.data
-            if (code === 0) {
-              this.getList()
-                .then(() => {
-                  resolve()
-                })
-            }
-          })
+      return new Promise(resolve => {
+        PLUGINS.deletePluginListItem(params).then(response => {
+          const { code } = response.data
+          if (code === 0) {
+            this.getList().then(() => {
+              resolve()
+            })
+          }
+        })
       })
     },
     setTopPluginListItem (params) {
-      return new Promise((resolve) => {
-        setTopPluginListItem(params)
-          .then((response) => {
-            const { code } = response.data
-            if (code === 0) {
-              this.getList()
-                .then(() => {
-                  resolve()
-                })
-            }
-          })
+      return new Promise(resolve => {
+        PLUGINS.setTopPluginListItem(params).then(response => {
+          const { code } = response.data
+          if (code === 0) {
+            this.getList().then(() => {
+              resolve()
+            })
+          }
+        })
       })
     },
     cancelSetTopPluginListItem (params) {
-      return new Promise((resolve) => {
-        cancelSetTopPluginListItem(params)
-          .then((response) => {
-            const { code } = response.data
-            if (code === 0) {
-              this.getList()
-                .then(() => {
-                  resolve()
-                })
-            }
-          })
+      return new Promise(resolve => {
+        PLUGINS.cancelSetTopPluginListItem(params).then(response => {
+          const { code } = response.data
+          if (code === 0) {
+            this.getList().then(() => {
+              resolve()
+            })
+          }
+        })
       })
     },
     // 分页器 size 改变
@@ -210,14 +238,16 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        this.deletePluginListItem({ id })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
       })
+        .then(() => {
+          this.deletePluginListItem({ id })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
     handleEdit (id) {
       this.id = id
@@ -231,28 +261,32 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        this.setTopPluginListItem({ id })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
       })
+        .then(() => {
+          this.setTopPluginListItem({ id })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
     cancelSetTop (id) {
       this.$confirm('此操作将取消该数据置顶, 是否继续?', '温馨提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        this.cancelSetTopPluginListItem({ id })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
       })
+        .then(() => {
+          this.cancelSetTopPluginListItem({ id })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
     // 关键字搜索
     handleSearch () {
@@ -274,7 +308,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/scss/mixin.scss';
+@import "@/assets/styles/scss/mixin.scss";
 .plugin-list-wrapper {
   width: 100%;
   height: 100%;
@@ -289,7 +323,7 @@ export default {
     width: 98px;
   }
   /deep/tr.is-set-top {
-    @include gradient(rgba(0,0,0,.2), #fff);
+    @include gradient(rgba(0, 0, 0, 0.2), #fff);
   }
 }
 </style>

@@ -31,7 +31,7 @@
 
 <script>
 import REGEXP from '@/assets/js/contants/regexp'
-import { login } from '@/apis/apis'
+import { USER } from '@/apis/apis'
 import { mapMutations } from 'vuex'
 export default {
   name: 'login',
@@ -132,7 +132,7 @@ export default {
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          login(this.model)
+          USER.login(this.model)
             .then((res) => {
               const { code, result } = res.data
               this.SETUSERINFO(result)

@@ -4,8 +4,8 @@
     :dialogClose="dialogClose"
     :visible="visible"
     :title="dialogTitle"
-    :showFooter='true'
-    @open='handleOpen'
+    :showFooter="true"
+    @open="handleOpen"
   >
     <template v-slot:body>
       <el-form
@@ -30,14 +30,21 @@
       </el-form>
     </template>
     <template v-slot:footer class="form-footer">
-      <el-button type="info" size='small' @click='dialogClose'>取 消</el-button>
-      <el-button type="primary" size='small' @click='submitForm'>保 存</el-button>
+      <el-button type="info" size="small" @click="dialogClose">取 消</el-button>
+      <el-button type="primary" size="small" @click="submitForm"
+        >保 存</el-button
+      >
     </template>
   </t-dialog>
 </template>
 
 <script>
-import { createPluginListItem, checkPluginListItem, updatePluginListItem } from '@/apis/apis'
+import {
+  PLUGINS
+  // createPluginListItem,
+  // checkPluginListItem,
+  // updatePluginListItem
+} from '@/apis/apis'
 export default {
   name: 'OperationDialog',
   components: {},
@@ -78,45 +85,41 @@ export default {
         desc: '',
         url: ''
       }
-      this.id &&
-      this.checkPluginListItem()
+      this.id && this.checkPluginListItem()
     },
     // 新增模式下，创建单条信息
     createPluginListItem () {
-      return new Promise((resolve) => {
-        createPluginListItem(this.model)
-          .then((response) => {
-            const { code } = response.data
-            if (code === 0) {
-              resolve()
-            }
-          })
+      return new Promise(resolve => {
+        PLUGINS.createPluginListItem(this.model).then(response => {
+          const { code } = response.data
+          if (code === 0) {
+            resolve()
+          }
+        })
       })
     },
     // 编辑模式下，查看单条数据信息
     checkPluginListItem () {
-      return new Promise((resolve) => {
-        checkPluginListItem({ id: this.id })
-          .then((response) => {
-            const { code, result } = response.data
-            if (code === 0) {
-              this.model = result
-              resolve()
-            }
-          })
+      return new Promise(resolve => {
+        PLUGINS.checkPluginListItem({ id: this.id }).then(response => {
+          const { code, result } = response.data
+          if (code === 0) {
+            this.model = result
+            resolve()
+          }
+        })
       })
     },
     // 编辑模式下，更新单条数据信息
     updatePluginListItem () {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         const params = Object.assign(this.model, { id: this.id })
-        updatePluginListItem(params)
-          .then((response) => {
-            const { code } = response.data
-            if (code === 0) {
-              resolve()
-            }
-          })
+        PLUGINS.updatePluginListItem(params).then(response => {
+          const { code } = response.data
+          if (code === 0) {
+            resolve()
+          }
+        })
       })
     },
     // 提交新增或编辑后的数据
@@ -125,14 +128,12 @@ export default {
         this.$refs.createPluginItem.validate(valid => {
           if (valid) {
             this.id
-              ? this.updatePluginListItem()
-                .then(() => {
-                  this.$emit('dialogClose', true)
-                })
-              : this.createPluginListItem()
-                .then(() => {
-                  this.$emit('dialogClose', true)
-                })
+              ? this.updatePluginListItem().then(() => {
+                this.$emit('dialogClose', true)
+              })
+              : this.createPluginListItem().then(() => {
+                this.$emit('dialogClose', true)
+              })
           } else {
             console.log('error submit!!')
             return false
@@ -156,6 +157,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

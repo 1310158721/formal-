@@ -37,7 +37,7 @@
       />
     </el-form-item>
     <el-form-item label-width="0px" class="button-wrapper">
-      <el-button v-t-throttle='submitOptions' type="primary">
+      <el-button v-t-throttle="submitOptions" type="primary">
         {{ id ? "修改文章" : "创建文章" }}
       </el-button>
     </el-form-item>
@@ -45,11 +45,7 @@
 </template>
 
 <script>
-import {
-  createArticle,
-  checkArticleListItem,
-  updateArticleListItem
-} from '@/apis/apis'
+import { ARTICLE } from '@/apis/apis'
 import { mapMutations } from 'vuex'
 export default {
   name: 'Article',
@@ -110,7 +106,7 @@ export default {
         const params = Object.assign({}, this.model, {
           tags: this.model.tags.join(',')
         })
-        createArticle(params).then(response => {
+        ARTICLE.createArticle(params).then(response => {
           setTimeout(() => {
             const { code, msg } = response.data
             if (code === 0) {
@@ -126,20 +122,19 @@ export default {
       this.isLoaded = false
       this.SETGLOBALMASK(true)
       return new Promise(resolve => {
-        checkArticleListItem({ id })
-          .then(response => {
-            setTimeout(() => {
-              const { result, code } = response.data
-              if (code === 0) {
-                this.SETGLOBALMASK(false)
-                this.isLoaded = true
-                const model = Object.assign({}, result, {
-                  tags: result.tags.split(',')
-                })
-                this.model = model
-              }
-            }, this.$store.state.apiDelay)
-          })
+        ARTICLE.checkArticleListItem({ id }).then(response => {
+          setTimeout(() => {
+            const { result, code } = response.data
+            if (code === 0) {
+              this.SETGLOBALMASK(false)
+              this.isLoaded = true
+              const model = Object.assign({}, result, {
+                tags: result.tags.split(',')
+              })
+              this.model = model
+            }
+          }, this.$store.state.apiDelay)
+        })
       })
     },
     updateArticleListItem () {
@@ -148,7 +143,7 @@ export default {
           tags: this.model.tags.join(','),
           id: this.id
         })
-        updateArticleListItem(params).then(response => {
+        ARTICLE.updateArticleListItem(params).then(response => {
           setTimeout(() => {
             const { code, msg } = response.data
             if (code === 0) {
@@ -198,7 +193,7 @@ export default {
     /deep/.el-form-item__content {
       height: 100%;
       .t-mavon-editor-wrapper {
-        height: 100%!important;
+        height: 100% !important;
       }
     }
   }

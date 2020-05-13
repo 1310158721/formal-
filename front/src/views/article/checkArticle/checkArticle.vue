@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { checkArticleListItem } from '@/apis/apis'
+import { ARTICLE } from '@/apis/apis'
 export default {
   name: 'checkArticle',
   components: {},
@@ -20,7 +20,7 @@ export default {
   methods: {
     checkArticleListItem (id) {
       return new Promise(resolve => {
-        checkArticleListItem({ id }).then(response => {
+        ARTICLE.checkArticleListItem({ id }).then(response => {
           const { result, code } = response.data
           if (code === 0) {
             const { markdownRender } = result
