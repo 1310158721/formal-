@@ -13,7 +13,7 @@
       <el-button class="mgr-24" type="primary" size="small" @click='handleCreateArticle'>
         新增
       </el-button>
-      <t-select class="select-w-120" v-if='tagsEnum.length' :data='tagsEnum' v-model='params.tag' @change='handleTagChange' />
+      <t-select class="select-w-120" v-if='tagsEnum.length' :data='tagsEnum' v-model='params.tag' filterable @change='handleTagChange' />
       <span class="space"></span>
       <el-input class="input-w-300" size="small" type='text' v-model='params.keyword' @keydown.enter.native="handleSearch" @input.native='handleInput'>
         <el-button size="small" type="primary" slot="append" icon="el-icon-search" @click='handleSearch'></el-button>

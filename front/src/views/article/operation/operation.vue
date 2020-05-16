@@ -116,6 +116,9 @@ export default {
             if (code === 0) {
               this.SETGLOBALMASK(false)
               this.$message.success(msg)
+              this.$router.push({
+                path: '/article-list'
+              })
               resolve()
             }
           }, this.$store.state.apiDelay)
@@ -143,6 +146,7 @@ export default {
       })
     },
     updateArticleListItem () {
+      this.SETGLOBALMASK(true)
       return new Promise(resolve => {
         const params = Object.assign({}, this.model, {
           tags: this.model.tags.join(','),
@@ -152,7 +156,11 @@ export default {
           setTimeout(() => {
             const { code, msg } = response.data
             if (code === 0) {
+              this.SETGLOBALMASK(false)
               this.$message.success(msg)
+              this.$router.push({
+                path: '/article-list'
+              })
               resolve()
             }
           }, this.$store.state.apiDelay)
