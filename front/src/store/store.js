@@ -5,30 +5,18 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    // 模拟接口延迟 500 ms
-    apiDelay: 500,
-    // 用户信息
-    userInfo: null,
-    // 菜单导航列表
-    menuList: [],
-    // 开启 logo
-    isOpenLogo: true,
-    // 是否固定 Header
-    isFixedBaseLayoutHeader: true,
-    // 是否显示面包屑 Breadcrumb
-    isShowBaseLayoutBreadcrumb: true,
-    // 是否开启 tabRoutes
-    isOpenBaseLayoutTabRoutes: true,
-    // 是否开启全局化
-    isOpenFullScreen: true,
-    // 是否开启多语言功能
-    isOpenMultilingual: true,
-    // 是否开启菜单搜索功能
-    isOpenRoutesSearch: true,
-    // 是否显示全局组件 baseLayoutDrawer
-    isShowGlobalBaseLayout: false,
-    // 全局 mask
-    globalMask: false
+    apiDelay: 500, // 模拟接口延迟 500 ms
+    userInfo: null, // 用户信息
+    menuList: [], // 菜单导航列表
+    isOpenLogo: true, // 开启 logo
+    isFixedBaseLayoutHeader: true, // 是否固定 Header
+    isShowBaseLayoutBreadcrumb: true, // 是否显示面包屑 Breadcrumb
+    isOpenBaseLayoutTabRoutes: true, // 是否开启 tabRoutes
+    isOpenFullScreen: true, // 是否开启全局化
+    isOpenMultilingual: true, // 是否开启多语言功能
+    isOpenRoutesSearch: true, // 是否开启菜单搜索功能
+    isShowGlobalBaseLayout: false, // 是否显示全局组件 baseLayoutDrawer
+    globalMask: false // 全局 mask
   },
   getters: {},
   mutations: {

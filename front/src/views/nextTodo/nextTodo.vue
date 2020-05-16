@@ -11,13 +11,14 @@
   >
     <template #filter>
       <el-button class="mgr-24" type="primary" size="small" @click="createItem">
-        新增
+        {{ $t('nextTodo.新增') }}
       </el-button>
       <span class="space"></span>
       <el-input
         class="input-w-300"
         size="small"
         type="text"
+        :placeholder="$t('nextTodo.searchPlaceholder')"
         v-model="params.keyword"
         @keydown.enter.native="handleSearch"
       >
@@ -31,18 +32,18 @@
       </el-input>
     </template>
     <template #table>
-      <el-table-column label="序号" align="center" width="60">
+      <el-table-column :label="$t('nextTodo.序号')" align="center" width="60">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="desc" label="简述" align="center" />
-      <el-table-column label="创建时间" align="center" width="250">
+      <el-table-column prop="desc" :label="$t('nextTodo.简述')" align="center" />
+      <el-table-column :label="$t('nextTodo.创建时间')" align="center" width="250">
         <template slot-scope="scope">
           <span>{{ scope.row.createdTime | timeFormat }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="120">
+      <el-table-column :label="$t('nextTodo.操作')" align="center" width="120">
         <template slot-scope="scope">
           <t-dropdown
             trigger="click"
@@ -311,7 +312,7 @@ export default {
     dropdownItemEnum ({ _id, url, isTop }) {
       return [
         {
-          label: '删除',
+          label: this.$t('nextTodo.删除'),
           attrs: {
             command: 'delete'
           },
@@ -320,7 +321,7 @@ export default {
           }
         },
         {
-          label: '编辑',
+          label: this.$t('nextTodo.编辑'),
           attrs: {
             command: 'edit'
           },
@@ -329,7 +330,7 @@ export default {
           }
         },
         {
-          label: isTop ? '取消置顶' : '置顶',
+          label: isTop ? this.$t('nextTodo.取消置顶') : this.$t('nextTodo.置顶'),
           attrs: {
             command: 'setTop'
           },

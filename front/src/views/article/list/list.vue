@@ -23,6 +23,7 @@
         v-if="tagsEnum.length"
         :data="tagsEnum"
         v-model="params.tag"
+        clearable
         @change="handleTagChange"
       />
       <span class="space"></span>

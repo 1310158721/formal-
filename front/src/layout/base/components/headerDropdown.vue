@@ -1,7 +1,8 @@
 <template>
   <t-dropdown class="header-dropdown mgr-12" :dropdownItemEnum='dropdownItemEnum' trigger='click'>
     <template #link>
-      <el-avatar v-if='avatar' :size="50" :src="avatar" />
+      <!-- <el-avatar v-if='avatar' :size="50" :src="avatar" /> -->
+      <span class="avatar" v-if='avatar' :style='{ backgroundImage: `url(${avatar})` }'></span>
     </template>
   </t-dropdown>
 </template>
@@ -69,8 +70,15 @@ export default {
 .header-dropdown {
   width: 50px;
   height: 50px;
-  .el-avatar {
-    cursor: pointer
+  .avatar {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    cursor: pointer;
   }
 }
 </style>

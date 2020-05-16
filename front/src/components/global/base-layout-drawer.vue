@@ -75,14 +75,14 @@ export default {
             this.SETOPENFULLSCREEN(val)
           }
         },
-        // {
-        //   label: '开启多语言',
-        //   model: this.isOpenMultilingual,
-        //   change: val => {
-        //     this.isOpenMultilingual = val
-        //     this.SETOPENMULTILINGUAL(val)
-        //   }
-        // },
+        {
+          label: '开启多语言',
+          model: this.isOpenMultilingual,
+          change: val => {
+            this.isOpenMultilingual = val
+            this.SETOPENMULTILINGUAL(val)
+          }
+        },
         {
           label: '开启路由搜索',
           model: this.isOpenRoutesSearch,

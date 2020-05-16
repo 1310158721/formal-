@@ -10,6 +10,7 @@
       :breadcrumbEnum="breadcrumbEnum"
     />
     <span class="space" />
+    <Language v-if='$store.state.isOpenMultilingual' />
     <Fullscreen v-if='$store.state.isOpenFullScreen' />
     <RouteSearch v-if='$store.state.isOpenRoutesSearch' />
     <HeaderDropdown />
@@ -21,6 +22,7 @@ import TBreadcrumb from './breadcrumb'
 import HeaderDropdown from './headerDropdown'
 import RouteSearch from './routeSearch'
 import Fullscreen from './fullscreen'
+import Language from './language'
 import EventBus from '@/assets/js/utils/event'
 export default {
   name: 't-header',
@@ -28,7 +30,8 @@ export default {
     TBreadcrumb,
     HeaderDropdown,
     RouteSearch,
-    Fullscreen
+    Fullscreen,
+    Language
   },
   props: {},
   data () {

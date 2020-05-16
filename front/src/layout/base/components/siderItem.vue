@@ -3,8 +3,7 @@
   <div class="menu-item-wrapper">
     <el-menu-item v-if="!item.children || !item.children.length" :index="item.path">
       <i class="icon iconfont" :class="item.icon" />
-      <!-- <span slot="title">{{ $t('menuList.' + item.title) }}</span> -->
-      <span slot="title">{{ item.title }}</span>
+      <span slot="title">{{ $t('menuList.' + item.title) }}</span>
     </el-menu-item>
     <el-submenu
       v-else
@@ -14,8 +13,7 @@
     >
       <template slot="title">
         <i class="icon iconfont" :class="item.icon" />
-        <!-- <span slot="title" class="title">{{ $t('menuList.' + item.title) }}</span> -->
-        <span slot="title" class="title">{{ item.title }}</span>
+        <span slot="title" class="title">{{ $t('menuList.' + item.title) }}</span>
       </template>
       <template v-for="(_item, _index) in item.children">
         <!-- 递归调用自身 -->
@@ -80,6 +78,9 @@ export default {
 // 第一次遍历渲染出来的元素
 /deep/.el-menu-item,
 /deep/.el-submenu__title {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
   &:hover {
     background-color: #001528 !important;
   }

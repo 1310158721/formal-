@@ -9,8 +9,7 @@
         :key="i.path"
         :to="canLink(i)"
       >
-        <!-- {{ $t('menuList.' + i.title) }} -->
-        {{ i.title }}
+        {{ $t('menuList.' + i.title) }}
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>

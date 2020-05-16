@@ -17,8 +17,7 @@
         size="mini"
         type="primary"
       >
-        <!-- {{ $t("menuList." + i.title) }} -->
-        {{ i.title }}
+        {{ $t("menuList." + i.title) }}
         <i
           class="el-icon-circle-close"
           v-if="index > 0"
