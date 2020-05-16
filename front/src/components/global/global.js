@@ -6,10 +6,12 @@ import Vue from 'vue'
 // 列表
 import TGlobalMask from './mask'
 import TMavonEditor from './mavon-editor'
+import TGloblaBaseLayoutDrawer from './base-layout-drawer'
 
 const components = [
   TGlobalMask,
-  TMavonEditor
+  TMavonEditor,
+  TGloblaBaseLayoutDrawer
 ]
 
 for (const i in components) {

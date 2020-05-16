@@ -12,6 +12,7 @@ import TSwitch from './t-switch'
 import TInputTags from './t-input-tags'
 import TDropdown from './t-dropdown'
 import TDialog from './t-dialog'
+import TDrawer from './t-drawer'
 
 const components = [
   TTable,
@@ -21,7 +22,8 @@ const components = [
   TSwitch,
   TInputTags,
   TDropdown,
-  TDialog
+  TDialog,
+  TDrawer
 ]
 
 for (const i in components) {

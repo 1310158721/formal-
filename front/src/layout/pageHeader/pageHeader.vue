@@ -30,11 +30,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/scss/mixin.scss';
 .page-header-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  @include gradient(rgba(0,0,0,.2), #fff);
   .header-wrapper {
     height: 50px;
     box-sizing: border-box;

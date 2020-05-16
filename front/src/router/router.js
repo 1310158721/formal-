@@ -75,13 +75,14 @@ router.beforeEach((to, from, next) => {
     store.commit('SETMENULIST', [])
   } else if (!store.state.menuList.length) {
     // 这两个接口应合并为一个同步请求
-    USER.checkUser({ token }).then((res) => {
-      const { result, code } = res.data
-      if (code === 0) {
-        store.commit('SETUSERINFO', result)
-      }
-    })
-    MENULIST.checkUserMenu()
+    USER.checkUser({ token })
+      .then((res) => {
+        const { result, code } = res.data
+        if (code === 0) {
+          store.commit('SETUSERINFO', result)
+        }
+      })
+    MENULIST.getUserMenuList()
       .then((res) => {
         const { result, code } = res.data
         if (code === 0) {

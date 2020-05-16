@@ -12,7 +12,7 @@
       <el-button class="mgr-24" type="primary" size="small" @click='handleCreateUser' v-t-permission="'USERSLISTADD'">
         新增
       </el-button>
-      <t-select class="select-w-120" :data='roleEnum' v-model='params.role' @change='selectHandleChange' />
+      <t-select class="select-w-120" :data='roleEnum' v-model='params.role' @change='selectHandleChange' clearable />
       <span class="space"></span>
       <el-input class="input-w-300" size="small" type='text' v-model='params.keyword' @keydown.enter.native="handleSearch" @input.native='handleInput'>
         <el-button size="small" type="primary" slot="append" icon="el-icon-search" @click='handleSearch'></el-button>
@@ -65,7 +65,7 @@ export default {
     getList () {
       this.isLoading = true
       return new Promise((resolve) => {
-        USER.checkAllUsers(this.params).then(response => {
+        USER.getUsers(this.params).then(response => {
           setTimeout(() => {
             const { result, code } = response.data
             if (code === 0) {

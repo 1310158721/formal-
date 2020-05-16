@@ -99,8 +99,8 @@ class ARTICLE {
   /**
    * 根据 token id 查询单条文章列表
    */
-  checkArticleListItem () {
-    this.app.get('/api/checkArticleListItem', (req, res, next) => {
+  getArticle () {
+    this.app.get('/api/getArticle', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -126,8 +126,8 @@ class ARTICLE {
   /**
    * 根据 token id 修改单条文章列表
    */
-  updateArticleListItem() {
-    this.app.post('/api/updateArticleListItem', (req, res, next) => {
+  updateArticle() {
+    this.app.post('/api/updateArticle', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -173,8 +173,8 @@ class ARTICLE {
   /**
    * 根据 token 获取文章列表
    */
-  checkArticleList() {
-    this.app.get('/api/checkArticleList', (req, res, next) => {
+  getArticleList() {
+    this.app.get('/api/getArticleList', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -238,8 +238,8 @@ class ARTICLE {
   }
 
   // 置顶列表 item
-  setTopArticleListItem () {
-    this.app.post('/api/setTopArticleListItem', (req, res, next) => {
+  setArticleItemTop () {
+    this.app.post('/api/setArticleItemTop', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -263,8 +263,8 @@ class ARTICLE {
   }
 
   // 取消置顶列表 item
-  cancelSetTopArticleListItem () {
-    this.app.post('/api/cancelSetTopArticleListItem', (req, res, next) => {
+  cancelArticleItemTop () {
+    this.app.post('/api/cancelArticleItemTop', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -404,12 +404,12 @@ class ARTICLE {
 
   openApi() {
     this.createArticle()
-    this.checkArticleList()
+    this.getArticleList()
     this.deleteArticle()
-    this.checkArticleListItem()
-    this.updateArticleListItem()
-    this.setTopArticleListItem()
-    this.cancelSetTopArticleListItem()
+    this.getArticle()
+    this.updateArticle()
+    this.setArticleItemTop()
+    this.cancelArticleItemTop()
     this.getArticleTagsEnum()
     this.deleteDbAllCollections()
   }

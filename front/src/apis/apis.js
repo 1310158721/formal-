@@ -52,27 +52,27 @@ class User {
   }
 
   // 用户列表
-  async checkAllUsers (params) {
+  async getUsers (params) {
     return await isMock
-      ? axios.get(formatUrl('user', 'checkAllUsers'), { params })
-      : axios.get('/checkAllUsers', { params })
+      ? axios.get(formatUrl('user', 'getUsers'), { params })
+      : axios.get('/getUsers', { params })
   }
 }
 
 // 菜单相关
 class Menulist {
   // 用户权限菜单
-  async checkUserMenu (params) {
+  async getUserMenuList (params) {
     return await isMock
-      ? axios.get(formatUrl('menulist', 'checkUserMenu'), { params })
-      : axios.get('/checkUserMenu', { params })
+      ? axios.get(formatUrl('menulist', 'getUserMenuList'), { params })
+      : axios.get('/getUserMenuList', { params })
   }
 
   // 数据库已有菜单，用于用户权限编辑
-  async checkAllMenu () {
+  async getMenuList () {
     return await isMock
-      ? axios.get(formatUrl('menulist', 'checkAllMenu'))
-      : axios.get('/checkAllMenu')
+      ? axios.get(formatUrl('menulist', 'getMenuList'))
+      : axios.get('/getMenuList')
   }
 }
 
@@ -82,49 +82,49 @@ class NextTodo {
   async nextTodoList (params) {
     return await isMock
       ? axios.get(formatUrl('nextTodo', 'list'), { params })
-      : axios.get('/checkUserNextList', { params })
+      : axios.get('/getNextList', { params })
   }
 
   // 新增待办事项
   async createNextTodoList (params) {
     return await isMock
       ? axios.get(formatUrl('nextTodo', 'create'), { params })
-      : axios.post('/createUserNextTodoItem', params)
+      : axios.post('/createNextItem', params)
   }
 
   // 删除待办事项
   async asyncdeleteNextTodoList (params) {
     return await isMock
       ? axios.get(formatUrl('nextTodo', 'delete'), { params })
-      : axios.get('/deleteUserNextTodoItem', { params })
+      : axios.get('/deleteNextItem', { params })
   }
 
   // 查看待办事项
   async checkNextTodoList (params) {
     return await isMock
       ? axios.get(formatUrl('nextTodo', 'check'), { params })
-      : axios.post('/checkUserNextTodoItem', params)
+      : axios.post('/getNextItem', params)
   }
 
   // 更新待办事项
   async updateNextTodoList (params) {
     return await isMock
       ? axios.get(formatUrl('nextTodo', 'update'), { params })
-      : axios.post('/updateUserNextTodoItem', params)
+      : axios.post('/updateNextItem', params)
   }
 
   // 置顶待办事项
-  async setNextTodoListItemTop (params) {
+  async setNextItemTop (params) {
     return await isMock
       ? axios.get(formatUrl('nextTodo', 'top'), { params })
-      : axios.post('/setNextTodoListItemTop', params)
+      : axios.post('/setNextItemTop', params)
   }
 
   // 取消置顶待办事项
-  async cancelNextTodoListItemTop (params) {
+  async cancelNextItemTop (params) {
     return await isMock
       ? axios.get(formatUrl('nextTodo', 'top'), { params })
-      : axios.post('/cancelNextTodoListItemTop', params)
+      : axios.post('/cancelNextItemTop', params)
   }
 }
 
@@ -138,10 +138,10 @@ class Article {
   }
 
   // 获取文章列表
-  async checkArticleList (params) {
+  async getArticleList (params) {
     return await isMock
       ? axios.get(formatUrl('article', 'list'), { params })
-      : axios.get('/checkArticleList', { params })
+      : axios.get('/getArticleList', { params })
   }
 
   // 删除文章列表
@@ -152,31 +152,31 @@ class Article {
   }
 
   // 查询单条文章数据
-  async checkArticleListItem (params) {
+  async getArticle (params) {
     return await isMock
-      ? axios.get(formatUrl('article', 'checkArticleListItem'), { params })
-      : axios.get('/checkArticleListItem', { params })
+      ? axios.get(formatUrl('article', 'getArticle'), { params })
+      : axios.get('/getArticle', { params })
   }
 
   // 更新单条文章数据
-  async updateArticleListItem (params) {
+  async updateArticle (params) {
     return await isMock
       ? axios.get(formatUrl('article', 'update'), { params })
-      : axios.post('/updateArticleListItem', params)
+      : axios.post('/updateArticle', params)
   }
 
   // 置顶单条文章列表信息
-  async setTopArticleListItem (params) {
+  async setArticleItemTop (params) {
     return await isMock
       ? axios.get(formatUrl('article', 'top'), { params })
-      : axios.post('/setTopArticleListItem', params)
+      : axios.post('/setArticleItemTop', params)
   }
 
   // 取消置顶单条文章列表信息
-  async cancelSetTopArticleListItem (params) {
+  async cancelArticleItemTop (params) {
     return await isMock
       ? axios.get(formatUrl('article', 'top'), { params })
-      : axios.post('/cancelSetTopArticleListItem', params)
+      : axios.post('/cancelArticleItemTop', params)
   }
 
   // 获取文章所有 tags 枚举
@@ -190,52 +190,52 @@ class Article {
 // 插件列表相关接口
 class Plugins {
   // 查看插件列表
-  async checkPluginList (params) {
+  async getPluginList (params) {
     return await isMock
       ? axios.get(formatUrl('plugins', 'list'), { params })
-      : axios.get('/checkPluginList', { params })
+      : axios.get('/getPluginList', { params })
   }
 
   // 新增插件列表信息
-  async createPluginListItem (params) {
+  async createPluginItem (params) {
     return await isMock
       ? axios.get(formatUrl('plugins', 'create'), { params })
-      : axios.post('/createPluginListItem', params)
+      : axios.post('/createPluginItem', params)
   }
 
   // 删除插件列表信息
-  async deletePluginListItem (params) {
+  async deletePluginItem (params) {
     return await isMock
       ? axios.get(formatUrl('plugins', 'delete'), { params })
-      : axios.post('/deletePluginListItem', params)
+      : axios.post('/deletePluginItem', params)
   }
 
   // 查看单条插件列表信息
-  async checkPluginListItem (params) {
+  async getPluginItem (params) {
     return await isMock
       ? axios.get(formatUrl('plugins', 'check'), { params })
-      : axios.get('/checkPluginListItem', { params })
+      : axios.get('/getPluginItem', { params })
   }
 
   // 更新单条插件列表信息
-  async updatePluginListItem (params) {
+  async updatePluginItem (params) {
     return await isMock
       ? axios.get(formatUrl('plugins', 'update'), { params })
-      : axios.post('/updatePluginListItem', params)
+      : axios.post('/updatePluginItem', params)
   }
 
   // 置顶单条插件列表信息
-  async setTopPluginListItem (params) {
+  async setPluginItemTop (params) {
     return await isMock
       ? axios.get(formatUrl('plugins', 'top'), { params })
-      : axios.post('/setTopPluginListItem', params)
+      : axios.post('/setPluginItemTop', params)
   }
 
   // 取消置顶单条插件列表信息
-  async cancelSetTopPluginListItem (params) {
+  async cancelPluginItemTop (params) {
     return await isMock
       ? axios.get(formatUrl('plugins', 'top'), { params })
-      : axios.post('/cancelSetTopPluginListItem', params)
+      : axios.post('/cancelPluginItemTop', params)
   }
 }
 

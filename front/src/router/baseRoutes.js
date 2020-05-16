@@ -56,7 +56,7 @@ const baseRoutes = [
       // 待办事项
       {
         title: '待办事项',
-        icon: 'icon-ziyuan',
+        icon: 'icon-daibanshixiang',
         path: '/next-to-do',
         name: 'next-to-do',
         meta: {
@@ -68,7 +68,7 @@ const baseRoutes = [
       // 文章
       {
         title: '文章',
-        icon: 'icon-ziyuan',
+        icon: 'icon-wenzhang',
         path: '/article',
         name: 'article',
         meta: {
@@ -81,7 +81,7 @@ const baseRoutes = [
       },
       {
         title: '文章操作',
-        icon: 'icon-ziyuan',
+        icon: 'icon-bianji',
         path: '/article-operation',
         name: 'article-operation',
         meta: {
@@ -91,7 +91,7 @@ const baseRoutes = [
       },
       {
         title: '文章列表',
-        icon: 'icon-ziyuan',
+        icon: 'icon-liebiao',
         path: '/article-list',
         name: 'article-list',
         meta: {
@@ -255,7 +255,7 @@ const baseRoutes = [
       },
       {
         title: '复制粘贴',
-        icon: 'icon-fuzhi',
+        icon: 'icon-fuzhi1',
         path: '/clipboard',
         name: 'clipboard',
         meta: {
@@ -265,7 +265,7 @@ const baseRoutes = [
       },
       {
         title: '防抖',
-        icon: 'icon-fuzhi',
+        icon: 'icon-xingneng',
         path: '/debounce',
         name: 'debounce',
         meta: {
@@ -275,7 +275,7 @@ const baseRoutes = [
       },
       {
         title: '节流',
-        icon: 'icon-fuzhi',
+        icon: 'icon-xingneng',
         path: '/throttle',
         name: 'throttle',
         meta: {
@@ -286,7 +286,7 @@ const baseRoutes = [
       // 常用插件
       {
         title: '常用插件',
-        icon: 'icon--luyouguanli',
+        icon: 'icon-chajiancanshupeizhi',
         path: '/plugins',
         name: 'plugins',
         meta: {
@@ -299,7 +299,7 @@ const baseRoutes = [
       },
       {
         title: '插件列表',
-        icon: 'icon--luyouguanli',
+        icon: 'icon-liebiao',
         path: '/plugin-list',
         name: 'plugin-list',
         meta: {
@@ -368,7 +368,7 @@ const baseRoutes = [
       // 权限
       {
         title: '权限',
-        icon: 'icon--luyouguanli',
+        icon: 'icon-quanxian',
         path: '/permission',
         name: 'permission',
         meta: {
@@ -382,7 +382,7 @@ const baseRoutes = [
       // 权限 -> 用户列表
       {
         title: '用户列表',
-        icon: 'icon--luyouguanli',
+        icon: 'icon-liebiao',
         path: '/permission-list',
         name: 'permission-list',
         meta: {

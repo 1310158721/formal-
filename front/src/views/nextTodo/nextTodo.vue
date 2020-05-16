@@ -236,7 +236,7 @@ export default {
      */
     setListItemTop (params) {
       return new Promise(resolve => {
-        NEXTTODO.setNextTodoListItemTop(params)
+        NEXTTODO.setNextItemTop(params)
           .then(response => {
             const { code } = response.data
             if (code === 0) {
@@ -255,7 +255,7 @@ export default {
      */
     cancelListItemTop (params) {
       return new Promise(resolve => {
-        NEXTTODO.cancelNextTodoListItemTop(params)
+        NEXTTODO.cancelNextItemTop(params)
           .then(response => {
             const { code } = response.data
             if (code === 0) {

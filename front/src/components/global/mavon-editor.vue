@@ -94,12 +94,13 @@ export default {
         const formData = new FormData()
         formData.append('file', file)
         formData.append('directory', this.directory)
-        axios.post(this.action, formData, {
-          headers: {
-            'Content-type': 'multipart/form-data'
-          }
-        })
-          .then((res) => {
+        axios
+          .post(this.action, formData, {
+            headers: {
+              'Content-type': 'multipart/form-data'
+            }
+          })
+          .then(res => {
             const { url } = res.data.result
             this.$refs.mavonEditor.$img2Url(pos, url)
             this.SETGLOBALMASK(false)
@@ -131,11 +132,18 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
-}
-/deep/.v-show-content {
-  img {
-    min-width: 200px;
-    max-width: 400px;
+  /deep/.v-show-content {
+    img {
+      min-width: 200px;
+      max-width: 400px;
+      margin: 0;
+    }
   }
+}
+</style>
+
+<style>
+.v-note-help-wrapper {
+  overflow: auto;
 }
 </style>

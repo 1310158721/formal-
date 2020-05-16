@@ -112,17 +112,20 @@ export default {
             if (code === 0) {
               this.SETGLOBALMASK(false)
               this.$message.success(msg)
+              this.$router.push({
+                path: '/article-list'
+              })
               resolve()
             }
           }, this.$store.state.apiDelay)
         })
       })
     },
-    checkArticleListItem (id) {
+    getArticle (id) {
       this.isLoaded = false
       this.SETGLOBALMASK(true)
       return new Promise(resolve => {
-        ARTICLE.checkArticleListItem({ id }).then(response => {
+        ARTICLE.getArticle({ id }).then(response => {
           setTimeout(() => {
             const { result, code } = response.data
             if (code === 0) {
@@ -137,17 +140,22 @@ export default {
         })
       })
     },
-    updateArticleListItem () {
+    updateArticle () {
+      this.SETGLOBALMASK(true)
       return new Promise(resolve => {
         const params = Object.assign({}, this.model, {
           tags: this.model.tags.join(','),
           id: this.id
         })
-        ARTICLE.updateArticleListItem(params).then(response => {
+        ARTICLE.updateArticle(params).then(response => {
           setTimeout(() => {
             const { code, msg } = response.data
             if (code === 0) {
+              this.SETGLOBALMASK(false)
               this.$message.success(msg)
+              this.$router.push({
+                path: '/article-list'
+              })
               resolve()
             }
           }, this.$store.state.apiDelay)
@@ -161,7 +169,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.id ? this.updateArticleListItem() : this.createArticle()
+          this.id ? this.updateArticle() : this.createArticle()
         } else {
           console.log('error submit!!')
           return false
@@ -173,7 +181,7 @@ export default {
     const { id } = this.$route.query
     if (id) {
       this.id = id
-      this.checkArticleListItem(id)
+      this.getArticle(id)
     }
   },
   mounted () {},

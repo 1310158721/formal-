@@ -1,5 +1,6 @@
 module.exports = {
   publicPath: './',
+  outputDir: 'web',
   devServer: {
     before: function (app, server, compiler) {
       /* mock 接口 */

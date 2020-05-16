@@ -79,10 +79,10 @@
 
 import {
   PLUGINS
-  // checkPluginList,
-  // deletePluginListItem,
-  // setTopPluginListItem,
-  // cancelSetTopPluginListItem
+  // getPluginList,
+  // deletePluginItem,
+  // setPluginItemTop,
+  // cancelPluginItemTop
 } from '@/apis/apis'
 import OperationDialog from '../components/operationDialog'
 export default {
@@ -150,7 +150,7 @@ export default {
     getList () {
       this.isLoading = true
       return new Promise(resolve => {
-        PLUGINS.checkPluginList(this.params).then(response => {
+        PLUGINS.getPluginList(this.params).then(response => {
           setTimeout(() => {
             const { result, code } = response.data
             if (code === 0) {
@@ -166,9 +166,9 @@ export default {
         })
       })
     },
-    deletePluginListItem (params) {
+    deletePluginItem (params) {
       return new Promise(resolve => {
-        PLUGINS.deletePluginListItem(params).then(response => {
+        PLUGINS.deletePluginItem(params).then(response => {
           const { code } = response.data
           if (code === 0) {
             this.getList().then(() => {
@@ -178,9 +178,9 @@ export default {
         })
       })
     },
-    setTopPluginListItem (params) {
+    setPluginItemTop (params) {
       return new Promise(resolve => {
-        PLUGINS.setTopPluginListItem(params).then(response => {
+        PLUGINS.setPluginItemTop(params).then(response => {
           const { code } = response.data
           if (code === 0) {
             this.getList().then(() => {
@@ -190,9 +190,9 @@ export default {
         })
       })
     },
-    cancelSetTopPluginListItem (params) {
+    cancelPluginItemTop (params) {
       return new Promise(resolve => {
-        PLUGINS.cancelSetTopPluginListItem(params).then(response => {
+        PLUGINS.cancelPluginItemTop(params).then(response => {
           const { code } = response.data
           if (code === 0) {
             this.getList().then(() => {
@@ -240,7 +240,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          this.deletePluginListItem({ id })
+          this.deletePluginItem({ id })
         })
         .catch(() => {
           this.$message({
@@ -263,7 +263,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          this.setTopPluginListItem({ id })
+          this.setPluginItemTop({ id })
         })
         .catch(() => {
           this.$message({
@@ -279,7 +279,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          this.cancelSetTopPluginListItem({ id })
+          this.cancelPluginItemTop({ id })
         })
         .catch(() => {
           this.$message({

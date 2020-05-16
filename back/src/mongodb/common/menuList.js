@@ -78,8 +78,8 @@ class MENULIST {
    * 查询已有的所有菜单
    * 用于创建用户时，给用户添加权限
    */
-  checkAllMenu () {
-    this.app.get('/api/checkAllMenu', (req, res, next) => {
+  getMenuList () {
+    this.app.get('/api/getMenuList', (req, res, next) => {
       const { token } = req.signedCookies
       $axios.get(`http://127.0.0.1:${global.PORT}/api/checkUser`, { params: { token, inside: true } })
         .then((response) => {
@@ -113,8 +113,8 @@ class MENULIST {
    * 接收一个参数 token / id
    * 用于前端生成导航菜单
    */
-  checkUserMenu () {
-    this.app.get('/api/checkUserMenu', (req, res, next) => {
+  getUserMenuList () {
+    this.app.get('/api/getUserMenuList', (req, res, next) => {
       const { id = '' } = req.query
       const { token } = req.signedCookies
       if (!token && !id) {
@@ -155,8 +155,8 @@ class MENULIST {
 
   // 开启 api
   openApi () {
-    this.checkAllMenu()
-    this.checkUserMenu()
+    this.getMenuList()
+    this.getUserMenuList()
   }
 }
 

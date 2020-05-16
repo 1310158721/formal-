@@ -1,3 +1,10 @@
+<!--
+  存在问题：
+    当修改当前登录用户（自己）的权限时，从操作页面跳转当前页面时会调取两次的用户查询/用户权限菜单接口
+    第一次时因为没有因为 this.$store.state.menuList 被清空了，所以调取这两个接口
+    第二次是第一次的接口调取成功时，需要重定向到当前页面，相当于刷新当前页面
+    暂时没想到方法修改
+-->
 <template>
   <el-form
     class="permission-operation-wrapper"
@@ -12,7 +19,7 @@
     <div class="form-item-wrapper">
       <div class="left flex">
         <el-form-item label="账户" prop="account">
-          <el-input v-model="model.account" />
+          <el-input v-model="model.account" :disabled='mode !== "create"' />
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="model.password" />
@@ -21,7 +28,7 @@
           <el-input v-model="model.name" />
         </el-form-item>
         <el-form-item label="号码" prop="mobile">
-          <el-input v-model="model.mobile" />
+          <el-input maxLength='11' v-model="model.mobile" />
         </el-form-item>
         <el-form-item label="头像" prop="avatar">
           <t-single-upload
@@ -166,7 +173,7 @@ export default {
   },
   methods: {
     // 展示全局 mask 方法
-    ...mapMutations(['SETGLOBALMASK']),
+    ...mapMutations(['SETGLOBALMASK', 'SETUSERINFO', 'SETMENULIST']),
     // 注册用户接口
     registerUser () {
       this.SETGLOBALMASK(true)
@@ -180,6 +187,7 @@ export default {
             if (code === 0) {
               this.SETGLOBALMASK(false)
               this.$message.success(msg)
+              this.$router.back()
               resolve()
             }
           }, this.$store.state.apiDelay)
@@ -196,15 +204,16 @@ export default {
           const { code, msg } = response.data
           if (code === 0) {
             this.SETGLOBALMASK(false)
+            this.clearStoreMenuList()
             this.$message.success(msg)
           }
         }, this.$store.state.apiDelay)
       })
     },
     // 查看所有的导航菜单
-    checkAllMenu () {
+    getMenuList () {
       return new Promise(resolve => {
-        MENULIST.checkAllMenu().then(response => {
+        MENULIST.getMenuList().then(response => {
           const { result, code } = response.data
           if (code === 0) {
             this.treeData = this.formatButtons(result)
@@ -284,6 +293,15 @@ export default {
           return false
         }
       })
+    },
+    // 编辑模式时才会触发
+    clearStoreMenuList () {
+      const loginAccount = this.$store.state.userInfo.account
+      const editAccount = this.model.account
+      if (loginAccount === editAccount) {
+        // this.SETUSERINFO(null)
+        this.SETMENULIST([])
+      }
     }
   },
   created () {
@@ -321,7 +339,7 @@ export default {
       })
     }
     // 获取树形控件数据
-    this.checkAllMenu()
+    this.getMenuList()
   },
   mounted () {},
   watch: {}

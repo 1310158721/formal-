@@ -19,6 +19,7 @@ class USER {
       avatar: String,
       role: String,
       roleDesc: String,
+      roleRank: Number,
       hasPermission: String,
       desc: String,
       token: String,
@@ -27,9 +28,9 @@ class USER {
 
     // 用户权限枚举
     this.roleEnum = [
-      { label: '超级管理员', value: 'superadmin', roleDesc: '超级管理员' },
-      { label: '管理员', value: 'admin', roleDesc: '管理员' },
-      { label: '普通用户', value: 'common', roleDesc: '普通用户' }
+      { label: '超级管理员', value: 'superadmin', roleDesc: '超级管理员', roleRank: 1 },
+      { label: '管理员', value: 'admin', roleDesc: '管理员', roleRank: 2 },
+      { label: '普通用户', value: 'common', roleDesc: '普通用户', roleRank: 3 }
     ]
 
     // 数据库连接状态
@@ -140,6 +141,7 @@ class USER {
               myRes(res, null, 400, '该账号已存在')
             } else {
               const roleDesc = this.roleEnum.filter((i) => i.value === role)[0].roleDesc
+              const roleRank = this.roleEnum.filter((i) => i.value === role)[0].roleRank
               const token = account
               const createdTime = Date.now()
               const dataModel = new this.userModel({
@@ -245,8 +247,8 @@ class USER {
   /**
    * 查看所有用户数据，没有查询条件
    */
-  checkAllUsers() {
-    this.app.get('/api/checkAllUsers', (req, res, next) => {
+  getUsers() {
+    this.app.get('/api/getUsers', (req, res, next) => {
       const { token } = req.signedCookies
       const { size = 20, page = 1, keyword = '', role = '' } = req.query
 
@@ -296,18 +298,26 @@ class USER {
             // 查询符合条件的用户条数
             this.userModel
               .countDocuments(vagueConditions)
+              .sort({
+                roleRank: 1,
+                createdTime: -1
+              })
               .nor(filter)
               .then((count) => {
                 // 查询符合条件的用户数据
                 this.userModel
                   .find(vagueConditions, { __v: 0 })
+                  .sort({
+                    roleRank: 1,
+                    createdTime: -1
+                  })
                   .nor(filter)
                   .limit(Number.parseInt(size))
                   .skip((Number.parseInt(page) - 1) * Number.parseInt(size))
                   .then((doc) => {
                     const r = {
-                      list: account === 'tanglihe' ? doc : [result, ...doc],
-                      total: count + 1
+                      list: doc,
+                      total: count
                     }
                     myRes(res, r, 0, '查询成功')
                   })
@@ -377,7 +387,7 @@ class USER {
   // 表示开启的 api
   openApi() {
     this.checkUser()
-    this.checkAllUsers()
+    this.getUsers()
     this.login()
     this.registerUser()
     this.deleteUser()

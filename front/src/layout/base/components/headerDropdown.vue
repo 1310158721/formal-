@@ -1,5 +1,5 @@
 <template>
-  <t-dropdown class="header-dropdown mgr-24" :dropdownItemEnum='dropdownItemEnum' trigger='click'>
+  <t-dropdown class="header-dropdown mgr-12" :dropdownItemEnum='dropdownItemEnum' trigger='click'>
     <template #link>
       <el-avatar v-if='avatar' :size="50" :src="avatar" />
     </template>
@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: 'HeaderDropdown',
   components: {},
@@ -30,6 +31,13 @@ export default {
           }
         },
         {
+          label: '系统设置',
+          attrs: {
+            command: 'setting'
+          },
+          fnCallback: this.handleSetting
+        },
+        {
           label: '退出登录',
           attrs: {
             command: 'logout',
@@ -41,8 +49,12 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['SETGLOBALBASELAYOUT']),
     logout () {
       this.$router.push('/logout')
+    },
+    handleSetting () {
+      this.SETGLOBALBASELAYOUT(true)
     }
   },
   created () {

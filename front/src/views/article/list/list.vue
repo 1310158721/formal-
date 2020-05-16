@@ -168,7 +168,7 @@ export default {
     getList () {
       this.isLoading = true
       return new Promise(resolve => {
-        ARTICLE.checkArticleList(this.params).then(response => {
+        ARTICLE.getArticleList(this.params).then(response => {
           setTimeout(() => {
             const { result, code } = response.data
             if (code === 0) {
@@ -198,9 +198,9 @@ export default {
         }, this.$store.state.apiDelay)
       })
     },
-    setTopArticleListItem (params) {
+    setArticleItemTop (params) {
       return new Promise(resolve => {
-        ARTICLE.setTopArticleListItem(params).then(response => {
+        ARTICLE.setArticleItemTop(params).then(response => {
           const { code } = response.data
           if (code === 0) {
             this.getList().then(() => {
@@ -210,9 +210,9 @@ export default {
         })
       })
     },
-    cancelSetTopArticleListItem (params) {
+    cancelArticleItemTop (params) {
       return new Promise(resolve => {
-        ARTICLE.cancelSetTopArticleListItem(params).then(response => {
+        ARTICLE.cancelArticleItemTop(params).then(response => {
           const { code } = response.data
           if (code === 0) {
             this.getList().then(() => {
@@ -294,7 +294,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          this.setTopArticleListItem({ id })
+          this.setArticleItemTop({ id })
         })
         .catch(() => {
           this.$message({
@@ -310,7 +310,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          this.cancelSetTopArticleListItem({ id })
+          this.cancelArticleItemTop({ id })
         })
         .catch(() => {
           this.$message({

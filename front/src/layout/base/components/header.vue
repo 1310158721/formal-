@@ -1,8 +1,8 @@
 <template>
   <div class="base-layout-header">
     <i
-      class="collapse-icon"
-      :class="[isCollapse ? 'el-icon-right' : 'el-icon-back']"
+      class="collapse-icon iconfont"
+      :class="[isCollapse ? 'icon-caidanzhankai' : 'icon-weibiaoti26']"
       @click="handleCollapseIcon"
     />
     <TBreadcrumb
@@ -10,31 +10,25 @@
       :breadcrumbEnum="breadcrumbEnum"
     />
     <span class="space" />
-    <!-- <TSearchRoutes v-if="$store.state.isOpenRoutesSearch" />
-    <TMultilingual v-if="$store.state.isOpenMultilingual" />
-    <TFullScreen v-if="$store.state.isOpenFullScreen" /> -->
-    <!-- <headerHandle /> -->
+    <Fullscreen v-if='$store.state.isOpenFullScreen' />
+    <RouteSearch v-if='$store.state.isOpenRoutesSearch' />
     <HeaderDropdown />
   </div>
 </template>
 
 <script>
-// import headerHandle from './headerHandle'
 import TBreadcrumb from './breadcrumb'
-// import TFullScreen from './fullScreen'
-// import TMultilingual from './multilingual'
-// import TSearchRoutes from './searchRoutes'
 import HeaderDropdown from './headerDropdown'
+import RouteSearch from './routeSearch'
+import Fullscreen from './fullscreen'
 import EventBus from '@/assets/js/utils/event'
 export default {
   name: 't-header',
   components: {
-    // headerHandle,
     TBreadcrumb,
-    // TFullScreen,
-    // TMultilingual,
-    // TSearchRoutes
-    HeaderDropdown
+    HeaderDropdown,
+    RouteSearch,
+    Fullscreen
   },
   props: {},
   data () {
@@ -92,7 +86,6 @@ export default {
     width: 50px;
     height: 100%;
     line-height: 50px;
-    color: #fff;
     font-size: 30px;
     text-align: center;
     cursor: pointer;

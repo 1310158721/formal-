@@ -18,9 +18,9 @@ export default {
   },
   computed: {},
   methods: {
-    checkArticleListItem (id) {
+    getArticle (id) {
       return new Promise(resolve => {
-        ARTICLE.checkArticleListItem({ id }).then(response => {
+        ARTICLE.getArticle({ id }).then(response => {
           const { result, code } = response.data
           if (code === 0) {
             const { markdownRender } = result
@@ -35,7 +35,7 @@ export default {
   },
   created () {
     const { id } = this.$route.query
-    this.checkArticleListItem(id)
+    this.getArticle(id)
   },
   mounted () {},
   watch: {},
@@ -53,14 +53,14 @@ export default {
   height: 100%;
   padding: 0px 150px;
   box-sizing: border-box;
-  background-color: #282c34;
+  background-color: rgba(0,0,0,.9);
   overflow: auto;
   .markdown-body {
     min-height: 100%;
     padding: 20px;
     box-sizing: border-box;
     border-radius: 0;
-    background-color: lightslategrey;
+    background-color: ghostwhite;
   }
 }
 </style>

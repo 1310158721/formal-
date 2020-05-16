@@ -1,6 +1,6 @@
 <template>
   <div>
-    Dashboard
+    展示各个模块的条数等 Echarts 表格
   </div>
 </template>
 

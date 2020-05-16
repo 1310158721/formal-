@@ -23,8 +23,8 @@ class NEXTTODO {
   /**
    * 根据当前用户的 token 获取对应的待办事项列表
    */
-  checkUserNextList() {
-    this.app.get('/api/checkUserNextList', (req, res, next) => {
+  getNextList() {
+    this.app.get('/api/getNextList', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -70,7 +70,7 @@ class NEXTTODO {
    * 根据当前用户的 token 新增待办事项列表
    */
   createItem() {
-    this.app.post('/api/createUserNextTodoItem', (req, res, next) => {
+    this.app.post('/api/createNextItem', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -102,7 +102,7 @@ class NEXTTODO {
    * 根据当前用户的 token 及列表item的 ID 删除待办事项列表
    */
   deleteItem() {
-    this.app.get('/api/deleteUserNextTodoItem', (req, res, next) => {
+    this.app.get('/api/deleteNextItem', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -129,7 +129,7 @@ class NEXTTODO {
    * 根据当前用户的 token 及列表item的 ID 查看待办事项列表
    */
   checkItem() {
-    this.app.post('/api/checkUserNextTodoItem', (req, res, next) => {
+    this.app.post('/api/getNextItem', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -156,7 +156,7 @@ class NEXTTODO {
    * 根据当前用户的 token 及列表item的 ID 更新待办事项列表
    */
   updateItem() {
-    this.app.post('/api/updateUserNextTodoItem', (req, res, next) => {
+    this.app.post('/api/updateNextItem', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -185,7 +185,7 @@ class NEXTTODO {
    * 根据当前用户的 token 置顶待办事项列表
    */
   setItemTop() {
-    this.app.post('/api/setNextTodoListItemTop', (req, res, next) => {
+    this.app.post('/api/setNextItemTop', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -212,7 +212,7 @@ class NEXTTODO {
    * 根据当前用户的 token 取消置顶待办事项列表
    */
   cancelItemTop() {
-    this.app.post('/api/cancelNextTodoListItemTop', (req, res, next) => {
+    this.app.post('/api/cancelNextItemTop', (req, res, next) => {
       const { token } = req.signedCookies
       if (!token) {
         myRes(res, null, 400, 'token 失效，请重新登录')
@@ -237,7 +237,7 @@ class NEXTTODO {
 
   // 表示开启的 api
   openApi() {
-    this.checkUserNextList()
+    this.getNextList()
     this.createItem()
     this.deleteItem()
     this.setItemTop()

@@ -3,8 +3,10 @@
     <TSider />
     <el-container class="base-layout-main">
       <THeader class="base-layout-header" />
+      <Ttab v-if='$store.state.isOpenBaseLayoutTabRoutes' />
       <TMain class="base-layout-view" />
     </el-container>
+    <t-globla-base-layout-drawer />
   </el-container>
 </template>
 
@@ -12,12 +14,14 @@
 import TSider from './components/slide'
 import THeader from './components/header'
 import TMain from './components/main'
+import Ttab from './components/tabRoutes'
 export default {
   name: 'base-layout',
   components: {
     TSider,
     THeader,
-    TMain
+    TMain,
+    Ttab
   },
   props: {},
   data () {

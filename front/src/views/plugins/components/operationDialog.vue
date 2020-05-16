@@ -41,9 +41,9 @@
 <script>
 import {
   PLUGINS
-  // createPluginListItem,
-  // checkPluginListItem,
-  // updatePluginListItem
+  // createPluginItem,
+  // getPluginItem,
+  // updatePluginItem
 } from '@/apis/apis'
 export default {
   name: 'OperationDialog',
@@ -85,12 +85,12 @@ export default {
         desc: '',
         url: ''
       }
-      this.id && this.checkPluginListItem()
+      this.id && this.getPluginItem()
     },
     // 新增模式下，创建单条信息
-    createPluginListItem () {
+    createPluginItem () {
       return new Promise(resolve => {
-        PLUGINS.createPluginListItem(this.model).then(response => {
+        PLUGINS.createPluginItem(this.model).then(response => {
           const { code } = response.data
           if (code === 0) {
             resolve()
@@ -99,9 +99,9 @@ export default {
       })
     },
     // 编辑模式下，查看单条数据信息
-    checkPluginListItem () {
+    getPluginItem () {
       return new Promise(resolve => {
-        PLUGINS.checkPluginListItem({ id: this.id }).then(response => {
+        PLUGINS.getPluginItem({ id: this.id }).then(response => {
           const { code, result } = response.data
           if (code === 0) {
             this.model = result
@@ -111,10 +111,10 @@ export default {
       })
     },
     // 编辑模式下，更新单条数据信息
-    updatePluginListItem () {
+    updatePluginItem () {
       return new Promise(resolve => {
         const params = Object.assign(this.model, { id: this.id })
-        PLUGINS.updatePluginListItem(params).then(response => {
+        PLUGINS.updatePluginItem(params).then(response => {
           const { code } = response.data
           if (code === 0) {
             resolve()
@@ -128,10 +128,10 @@ export default {
         this.$refs.createPluginItem.validate(valid => {
           if (valid) {
             this.id
-              ? this.updatePluginListItem().then(() => {
+              ? this.updatePluginItem().then(() => {
                 this.$emit('dialogClose', true)
               })
-              : this.createPluginListItem().then(() => {
+              : this.createPluginItem().then(() => {
                 this.$emit('dialogClose', true)
               })
           } else {

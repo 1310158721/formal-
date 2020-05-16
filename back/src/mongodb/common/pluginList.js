@@ -30,8 +30,8 @@ class PLUGINS {
   /**
    * 查看插件列表信息
    */
-  checkPluginList() {
-    this.app.get('/api/checkPluginList', (req, res, next) => {
+  getPluginList() {
+    this.app.get('/api/getPluginList', (req, res, next) => {
       const {
         page = 1,
         size = 20,
@@ -81,8 +81,8 @@ class PLUGINS {
   /**
    * 新增插件列表信息
    */
-  createPluginListItem() {
-    this.app.post('/api/createPluginListItem', (req, res, next) => {
+  createPluginItem() {
+    this.app.post('/api/createPluginItem', (req, res, next) => {
       const {
         name = '',
         url = '',
@@ -116,8 +116,8 @@ class PLUGINS {
   /**
    * 删除插件列表信息
    */
-  deletePluginListItem() {
-    this.app.post('/api/deletePluginListItem', (req, res, next) => {
+  deletePluginItem() {
+    this.app.post('/api/deletePluginItem', (req, res, next) => {
       const { id } = req.body
       if (!id) {
         myRes(res, null, 400, '参数不能为空')
@@ -137,8 +137,8 @@ class PLUGINS {
   /**
    * 查看单条插件列表信息
    */
-  checkPluginListItem() {
-    this.app.get('/api/checkPluginListItem', (req, res, next) => {
+  getPluginItem() {
+    this.app.get('/api/getPluginItem', (req, res, next) => {
       const { id } = req.query
       if (!id) {
         myRes(res, null, 400, '参数不能为空')
@@ -158,8 +158,8 @@ class PLUGINS {
   /**
    * 更新单条插件列表信息
    */
-  updatePluginListItem() {
-    this.app.post('/api/updatePluginListItem', (req, res, next) => {
+  updatePluginItem() {
+    this.app.post('/api/updatePluginItem', (req, res, next) => {
       const {
         id,
         name = '',
@@ -191,8 +191,8 @@ class PLUGINS {
   /**
    * 置顶单条插件列表信息
    */
-  setTopPluginListItem () {
-    this.app.post('/api/setTopPluginListItem', (req, res, next) => {
+  setPluginItemTop () {
+    this.app.post('/api/setPluginItemTop', (req, res, next) => {
       const { id } = req.body
       if (!id) {
         myRes(res, null, 400, '参数不能为空')
@@ -214,8 +214,8 @@ class PLUGINS {
   /**
    * 取消置顶单条插件列表信息
    */
-  cancelSetTopPluginListItem () {
-    this.app.post('/api/cancelSetTopPluginListItem', (req, res, next) => {
+  cancelPluginItemTop () {
+    this.app.post('/api/cancelPluginItemTop', (req, res, next) => {
       const { id } = req.body
       if (!id) {
         myRes(res, null, 400, '参数不能为空')
@@ -235,13 +235,13 @@ class PLUGINS {
   }
 
   openApi() {
-    this.checkPluginList()
-    this.createPluginListItem()
-    this.deletePluginListItem()
-    this.checkPluginListItem()
-    this.updatePluginListItem()
-    this.setTopPluginListItem()
-    this.cancelSetTopPluginListItem()
+    this.getPluginList()
+    this.createPluginItem()
+    this.deletePluginItem()
+    this.getPluginItem()
+    this.updatePluginItem()
+    this.setPluginItemTop()
+    this.cancelPluginItemTop()
   }
 }
 
