@@ -13,6 +13,7 @@
     v-on="$listeners"
     v-bind="$attrs"
     v-model="editorContent"
+    :placeholder="$t('mavonEditor.placeholder')"
   />
 </template>
 

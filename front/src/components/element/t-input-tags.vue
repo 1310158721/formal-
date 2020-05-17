@@ -26,7 +26,7 @@
       </el-input>
       <el-button v-else class="button-new-tag" size="small" @click="showInput"
         >
-          新增
+          {{ $t('inputTags.新增') }}
         </el-button
       >
     </template>

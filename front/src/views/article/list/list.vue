@@ -16,7 +16,7 @@
         size="small"
         @click="handleCreateArticle"
       >
-        新增
+        {{ $t('article.新增') }}
       </el-button>
       <t-select
         class="select-w-120"
@@ -24,6 +24,7 @@
         :data="tagsEnum"
         v-model="params.tag"
         clearable
+        :placeholder="$t('article.selectPlaceholder')"
         @change="handleTagChange"
       />
       <span class="space"></span>
@@ -33,6 +34,7 @@
         type="text"
         v-model="params.keyword"
         @keydown.enter.native="handleSearch"
+        :placeholder="$t('article.searchPlaceholder')"
         @input.native="handleInput"
       >
         <el-button
@@ -45,13 +47,18 @@
       </el-input>
     </template>
     <template #table>
-      <el-table-column prop="title" label="标题" align="center" />
-      <el-table-column label="是否发布" align="center" width="96">
+      <el-table-column :label="$t('article.序号')" align="center" width="60">
+        <template slot-scope="scope">
+          <span>{{ scope.$index + 1 }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="title" :label="$t('article.标题')" align="center" />
+      <el-table-column :label="$t('article.是否发布')" align="center" width="96">
         <template slot-scope="scope">
           <span>{{ scope.row.isPublish ? "是" : "否" }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="自定义类型" align="center" width="320">
+      <el-table-column :label="$t('article.自定义类型')" align="center" width="320">
         <template slot-scope="scope">
           <!-- 防止丑陋的动画 -->
           <span v-for="(tag, index) in scope.row.tags.split(',')" :key="tag">
@@ -62,7 +69,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="创建时间"
+        :label="$t('article.创建时间')"
         prop="createdTime"
         align="center"
         width="240"
@@ -71,7 +78,7 @@
           <span>{{ scope.row.createdTime | timeFormat }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="120">
+      <el-table-column :label="$t('article.操作')" align="center" width="120">
         <template slot-scope="scope">
           <t-dropdown
             trigger="click"
@@ -116,7 +123,7 @@ export default {
     dropdownItemEnum ({ _id, title, isTop }) {
       return [
         {
-          label: '删除',
+          label: this.$t('article.删除'),
           attrs: {
             command: 'delete'
           },
@@ -125,7 +132,7 @@ export default {
           }
         },
         {
-          label: '编辑',
+          label: this.$t('article.编辑'),
           attrs: {
             command: 'edit'
           },
@@ -134,7 +141,7 @@ export default {
           }
         },
         {
-          label: '查看',
+          label: this.$t('article.查看'),
           attrs: {
             command: 'check'
           },
@@ -143,7 +150,7 @@ export default {
           }
         },
         {
-          label: isTop ? '取消置顶' : '置顶',
+          label: isTop ? this.$t('article.取消置顶') : this.$t('article.置顶'),
           attrs: {
             command: 'setTop'
           },
@@ -264,9 +271,9 @@ export default {
     },
     // 删除按钮
     handleDelete (id) {
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '温馨提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('article.deleteComfirmTitle'), this.$t('article.deleteComfirmTip'), {
+        confirmButtonText: this.$t('article.deleteComfirmSure'),
+        cancelButtonText: this.$t('article.deleteComfirmCancel'),
         type: 'warning'
       })
         .then(() => {
@@ -275,7 +282,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('article.deleteComfirmCancelText')
           })
         })
     },
@@ -289,9 +296,9 @@ export default {
       })
     },
     handleSetTop (id) {
-      this.$confirm('此操作将该数据置顶, 是否继续?', '温馨提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('article.setTopComfirmTitle'), this.$t('article.setTopComfirmTip'), {
+        confirmButtonText: this.$t('article.setTopComfirmSure'),
+        cancelButtonText: this.$t('article.setTopComfirmCancel'),
         type: 'warning'
       })
         .then(() => {
@@ -300,14 +307,14 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('article.setTopComfirmCancelText')
           })
         })
     },
     cancelSetTop (id) {
-      this.$confirm('此操作将取消该数据置顶, 是否继续?', '温馨提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('article.cancelTopComfirmTitle'), this.$t('article.cancelTopComfirmTip'), {
+        confirmButtonText: this.$t('article.cancelTopComfirmSure'),
+        cancelButtonText: this.$t('article.cancelTopComfirmCancel'),
         type: 'warning'
       })
         .then(() => {
@@ -316,7 +323,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('article.cancelTopComfirmCancelText')
           })
         })
     },

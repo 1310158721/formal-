@@ -9,18 +9,18 @@
     :hide-required-asterisk="true"
     class="article-wrapper"
   >
-    <el-form-item label="标题" prop="title">
+    <el-form-item :label="$t('article.operation.标题')" prop="title">
       <el-input
         class="input-w-300"
         type="text"
         v-model="model.title"
-        placeholder="请输入文章的标题"
+        :placeholder="$t('article.operation.titleInputPlaceholder')"
       />
     </el-form-item>
-    <el-form-item label="是否发布">
-      <t-switch v-model="model.isPublish" active-text="是" inactive-text="否" />
+    <el-form-item :label="$t('article.operation.是否发布')">
+      <t-switch v-model="model.isPublish" :active-text="$t('article.operation.activeText')" :inactive-text="$t('article.operation.inactiveText')" />
     </el-form-item>
-    <el-form-item label="自定义类型" prop="tags">
+    <el-form-item :label="$t('article.operation.自定义类型')" prop="tags">
       <t-input-tags :dynamicTags="model.tags" />
     </el-form-item>
     <el-form-item
@@ -38,7 +38,7 @@
     </el-form-item>
     <el-form-item label-width="0px" class="button-wrapper">
       <el-button v-t-throttle="submitOptions" type="primary">
-        {{ id ? "修改文章" : "创建文章" }}
+        {{ id ? $t('article.operation.修改文章') : $t('article.operation.创建文章') }}
       </el-button>
     </el-form-item>
   </el-form>
@@ -78,15 +78,15 @@ export default {
       },
       rules: {
         title: [
-          { required: true, message: '请输入文章标题', trigger: 'blur' },
-          { min: 5, max: 50, message: '长度在 5 到 50 个字符', trigger: 'blur' }
+          { required: true, message: this.$t('article.operation.titleErrorMsg'), trigger: 'blur' },
+          { min: 5, max: 50, message: this.$t('article.operation.titleLengthErrorMsg'), trigger: 'blur' }
         ],
         tags: [
-          { required: true, message: '请输入文章标题', trigger: 'blur' },
+          { required: true, message: this.$t('article.operation.tagErrorMsg'), trigger: 'blur' },
           { validator: tagsCheck, trigger: 'blur' }
         ],
         markdownRender: [
-          { required: true, message: '请输入文章标题', trigger: 'blur' },
+          { required: true, message: this.$t('article.operation.contentErrorMsg'), trigger: 'blur' },
           { validator: markdownRenderCheck, trigger: 'blur' }
         ]
       },
@@ -149,10 +149,10 @@ export default {
         })
         ARTICLE.updateArticle(params).then(response => {
           setTimeout(() => {
-            const { code, msg } = response.data
+            const { code } = response.data
             if (code === 0) {
               this.SETGLOBALMASK(false)
-              this.$message.success(msg)
+              this.$message.success(this.$t('article.operation.更新成功'))
               this.$router.push({
                 path: '/article-list'
               })

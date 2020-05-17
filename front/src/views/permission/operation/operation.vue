@@ -18,19 +18,19 @@
   >
     <div class="form-item-wrapper">
       <div class="left flex">
-        <el-form-item label="账户" prop="account">
+        <el-form-item :label="$t('permission.operation.账户')" prop="account">
           <el-input v-model="model.account" :disabled='mode !== "create"' />
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item :label="$t('permission.operation.密码')" prop="password">
           <el-input v-model="model.password" />
         </el-form-item>
-        <el-form-item label="名称" prop="name">
+        <el-form-item :label="$t('permission.operation.名称')" prop="name">
           <el-input v-model="model.name" />
         </el-form-item>
-        <el-form-item label="号码" prop="mobile">
+        <el-form-item :label="$t('permission.operation.号码')" prop="mobile">
           <el-input maxLength='11' v-model="model.mobile" />
         </el-form-item>
-        <el-form-item label="头像" prop="avatar">
+        <el-form-item :label="$t('permission.operation.头像')" prop="avatar">
           <t-single-upload
             :on-success="handleSuccess"
             :imageSrc="model.avatar"
@@ -39,10 +39,10 @@
             }"
           />
         </el-form-item>
-        <el-form-item label="级别" prop="role">
+        <el-form-item :label="$t('permission.operation.级别')" prop="role">
           <t-select v-model="model.role" :data="roleEnum" />
         </el-form-item>
-        <el-form-item label="简述" prop="desc">
+        <el-form-item :label="$t('permission.operation.简述')" prop="desc">
           <el-input
             type="textarea"
             :autosize="{ minRows: 4, maxRows: 6 }"
@@ -51,7 +51,7 @@
         </el-form-item>
       </div>
       <div class="right flex">
-        <el-form-item label="权限" prop="hasPermission">
+        <el-form-item :label="$t('permission.operation.权限')" prop="hasPermission">
           <t-tree
             v-if="treeData"
             :data="treeData"
@@ -67,7 +67,7 @@
     <div class="button-wrapper">
       <el-form-item>
         <el-button type="primary" @click="submit('permission-opertion')">{{
-          mode === "create" ? "创建用户" : "更新用户"
+          mode === "create" ? $t('permission.operation.创建用户') : $t('permission.operation.更新用户')
         }}</el-button>
       </el-form-item>
     </div>
@@ -225,10 +225,19 @@ export default {
     // 格式化导航菜单的 buttons 属性
     formatButtons (treeData) {
       treeData.map(i => {
+        i.title = this.$t('menuList.' + i.title)
         if (i.children && i.children.length) {
           this.formatButtons(i.children)
         } else {
-          i.children = i.buttons
+          let buttons = null
+          // 多语言处理
+          if (Array.isArray(i.buttons) && i.buttons.length) {
+            buttons = i.buttons.map((k) => {
+              k.title = this.$t('menuList.' + k.title)
+              return k
+            })
+          }
+          i.children = buttons
           return i
         }
       })

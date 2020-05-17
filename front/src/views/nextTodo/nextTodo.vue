@@ -108,18 +108,18 @@ export default {
      * 新增表格 item
      */
     createItem () {
-      this.$prompt('请输入相关简述', '', {
+      this.$prompt(this.$t('nextTodo.createPromptTitle'), '', {
         inputValue: null,
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+        confirmButtonText: this.$t('nextTodo.createConfirmSure'),
+        cancelButtonText: this.$t('nextTodo.createConfirmCancel'),
         inputPattern: /^.{1,50}$/,
-        inputErrorMessage: '长度应在1～50间'
+        inputErrorMessage: this.$t('nextTodo.createInputErrorMessage')
       })
         .then(({ value }) => {
           NEXTTODO.createNextTodoList({ desc: value }).then(resposne => {
-            const { code, msg } = resposne.data
+            const { code } = resposne.data
             if (code === 0) {
-              this.$message.success(msg)
+              this.$message.success(this.$t('nextTodo.createSuccess'))
               this.getList()
             }
           })
@@ -127,7 +127,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入'
+            message: this.$t('nextTodo.createCancelTip')
           })
         })
     },
@@ -136,16 +136,16 @@ export default {
      * 删除下拉选项
      */
     handleDelete (id) {
-      this.$confirm('此操作将永久删除该条数据, 是否继续?', '温馨提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('nextTodo.DeleteConfirmTitle'), this.$t('nextTodo.DeleteConfirmTip'), {
+        confirmButtonText: this.$t('nextTodo.DeleteConfirmSure'),
+        cancelButtonText: this.$t('nextTodo.DeleteConfirmCancel'),
         type: 'warning'
       })
         .then(() => {
           NEXTTODO.deleteNextTodoList({ id }).then(response => {
-            const { code, msg } = response.data
+            const { code } = response.data
             if (code === 0) {
-              this.$message.success(msg)
+              this.$message.success(this.$t('nextTodo.deleteSuccess'))
               this.getList()
             }
           })
@@ -153,7 +153,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('nextTodo.DeleteConfirmCancelText')
           })
         })
     },
@@ -166,18 +166,18 @@ export default {
         const { code, result } = response.data
         if (code === 0) {
           const { desc } = result
-          this.$prompt('请输入相关简述', '', {
+          this.$prompt(this.$t('nextTodo.EditPromptTitle'), '', {
             inputValue: desc,
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+            confirmButtonText: this.$t('nextTodo.EditPromptConfirmSure'),
+            cancelButtonText: this.$t('nextTodo.EditPromptConfirmCancel'),
             inputPattern: /^.{1,50}$/,
-            inputErrorMessage: '长度应在1～50间'
+            inputErrorMessage: this.$t('nextTodo.EditPromptInputErrorMessage')
           })
             .then(({ value }) => {
               NEXTTODO.updateNextTodoList({ id, desc: value }).then(resposne => {
-                const { code, msg } = resposne.data
+                const { code } = resposne.data
                 if (code === 0) {
-                  this.$message.success(msg)
+                  this.$message.success(this.$t('nextTodo.editSuccess'))
                   this.getList()
                 }
               })
@@ -185,7 +185,7 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'info',
-                message: '取消输入'
+                message: this.$t('nextTodo.EditPromptCancelText')
               })
             })
         }
@@ -196,9 +196,9 @@ export default {
      * 点击置顶下拉选项，设置表格当前行为置顶状态
      */
     handleSetTop (id) {
-      this.$confirm('此操作将该数据置顶, 是否继续?', '温馨提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('nextTodo.SetTopConfirmTitle'), this.$t('nextTodo.SetTopConfirmTip'), {
+        confirmButtonText: this.$t('nextTodo.SetTopConfirmSure'),
+        cancelButtonText: this.$t('nextTodo.SetTopConfirmCancel'),
         type: 'warning'
       })
         .then(() => {
@@ -207,7 +207,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('nextTodo.SetTopConfirmCancelText')
           })
         })
     },
@@ -216,9 +216,9 @@ export default {
      * 点击取消置顶下拉选项，取消表格当前行的置顶状态
      */
     handleCancelTop (id) {
-      this.$confirm('此操作将取消该数据置顶, 是否继续?', '温馨提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('nextTodo.CancelTopConfirmTitle'), this.$t('nextTodo.CancelTopConfirmTip'), {
+        confirmButtonText: this.$t('nextTodo.CancelTopConfirmSure'),
+        cancelButtonText: this.$t('nextTodo.CancelTopConfirmCancel'),
         type: 'warning'
       })
         .then(() => {
@@ -227,7 +227,7 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: this.$t('nextTodo.CancelTopConfirmCancelText')
           })
         })
     },
@@ -241,7 +241,7 @@ export default {
           .then(response => {
             const { code } = response.data
             if (code === 0) {
-              this.$message.success('该条数据置顶成功')
+              this.$message.success(this.$t('nextTodo.setTopSuccess'))
               this.getList()
                 .then(() => {
                   resolve()
@@ -260,7 +260,7 @@ export default {
           .then(response => {
             const { code } = response.data
             if (code === 0) {
-              this.$message.success('该条数据已取消置顶')
+              this.$message.success(this.$t('nextTodo.cancelTopSuccess'))
               this.getList()
                 .then(() => {
                   resolve()

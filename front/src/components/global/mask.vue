@@ -18,7 +18,9 @@ export default {
   props: {
     loadingText: {
       type: String,
-      default: '拼命加载中'
+      default: function () {
+        return this.$t('mask.defaultText')
+      }
     }
   },
   data () {

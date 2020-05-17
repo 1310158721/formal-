@@ -38,12 +38,7 @@ export default {
     this.getArticle(id)
   },
   mounted () {},
-  watch: {},
-  beforeRouteEnter (to, from, next) {
-    const title = window.sessionStorage.getItem('ARTICLETITLE')
-    to.meta.title = title
-    next()
-  }
+  watch: {}
 }
 </script>
 

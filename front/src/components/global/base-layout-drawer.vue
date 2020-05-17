@@ -4,12 +4,12 @@
 <template>
   <t-drawer
     :visible="$store.state.isShowGlobalBaseLayout"
-    title="baseLayout 布局设置"
+    :title="$t('baseLayoutDrawer.title')"
     :before-close="beforeClose"
   >
     <el-form :inline="true" size="small" label-width="120px" label-position="left">
       <el-form-item v-for="i in formItemEnum" :key="i.id" :label="i.label">
-        <el-switch v-model="i.model" active-text="是" inactive-text="否" @change="i.change" />
+        <el-switch v-model="i.model" :active-text="$t('baseLayoutDrawer.是')" :inactive-text="$t('baseLayoutDrawer.否')" @change="i.change" />
       </el-form-item>
     </el-form>
   </t-drawer>
@@ -36,7 +36,7 @@ export default {
     formItemEnum () {
       return [
         {
-          label: '开启logo',
+          label: this.$t('baseLayoutDrawer.logo'),
           model: this.isOpenLogo,
           change: val => {
             this.isOpenLogo = val
@@ -52,7 +52,7 @@ export default {
         //   }
         // },
         {
-          label: '开启面包屑',
+          label: this.$t('baseLayoutDrawer.面包屑'),
           model: this.isShowBaseLayoutBreadcrumb,
           change: val => {
             this.isShowBaseLayoutBreadcrumb = val
@@ -60,7 +60,7 @@ export default {
           }
         },
         {
-          label: '开启TabRoutes',
+          label: this.$t('baseLayoutDrawer.TabRoutes'),
           model: this.isOpenBaseLayoutTabRoutes,
           change: val => {
             this.isOpenBaseLayoutTabRoutes = val
@@ -68,7 +68,7 @@ export default {
           }
         },
         {
-          label: '开启全局化',
+          label: this.$t('baseLayoutDrawer.全局化'),
           model: this.isOpenFullScreen,
           change: val => {
             this.isOpenFullScreen = val
@@ -76,7 +76,7 @@ export default {
           }
         },
         {
-          label: '开启多语言',
+          label: this.$t('baseLayoutDrawer.多语言'),
           model: this.isOpenMultilingual,
           change: val => {
             this.isOpenMultilingual = val
@@ -84,11 +84,10 @@ export default {
           }
         },
         {
-          label: '开启路由搜索',
+          label: this.$t('baseLayoutDrawer.路由搜索'),
           model: this.isOpenRoutesSearch,
           change: val => {
             this.isOpenRoutesSearch = val
-            console.log(val)
             this.SETOPENROUTESSEARCH(val)
           }
         }

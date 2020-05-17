@@ -40,7 +40,12 @@ const menuList = {
     权限: '权限',
     用户列表: '用户列表',
 
-    测试: '测试'
+    测试: '测试',
+
+    // buttons
+    编辑: '编辑',
+    删除: '删除',
+    新增: '新增'
   },
   en: {
     首页: 'Dashboard',
@@ -83,7 +88,12 @@ const menuList = {
     权限: 'Permission',
     用户列表: 'PerList',
 
-    测试: 'Test'
+    测试: 'Test',
+
+    // buttons
+    编辑: 'Edit',
+    删除: 'Delete',
+    新增: 'Create'
   }
 }
 

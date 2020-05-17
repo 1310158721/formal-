@@ -44,8 +44,8 @@ export default {
   },
   methods: {
     switchLanguage (command) {
-      localStorage.setItem('locale', command)
       this.$i18n.locale = command
+      localStorage.setItem('locale', command)
       this.locale = command
     }
   },

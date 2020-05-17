@@ -4,29 +4,67 @@
     :isLoading="isLoading"
     :data="data"
     :openFilter="true"
-    :pagination='pagination'
+    :pagination="pagination"
     :sizeChange="handleSizeChange"
     :currentChange="handleCurrentChange"
   >
     <template #filter>
-      <el-button class="mgr-24" type="primary" size="small" @click='handleCreateUser' v-t-permission="'USERSLISTADD'">
-        新增
+      <el-button
+        class="mgr-24"
+        type="primary"
+        size="small"
+        @click="handleCreateUser"
+        v-t-permission="'USERSLISTADD'"
+      >
+        {{ $t("permission.新增") }}
       </el-button>
-      <t-select class="select-w-120" :data='roleEnum' v-model='params.role' @change='selectHandleChange' clearable />
+      <t-select
+        class="select-w-120"
+        :data="roleEnum"
+        v-model="params.role"
+        @change="selectHandleChange"
+        clearable
+        :placeholder='$t("permission.selectPlaceholder")'
+      />
       <span class="space"></span>
-      <el-input class="input-w-300" size="small" type='text' v-model='params.keyword' @keydown.enter.native="handleSearch" @input.native='handleInput'>
-        <el-button size="small" type="primary" slot="append" icon="el-icon-search" @click='handleSearch'></el-button>
+      <el-input
+        class="input-w-300"
+        size="small"
+        type="text"
+        v-model="params.keyword"
+        @keydown.enter.native="handleSearch"
+        @input.native="handleInput"
+        :placeholder='$t("permission.searchPlaceholder")'
+      >
+        <el-button
+          size="small"
+          type="primary"
+          slot="append"
+          icon="el-icon-search"
+          @click="handleSearch"
+        ></el-button>
       </el-input>
     </template>
     <template #table>
-      <el-table-column prop="name" label="名称" align="center" />
-      <el-table-column prop="account" label="账号" align="center" />
-      <el-table-column prop="mobile" label="号码" align="center" />
-      <el-table-column prop="roleDesc" label="角色" align="center" />
-      <el-table-column label="操作" align="center" width="200">
+      <el-table-column prop="name" :label="$t('permission.名称')" align="center" />
+      <el-table-column prop="account" :label="$t('permission.账号')" align="center" />
+      <el-table-column prop="mobile" :label="$t('permission.号码')" align="center" />
+      <el-table-column prop="roleDesc" :label="$t('permission.角色')" align="center" />
+      <el-table-column :label="$t('permission.操作')" align="center" width="200">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click='handleDelete(scope.row._id)'>删除</el-button>
-          <el-button type="text" size="small" @click='handleEdit(scope.row._id)'>编辑</el-button>
+          <el-button
+            type="text"
+            size="small"
+            @click="handleDelete(scope.row._id)"
+            >
+              {{ $t('permission.删除') }}
+            </el-button
+          >
+          <el-button type="text" size="small" @click="handleEdit(scope.row._id)"
+            >
+              {{ $t('permission.编辑') }}
+            </el-button
+          >
         </template>
       </el-table-column>
     </template>
@@ -64,7 +102,7 @@ export default {
     // 获取用户列表
     getList () {
       this.isLoading = true
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         USER.getUsers(this.params).then(response => {
           setTimeout(() => {
             const { result, code } = response.data
@@ -84,17 +122,16 @@ export default {
     // 删除用户接口
     deleteUser (id) {
       this.SETGLOBALMASK(true)
-      USER.deleteUser({ id })
-        .then((response) => {
-          setTimeout(() => {
-            const { code, msg } = response.data
-            if (code === 0) {
-              this.SETGLOBALMASK(false)
-              this.$message.success(msg)
-              this.getList()
-            }
-          }, this.$store.state.apiDelay)
-        })
+      USER.deleteUser({ id }).then(response => {
+        setTimeout(() => {
+          const { code } = response.data
+          if (code === 0) {
+            this.SETGLOBALMASK(false)
+            this.$message.success(this.$t('permission.deleteSuccess'))
+            this.getList()
+          }
+        }, this.$store.state.apiDelay)
+      })
     },
     // 分页器 size 改变
     handleSizeChange (val) {
@@ -140,18 +177,20 @@ export default {
     },
     // 删除按钮
     handleDelete (id) {
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '温馨提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('permission.deleteComfirmTitle'), this.$t('permission.deleteComfirmTip'), {
+        confirmButtonText: this.$t('permission.deleteComfirmSure'),
+        cancelButtonText: this.$t('permission.deleteComfirmCancel'),
         type: 'warning'
-      }).then(() => {
-        this.deleteUser(id)
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
       })
+        .then(() => {
+          this.deleteUser(id)
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: this.$t('permission.deleteComfirmCancelText')
+          })
+        })
     },
     // 关键字搜索
     handleSearch () {

@@ -1,7 +1,6 @@
 <template>
   <t-dropdown class="header-dropdown mgr-12" :dropdownItemEnum='dropdownItemEnum' trigger='click'>
     <template #link>
-      <!-- <el-avatar v-if='avatar' :size="50" :src="avatar" /> -->
       <span class="avatar" v-if='avatar' :style='{ backgroundImage: `url(${avatar})` }'></span>
     </template>
   </t-dropdown>
@@ -22,7 +21,7 @@ export default {
     dropdownItemEnum () {
       return [
         {
-          label: '返回首页',
+          label: this.$t('headerDropdown.返回首页'),
           attrs: {
             command: 'dashboard',
             disabled: this.$route.path.includes('/dashboard')
@@ -32,14 +31,14 @@ export default {
           }
         },
         {
-          label: '系统设置',
+          label: this.$t('headerDropdown.系统设置'),
           attrs: {
             command: 'setting'
           },
           fnCallback: this.handleSetting
         },
         {
-          label: '退出登录',
+          label: this.$t('headerDropdown.退出登录'),
           attrs: {
             command: 'logout',
             divided: true

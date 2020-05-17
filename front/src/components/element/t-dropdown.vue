@@ -3,7 +3,8 @@
     <span class="el-dropdown-link">
       <slot name="link">
         <div class="default-text">
-          详情<i class="el-icon-arrow-down el-icon--right" />
+          {{ $t('dropdown.详情') }}
+          <i class="el-icon-arrow-down el-icon--right" />
         </div>
       </slot>
     </span>

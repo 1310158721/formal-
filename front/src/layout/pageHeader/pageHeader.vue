@@ -1,7 +1,7 @@
 <template>
   <div class="page-header-wrapper">
     <div class="header-wrapper">
-      <el-page-header @back="goBack" :content="$route.meta.title" />
+      <el-page-header @back="goBack" :content="$t('pageHeader.' + $route.meta.title)" />
     </div>
     <div class="content">
       <router-view />

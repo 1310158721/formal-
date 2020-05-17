@@ -1,23 +1,29 @@
 import menuList from './details/menuList'
 import nextTodo from './details/nextTodo'
+import article from './details/article'
+import permission from './details/permission'
+import headerDropdown from './details/headerDropdown'
+import directives from './details/directives'
+import global from './global/global'
+import element from './element/element'
+import route from './route/route'
 
 const zh = {
   // 导航菜单多语言设置
   menuList: menuList.zh,
   // 待办事项
   nextTodo: nextTodo.zh,
-  // 指令多语言设置
-  directives: {
-    // 复制粘贴
-    clipboard: {
-      固定的文本: '固定的文本',
-      复制: '复制',
-      动态的文本: '动态的文本',
-      请输入需要复制的文本: '请输入需要复制的文本',
-      复制内容不能为空: '复制内容不能为空',
-      复制成功: '复制成功'
-    }
-  }
+  // 文章
+  article: article.zh,
+  // 权限
+  permission: permission.zh,
+  headerDropdown: headerDropdown.zh,
+  directives: directives.zh,
+  // 全局
+  ...global.zh,
+  // element 二次封装组件
+  ...element.zh,
+  ...route.zh
 }
 
 export default zh
