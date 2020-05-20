@@ -10,7 +10,7 @@
     :row-class-name="setRowClass"
   >
     <template #filter>
-      <el-button class="mgr-24" type="primary" size="small" @click="createItem">
+      <el-button v-t-permission='"NEXTCREATE"' class="mgr-24" type="primary" size="small" @click="createItem">
         {{ $t('nextTodo.新增') }}
       </el-button>
       <span class="space"></span>
@@ -43,7 +43,7 @@
           <span>{{ scope.row.createdTime | timeFormat }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('nextTodo.操作')" align="center" width="120">
+      <el-table-column v-if='$permission("NEXTDELETE,NEXTSETTOP,NEXTCANCELTOP,NEXTEDIT")' :label="$t('nextTodo.操作')" align="center" width="120">
         <template slot-scope="scope">
           <t-dropdown
             trigger="click"
@@ -310,7 +310,8 @@ export default {
      * 生成下拉数据，可接受表格当前行的数据为参数
      */
     dropdownItemEnum ({ _id, url, isTop }) {
-      return [
+      const { hasPermission } = this.$store.state.userInfo
+      const dropdownItemEnum = [
         {
           label: this.$t('nextTodo.删除'),
           attrs: {
@@ -318,7 +319,8 @@ export default {
           },
           fnCallback: command => {
             this.handleDelete(_id)
-          }
+          },
+          isExsit: hasPermission.includes('NEXTDELETE')
         },
         {
           label: this.$t('nextTodo.编辑'),
@@ -327,18 +329,32 @@ export default {
           },
           fnCallback: command => {
             this.handleEdit(_id)
-          }
+          },
+          isExsit: hasPermission.includes('NEXTEDIT')
         },
         {
-          label: isTop ? this.$t('nextTodo.取消置顶') : this.$t('nextTodo.置顶'),
+          label: this.$t('nextTodo.置顶'),
           attrs: {
             command: 'setTop'
           },
           fnCallback: command => {
-            isTop ? this.handleCancelTop(_id) : this.handleSetTop(_id)
-          }
+            this.handleSetTop(_id)
+          },
+          isExsit: hasPermission.includes('NEXTSETTOP') && !isTop
+        },
+        {
+          label: this.$t('nextTodo.取消置顶'),
+          attrs: {
+            command: 'cancelTop'
+          },
+          fnCallback: command => {
+            this.handleCancelTop(_id)
+          },
+          isExsit: hasPermission.includes('NEXTCANCELTOP') && isTop
         }
       ]
+
+      return dropdownItemEnum.filter((i) => i.isExsit)
     },
 
     /**

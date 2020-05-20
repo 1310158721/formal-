@@ -9,11 +9,11 @@ Vue.directive('t-permission', {
       Message.error('t-permission 指令必须接收一或多个权限值')
       return false
     }
-    const hasPermission = store.state.userInfo.hasPermission
+    const { hasPermission } = store.state.userInfo
     const checkPermission = value.split(',')
     let isExist = false
     for (let i = 0, len = checkPermission.length; i < len; i++) {
-      if (hasPermission.includes(checkPermission[i])) {
+      if (hasPermission.includes(checkPermission[i].trim())) {
         isExist = true
         break
       }
@@ -24,3 +24,16 @@ Vue.directive('t-permission', {
     }
   }
 })
+
+Vue.prototype.$permission = function (permissions) {
+  const { hasPermission } = store.state.userInfo
+  const checkPermission = permissions.split(',')
+  let isExist = false
+  for (let i = 0, len = checkPermission.length; i < len; i++) {
+    if (hasPermission.includes(checkPermission[i].trim())) {
+      isExist = true
+      break
+    }
+  }
+  return isExist
+}

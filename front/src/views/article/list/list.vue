@@ -15,6 +15,7 @@
         type="primary"
         size="small"
         @click="handleCreateArticle"
+        v-t-permission='"ARTICLECREATE"'
       >
         {{ $t('article.新增') }}
       </el-button>
@@ -78,7 +79,7 @@
           <span>{{ scope.row.createdTime | timeFormat }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('article.操作')" align="center" width="120">
+      <el-table-column v-if='$permission("ARTICLEDELETE,ARTICLEDELETE,ARTICLEDELETE,ARTICLEDELETE,ARTICLEDELETE")' :label="$t('article.操作')" align="center" width="120">
         <template slot-scope="scope">
           <t-dropdown
             trigger="click"
@@ -121,7 +122,8 @@ export default {
   methods: {
     ...mapMutations(['SETGLOBALMASK']),
     dropdownItemEnum ({ _id, title, isTop }) {
-      return [
+      const { hasPermission } = this.$store.state.userInfo
+      const dropdownItemEnum = [
         {
           label: this.$t('article.删除'),
           attrs: {
@@ -129,7 +131,8 @@ export default {
           },
           fnCallback: command => {
             this.handleDelete(_id)
-          }
+          },
+          isExsit: hasPermission.includes('ARTICLEDELETE')
         },
         {
           label: this.$t('article.编辑'),
@@ -138,7 +141,8 @@ export default {
           },
           fnCallback: command => {
             this.handleEdit(_id)
-          }
+          },
+          isExsit: hasPermission.includes('ARTICLEDELETE')
         },
         {
           label: this.$t('article.查看'),
@@ -147,18 +151,31 @@ export default {
           },
           fnCallback: command => {
             this.handleCheck(_id, title)
-          }
+          },
+          isExsit: hasPermission.includes('ARTICLEDELETE')
         },
         {
-          label: isTop ? this.$t('article.取消置顶') : this.$t('article.置顶'),
+          label: this.$t('article.置顶'),
           attrs: {
             command: 'setTop'
           },
           fnCallback: command => {
-            isTop ? this.cancelSetTop(_id) : this.handleSetTop(_id)
-          }
+            this.handleSetTop(_id)
+          },
+          isExsit: hasPermission.includes('ARTICLEDELETE') && !isTop
+        },
+        {
+          label: this.$t('article.取消置顶'),
+          attrs: {
+            command: 'cancelTop'
+          },
+          fnCallback: command => {
+            this.cancelSetTop(_id)
+          },
+          isExsit: hasPermission.includes('ARTICLEDELETE') && isTop
         }
       ]
+      return dropdownItemEnum.filter((i) => i.isExsit)
     },
     getArticleTagsEnum () {
       return new Promise(resolve => {
@@ -356,6 +373,7 @@ export default {
     // 获取列表数据
     this.getList()
     this.getArticleTagsEnum()
+    console.log(this.$store.state.userInfo.hasPermission)
   },
   mounted () {},
   watch: {}

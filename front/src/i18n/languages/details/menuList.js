@@ -45,7 +45,10 @@ const menuList = {
     // buttons
     编辑: '编辑',
     删除: '删除',
-    新增: '新增'
+    查看: '查看',
+    新增: '新增',
+    置顶: '置顶',
+    取消置顶: '取消置顶'
   },
   en: {
     首页: 'Dashboard',
@@ -93,7 +96,10 @@ const menuList = {
     // buttons
     编辑: 'Edit',
     删除: 'Delete',
-    新增: 'Create'
+    新增: 'Create',
+    查看: 'Check',
+    置顶: 'SetTop',
+    取消置顶: 'CancelTop'
   }
 }
 

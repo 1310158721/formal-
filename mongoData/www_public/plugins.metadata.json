@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"formalAdminCommon.plugins"}],"uuid":"408d0436fe7b4a14a89a66a3a36bcbcf"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"www_public.plugins"}]}

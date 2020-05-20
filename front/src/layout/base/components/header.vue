@@ -79,12 +79,10 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles/scss/mixin.scss';
 .base-layout-header {
-  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   @include gradient(rgba(0, 0, 0, 0.2), #fff);
-  line-height: 50pxs;
   .collapse-icon {
     width: 50px;
     height: 100%;

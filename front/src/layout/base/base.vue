@@ -44,7 +44,6 @@ export default {
     display: flex;
     flex-direction: column;
     .base-layout-header {
-      height: 50px;
       width: 100%;
     }
     .base-layout-view {
