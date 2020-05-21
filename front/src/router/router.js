@@ -104,19 +104,20 @@ router.beforeEach((to, from, next) => {
       // 清除权限菜单数据
       store.commit('SETMENULIST', [])
       next({ path: '/login' })
-    }
-    // tabRoutes 中没有匹配到当前路由时，便添加当前路由
-    if (!tabRoutes.filter((i) => to.path === i.path).length) {
+    } else {
+      // tabRoutes 中没有匹配到当前路由时，便添加当前路由
+      if (!tabRoutes.filter((i) => to.path === i.path).length) {
       // 是否为菜单栏上面的路由
-      if (to.meta && !to.meta.isNotTabRoute) {
-        tabRoutes.push({
-          path: to.path,
-          title: to.meta ? to.meta.title || '暂无meta' : '暂无meta'
-        })
-        window.sessionStorage.setItem('tabRoutes', JSON.stringify(tabRoutes))
+        if (to.meta && !to.meta.isNotTabRoute) {
+          tabRoutes.push({
+            path: to.path,
+            title: to.meta ? to.meta.title || '暂无meta' : '暂无meta'
+          })
+          window.sessionStorage.setItem('tabRoutes', JSON.stringify(tabRoutes))
+        }
       }
+      next()
     }
-    next()
   }
 })
 

@@ -151,6 +151,7 @@ class USER {
                 mobile,
                 avatar,
                 role,
+                roleRank,
                 roleDesc,
                 desc,
                 token,

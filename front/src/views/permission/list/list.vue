@@ -50,21 +50,14 @@
       <el-table-column prop="account" :label="$t('permission.账号')" align="center" />
       <el-table-column prop="mobile" :label="$t('permission.号码')" align="center" />
       <el-table-column prop="roleDesc" :label="$t('permission.角色')" align="center" />
-      <el-table-column :label="$t('permission.操作')" align="center" width="200">
+      <el-table-column :label="$t('permission.操作')" align="center" width="200" v-if='$permission("USERSLISTDELETE,USERSLISTEDIT")'>
         <template slot-scope="scope">
-          <el-button
-            type="text"
+          <t-dropdown
+            trigger="click"
+            class="list-dropdown"
             size="small"
-            @click="handleDelete(scope.row._id)"
-            >
-              {{ $t('permission.删除') }}
-            </el-button
-          >
-          <el-button type="text" size="small" @click="handleEdit(scope.row._id)"
-            >
-              {{ $t('permission.编辑') }}
-            </el-button
-          >
+            :dropdownItemEnum="dropdownItemEnum(scope.row)"
+          />
         </template>
       </el-table-column>
     </template>
@@ -204,6 +197,36 @@ export default {
     selectHandleChange () {
       this.params.keyword = null
       this.getList()
+    },
+    /**
+     * 生成下拉数据，可接受表格当前行的数据为参数
+     */
+    dropdownItemEnum ({ _id, url, isTop }) {
+      const { hasPermission } = this.$store.state.userInfo
+      const dropdownItemEnum = [
+        {
+          label: this.$t('nextTodo.删除'),
+          attrs: {
+            command: 'delete'
+          },
+          fnCallback: command => {
+            this.handleDelete(_id)
+          },
+          isExsit: hasPermission.includes('USERSLISTDELETE')
+        },
+        {
+          label: this.$t('nextTodo.编辑'),
+          attrs: {
+            command: 'edit'
+          },
+          fnCallback: command => {
+            this.handleEdit(_id)
+          },
+          isExsit: hasPermission.includes('USERSLISTEDIT')
+        }
+      ]
+
+      return dropdownItemEnum.filter((i) => i.isExsit)
     }
   },
   created () {
