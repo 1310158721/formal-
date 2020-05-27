@@ -48,12 +48,12 @@ export default {
 .full-screen-wrapper {
   width: 100%;
   height: 100%;
-  background-color: lightblue;
   .suqare {
     width: 200px;
     height: 200px;
     background-color: black;
     margin: 24px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,.5);
   }
 }
 </style>

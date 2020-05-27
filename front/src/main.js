@@ -33,6 +33,9 @@ import '@/components/global/global'
 // axios 拦截配置
 import '@/http/interceptors'
 
+// vue prototype
+import '@/assets/js/utils/prototype'
+
 /**
  * 必须放在 Vue.use(ElementUI) 前面才能生效
  * element-ui 兼容 i18n 插件

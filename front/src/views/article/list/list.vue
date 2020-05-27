@@ -8,6 +8,7 @@
     :sizeChange="handleSizeChange"
     :currentChange="handleCurrentChange"
     :row-class-name="setRowClass"
+    @row-click='handleRowClick'
   >
     <template #filter>
       <el-button
@@ -25,6 +26,7 @@
         :data="tagsEnum"
         v-model="params.tag"
         clearable
+        :filterable='true'
         :placeholder="$t('article.selectPlaceholder')"
         @change="handleTagChange"
       />
@@ -142,17 +144,7 @@ export default {
           fnCallback: command => {
             this.handleEdit(_id)
           },
-          isExsit: hasPermission.includes('ARTICLEDELETE')
-        },
-        {
-          label: this.$t('article.查看'),
-          attrs: {
-            command: 'check'
-          },
-          fnCallback: command => {
-            this.handleCheck(_id, title)
-          },
-          isExsit: hasPermission.includes('ARTICLEDELETE')
+          isExsit: hasPermission.includes('ARTICLEEDIT')
         },
         {
           label: this.$t('article.置顶'),
@@ -162,7 +154,7 @@ export default {
           fnCallback: command => {
             this.handleSetTop(_id)
           },
-          isExsit: hasPermission.includes('ARTICLEDELETE') && !isTop
+          isExsit: hasPermission.includes('ARTICLESETTOP') && !isTop
         },
         {
           label: this.$t('article.取消置顶'),
@@ -172,7 +164,7 @@ export default {
           fnCallback: command => {
             this.cancelSetTop(_id)
           },
-          isExsit: hasPermission.includes('ARTICLEDELETE') && isTop
+          isExsit: hasPermission.includes('ARTICLECANCELTOP') && isTop
         }
       ]
       return dropdownItemEnum.filter((i) => i.isExsit)
@@ -365,7 +357,21 @@ export default {
     setRowClass ({ row }) {
       const { isTop } = row
       if (isTop) {
-        return 'is-set-top'
+        return 'is-set-top row-style'
+      } else {
+        return 'row-style'
+      }
+    },
+    handleRowClick (row, column, event) {
+      const dom = event.target
+      const className = dom.getAttribute('class')
+      if (className === 'default-text') {
+        return false
+      } else {
+        if (this.$store.state.userInfo.hasPermission.includes('ARTICLECHECK')) {
+          const { _id, title } = row
+          this.handleCheck(_id, title)
+        }
       }
     }
   },
@@ -373,7 +379,6 @@ export default {
     // 获取列表数据
     this.getList()
     this.getArticleTagsEnum()
-    console.log(this.$store.state.userInfo.hasPermission)
   },
   mounted () {},
   watch: {}
@@ -397,6 +402,9 @@ export default {
   }
   /deep/tr.is-set-top {
     @include gradient(rgba(0, 0, 0, 0.2), #fff);
+  }
+  /deep/tr.row-style {
+    cursor: pointer;
   }
 }
 </style>

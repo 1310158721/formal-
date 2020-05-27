@@ -44,10 +44,11 @@ export default {
     display: flex;
     flex-direction: column;
     .base-layout-header {
+      height: 50px;
       width: 100%;
     }
     .base-layout-view {
-      padding: 24px;
+      padding: 24px 24px 0px;
       box-sizing: border-box;
     }
   }

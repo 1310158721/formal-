@@ -5,7 +5,6 @@
       :defaultContent='render'
       @change='editorChange'
     />
-
     <div class="markdown-body content-show" v-html='render' v-show='render'></div>
   </div>
 </template>
@@ -43,10 +42,14 @@ export default {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  background-color: lightblue;
+  padding: 0px 10px;
+  box-sizing: border-box;
+  .el-button {
+    margin-bottom: 20px;
+  }
   .t-mavon-editor-wrapper {
     width: 100%;
-    height: 500px;
+    height: 500px !important;
   }
 }
 </style>
