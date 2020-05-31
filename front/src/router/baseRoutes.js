@@ -6,8 +6,11 @@ import article from '@/views/article/article'
 import articleOperation from '@/views/article/operation/operation'
 import articleList from '@/views/article/list/list'
 import charts from '@/views/charts/charts'
-import pie from '@/views/charts/pie/pie'
+import chartConfig from '@/views/charts/config/config'
 import bar from '@/views/charts/bar/bar'
+import line from '@/views/charts/line/line'
+import pie from '@/views/charts/pie/pie'
+import merge from '@/views/charts/merge/merge'
 import editor from '@/views/editor/editor'
 import markdown from '@/views/editor/markdown/markdown'
 import component from '@/views/components/components'
@@ -110,30 +113,63 @@ const baseRoutes = [
         },
         component: charts,
         redirect: {
-          path: '/pie'
+          path: '/chart-config'
         }
       },
-      // 图表 -> 饼形图
+      // 图表 -> 常见参数
       {
-        title: '饼形',
+        title: '常见参数',
         icon: 'icon-tubiao-bingtu',
-        path: '/pie',
-        name: 'pie',
+        path: '/chart-config',
+        name: 'chart-config',
         meta: {
-          title: '饼形'
+          title: '常见参数'
         },
-        component: pie
+        component: chartConfig
       },
       // 图表 -> 柱形图
       {
-        title: '柱形',
+        title: '柱形图',
         icon: 'icon-histogram',
         path: '/bar',
         name: 'bar',
         meta: {
-          title: '柱形'
+          title: '柱形图'
         },
         component: bar
+      },
+      // 图表 -> 折线图
+      {
+        title: '折线图',
+        icon: 'icon-histogram',
+        path: '/line',
+        name: 'line',
+        meta: {
+          title: '折线图'
+        },
+        component: line
+      },
+      // 图表 -> 饼形图
+      {
+        title: '饼形图',
+        icon: 'icon-tubiao-bingtu',
+        path: '/pie',
+        name: 'pie',
+        meta: {
+          title: '饼形图'
+        },
+        component: pie
+      },
+      // 图表 -> 综合
+      {
+        title: '综合',
+        icon: 'icon-tubiao-bingtu',
+        path: '/chart-merge',
+        name: 'chart-merge',
+        meta: {
+          title: '综合'
+        },
+        component: merge
       },
       // 编辑器
       {

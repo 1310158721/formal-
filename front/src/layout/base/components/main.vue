@@ -1,6 +1,6 @@
 <template>
   <div class="main-wrapper">
-    <router-view class="router" />
+    <router-view class="router-page" />
     <span id="footer">
       <a class="text" target="_blank" href="http://beian.miit.gov.cn/">
         粤ICP备19147981号-1
@@ -29,10 +29,10 @@ export default {
 .main-wrapper {
   width: 100%;
   height: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
-  position: relative;
-  .router {
+  .router-page {
     flex: 1;
     height: 100%;
   }

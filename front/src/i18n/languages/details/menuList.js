@@ -12,8 +12,11 @@ const menuList = {
     Markdown: 'Markdown',
 
     图表: '图表',
-    饼形: '饼形',
-    柱形: '柱形',
+    常见参数: '常见参数',
+    柱形图: '柱形图',
+    折线图: '折线图',
+    饼形图: '饼形图',
+    综合: '综合',
 
     组件: '组件',
     图片查看器: '图片查看器',
@@ -63,8 +66,11 @@ const menuList = {
     Markdown: 'Markdown',
 
     图表: 'Charts',
-    饼形: 'Pie',
-    柱形: 'Bar',
+    常见参数: 'ChartConfig',
+    柱形图: 'Bar',
+    折线图: 'Line',
+    饼形图: 'Pie',
+    综合: 'Merge',
 
     组件: 'Components',
     图片查看器: 'Viewer',

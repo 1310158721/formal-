@@ -40,6 +40,7 @@ export default {
   width: 100vw;
   min-width: 1080px;
   height: 100vh;
+  overflow: hidden;
   .base-layout-main {
     display: flex;
     flex-direction: column;
@@ -48,8 +49,11 @@ export default {
       width: 100%;
     }
     .base-layout-view {
+      flex: 1;
+      height: 100%;
       padding: 24px 24px 0px;
       box-sizing: border-box;
+      overflow-y: auto;
     }
   }
 }
