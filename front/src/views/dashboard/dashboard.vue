@@ -1,9 +1,9 @@
 <template>
   <div class="dashboard-wrapper">
-    <div id="bar" v-if='xAxisData.length'></div>
-    <div id="line" v-if='xAxisData.length'></div>
-    <div id="pie" v-if='xAxisData.length'></div>
-    <div id="multiple" v-if='xAxisData.length'></div>
+    <div id="bar" v-t-full-screen='optionsBar' v-if='xAxisData.length' style="backgroundColor: #ffffff;" />
+    <div id="line" v-t-full-screen='optionsLine' v-if='xAxisData.length' style="backgroundColor: #ffffff;" />
+    <div id="pie" v-t-full-screen='optionsPie' v-if='xAxisData.length' style="backgroundColor: #ffffff;" />
+    <div id="multiple" v-t-full-screen='optionsMultiple' v-if='xAxisData.length' style="backgroundColor: #ffffff;" />
   </div>
 </template>
 
@@ -15,16 +15,31 @@ export default {
   props: {},
   data () {
     return {
-      // chartData: [],
       xAxisData: [],
-      yAxisData: []
+      yAxisData: [],
+      isBarFullScreen: false,
+      optionsBar: {
+        fnCallback: () => {
+          this.isBarFullScreen = !this.isBarFullScreen
+        },
+        dom: 'bar'
+      },
+      optionsLine: {
+        dom: 'line'
+      },
+      optionsPie: {
+        dom: 'pie'
+      },
+      optionsMultiple: {
+        dom: 'multiple'
+      }
     }
   },
   computed: {
     barOption () {
       return {
         tooltip: {
-          // trigger: 'axis'
+          show: true
         },
         grid: {
           top: '10%',
@@ -76,8 +91,6 @@ export default {
       }
     },
     pieOption () {
-      // console.log(this.xAxisData)
-      // console.log(this.yAxisData)
       const data = this.xAxisData.map((i, index) => {
         return {
           value: this.yAxisData[index],
@@ -86,11 +99,6 @@ export default {
       })
 
       return {
-        // title: {
-        //   text: '某站点用户访问来源',
-        //   subtext: '纯属虚构',
-        //   left: 'center'
-        // },
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -98,7 +106,6 @@ export default {
         legend: {
           orient: 'vertical',
           left: 'left',
-          // data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
           data: this.xAxisData
         },
         series: [
@@ -107,13 +114,6 @@ export default {
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
-            // data: [
-            //   { value: 335, name: '直接访问' },
-            //   { value: 310, name: '邮件营销' },
-            //   { value: 234, name: '联盟广告' },
-            //   { value: 135, name: '视频广告' },
-            //   { value: 1548, name: '搜索引擎' }
-            // ],
             data,
             emphasis: {
               itemStyle: {
@@ -128,9 +128,6 @@ export default {
     },
     multipleOption () {
       return {
-        // title: {
-        //   text: '折线图堆叠'
-        // },
         tooltip: {
           trigger: 'axis'
         },
@@ -178,11 +175,9 @@ export default {
       const menuList = this.$store.state.menuList
       menuList.map((i) => {
         if (!i.children || !i.children.length) {
-          // this.chartData.push({ title: i.title, count: 0 })
           this.xAxisData.push(i.title)
           this.yAxisData.push(0)
         } else {
-          // this.chartData.push({ title: i.title, count: i.children.length })
           this.xAxisData.push(i.title)
           this.yAxisData.push(i.children.length)
         }
@@ -236,6 +231,7 @@ export default {
     border: 1px black solid;
     box-sizing: border-box;
     border-radius: 10px;
+    position: relative;
   }
   #line {
     display: inline-block;
@@ -245,6 +241,7 @@ export default {
     border: 1px black solid;
     box-sizing: border-box;
     border-radius: 10px;
+    position: relative;
   }
   #pie {
     display: inline-block;
@@ -254,6 +251,7 @@ export default {
     border: 1px black solid;
     box-sizing: border-box;
     border-radius: 10px;
+    position: relative;
   }
 
   #multiple {
@@ -265,6 +263,7 @@ export default {
     border: 1px black solid;
     box-sizing: border-box;
     border-radius: 10px;
+    position: relative;
   }
 }
 </style>

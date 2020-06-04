@@ -70,6 +70,9 @@ export default {
         legend: {
           show: true
         },
+        tooltip: {
+          show: true
+        },
         xAxis: {
           type: 'category',
           data: null
@@ -92,7 +95,7 @@ export default {
   },
   computed: {
     formatOption () {
-      const { legend, xAxis, yAxis, series } = this.model
+      const { legend, tooltip, xAxis, yAxis, series } = this.model
 
       this.formatXAxis(xAxis)
       this.formatYAxis(yAxis)
@@ -100,6 +103,7 @@ export default {
 
       return {
         legend,
+        tooltip,
         xAxis,
         yAxis,
         series

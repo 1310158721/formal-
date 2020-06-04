@@ -48,14 +48,14 @@
           </div>
         </div>
 
-        <div class="yAxis">
+        <div class="tooltip">
           <h5>提示框组件(tooltip)相关配置</h5>
           <el-form-item label="是否显示">
             <el-switch v-model="model.tooltip.show" @change='drawEcharts' />
           </el-form-item>
 
           <div class="son" v-if='model.tooltip.show'>
-            <el-form-item label="显示类型">
+            <el-form-item label="显示类型" v-if='chartType !== "pie"'>
               <el-radio-group v-model="model.tooltip.axisPointer.type" @change="drawEcharts">
                 <el-radio label="shadow">阴影</el-radio>
                 <el-radio label="line">直线</el-radio>
@@ -73,7 +73,7 @@
 
         </div>
 
-        <div class="xAxis">
+        <div class="xAxis"  v-if='chartType !== "pie"'>
           <h5>x 轴(xAxis)相关配置</h5>
           <el-form-item label="是否显示">
             <el-switch v-model="model.xAxis.show" @change='drawEcharts' />
@@ -94,7 +94,7 @@
           </div>
         </div>
 
-        <div class="yAxis">
+        <div class="yAxis" v-if='chartType !== "pie"'>
           <h5>y 轴(yAxis)相关配置</h5>
           <el-form-item label="是否显示">
             <el-switch v-model="model.yAxis.show" @change='drawEcharts' />
