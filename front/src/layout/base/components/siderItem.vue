@@ -81,6 +81,7 @@ export default {
   -moz-user-select: none;
   -khtml-user-select: none;
   user-select: none;
+  background-color: rgb(38, 52, 69)!important;
   &:hover {
     background-color: #001528 !important;
   }

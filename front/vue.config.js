@@ -1,6 +1,7 @@
 module.exports = {
   publicPath: './',
   outputDir: 'web',
+  productionSourceMap: false,
   devServer: {
     before: function (app, server, compiler) {
       /* mock 接口 */
@@ -31,6 +32,18 @@ module.exports = {
           '^/tools': ''
         }
       }
+    }
+  },
+  configureWebpack: {
+    externals: {
+      vue: 'Vue',
+      'vue-router': 'VueRouter',
+      vuex: 'Vuex',
+      axios: 'axios',
+      echarts: 'echarts',
+      'mavon-editor': 'MavonEditor',
+      'vue-i18n': 'VueI18n',
+      'element-ui': 'ELEMENT'
     }
   }
 }

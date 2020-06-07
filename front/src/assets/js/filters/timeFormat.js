@@ -1,6 +1,33 @@
-import moment from 'moment'
+// import moment from 'moment'
 import Vue from 'vue'
 
-Vue.filter('timeFormat', function (value, type = 'YYYY年MM月DD日 HH时mm分ss秒') {
-  return moment(value).format(type)
+/**
+ * yyyy -- 年
+ * M -- 月
+ * d -- 日
+ * h -- 小时
+ * m -- 分钟
+ * s -- 秒
+ * q -- 季度
+ */
+Vue.filter('timeFormat', function (value, fmt = 'yyyy年MM月dd日 hh时mm分ss秒') {
+  const time = new Date(value)
+  var o = {
+    'M+': time.getMonth() + 1, // 月份
+    'd+': time.getDate(), // 日
+    'h+': time.getHours(), // 小时
+    'm+': time.getMinutes(), // 分
+    's+': time.getSeconds(), // 秒
+    'q+': Math.floor((time.getMonth() + 3) / 3), // 季度
+    S: time.getMilliseconds() // 毫秒
+  }
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (time.getFullYear() + '').substr(4 - RegExp.$1.length))
+  }
+  for (var k in o) {
+    if (new RegExp('(' + k + ')').test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+    }
+  }
+  return fmt
 })

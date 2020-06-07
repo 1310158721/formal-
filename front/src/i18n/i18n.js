@@ -4,8 +4,10 @@ import zh from './languages/zh'
 import en from './languages/en'
 
 // element-ui组件国际化
-import elementEnLocale from 'element-ui/lib/locale/lang/en' // element-ui lang
-import elementZhLocale from 'element-ui/lib/locale/lang/zh-CN'
+// import elementEnLocale from 'element-ui/lib/locale/lang/en' // element-ui lang
+// import elementZhLocale from 'element-ui/lib/locale/lang/zh-CN'
+import elementEnLocale from './extra/en'
+import elementZhLocale from './extra/zh'
 Vue.use(VueI18n)
 
 const i18n = new VueI18n({
