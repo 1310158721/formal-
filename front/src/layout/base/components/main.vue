@@ -1,11 +1,13 @@
 <template>
   <div class="main-wrapper">
-    <router-view class="router-page" />
-    <span id="footer">
+    <keep-alive>
+      <router-view class="router-page" />
+    </keep-alive>
+    <!-- <span id="footer">
       <a class="text" target="_blank" href="http://beian.miit.gov.cn/">
         粤ICP备19147981号-1
       </a>
-    </span>
+    </span> -->
   </div>
 </template>
 

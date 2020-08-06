@@ -93,7 +93,7 @@ class NextTodo {
   }
 
   // 删除待办事项
-  async asyncdeleteNextTodoList (params) {
+  async deleteNextTodoList (params) {
     return await isMock
       ? axios.get(formatUrl('nextTodo', 'delete'), { params })
       : axios.get('/deleteNextItem', { params })

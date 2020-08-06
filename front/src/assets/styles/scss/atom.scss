@@ -28,7 +28,12 @@
 
 // mavon-editor 相关
 .markdown-body {
-  height: auto!important;
+  // height: 100%!important;
+  background-color: transparent!important;
+  color: #abb2bf!important;
+  .v-note-op {
+    padding: 0 !important;
+  }
   img {
     max-width: 200px;
     max-height: 200px;
@@ -37,15 +42,40 @@
     cursor: pointer;
   }
   pre {
+    margin-top: 10px!important;
     padding: 0!important;
+    overflow: initial!important;
+  }
+
+  
+  table {
+    width: 100%!important;
+    box-sizing: border-box!important;
+    tr {
+      display: flex;
+      flex-direction: row;
+      box-sizing: border-box!important;
+      td, th {
+        flex: 1;
+        width: 100%;
+        word-break: break-all;
+        vertical-align: middle;
+      }
+    }
+  }
+  table,table tr td, table tr th {
+    border: 1px solid #abb2bf !important;
+    text-align: center!important;
+    border-collapse: collapse!important;
+    padding: 5px 20px!important;
   }
 
   p {
-    margin-bottom: 5px!important;
+    margin-bottom: 0px!important;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    padding-bottom: 0px!important;
+    padding-bottom: 10px!important;
   }
 
   /deep/.hljs {

@@ -142,13 +142,15 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          NEXTTODO.deleteNextTodoList({ id }).then(response => {
-            const { code } = response.data
-            if (code === 0) {
-              this.$message.success(this.$t('nextTodo.deleteSuccess'))
-              this.getList()
-            }
-          })
+          NEXTTODO
+            .deleteNextTodoList({ id })
+            .then(response => {
+              const { code } = response.data
+              if (code === 0) {
+                this.$message.success(this.$t('nextTodo.deleteSuccess'))
+                this.getList()
+              }
+            })
         })
         .catch(() => {
           this.$message({

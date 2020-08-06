@@ -1,11 +1,15 @@
 <template>
   <div class="t-markdown-wrapper">
-    <el-button type='primary' size='small' @click='handleClick'>获取内容</el-button>
-    <t-mavon-editor class="t-mavon-editor-wrapper"
+    <div class="button-wrapper">
+      <el-button type='primary' size='small' @click='handleClick'>获取内容</el-button>
+    </div>
+    <div class="t-mavon-editor-wrapper">
+      <t-mavon-editor class="t-mavon-editor-wrapper"
       :defaultContent='render'
       @change='editorChange'
     />
-    <div class="markdown-body content-show" v-html='render' v-show='render'></div>
+    </div>
+    <!-- <div class="markdown-body content-show" v-html='render' v-show='render'></div> -->
   </div>
 </template>
 
@@ -42,14 +46,16 @@ export default {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  padding: 0px 10px;
+  padding: 0px 0px 24px;
   box-sizing: border-box;
-  .el-button {
+  display: flex;
+  flex-direction: column;
+  .button-wrapper {
     margin-bottom: 20px;
   }
   .t-mavon-editor-wrapper {
-    width: 100%;
-    height: 500px !important;
+    height: 100%;
+    flex: 1;
   }
 }
 </style>

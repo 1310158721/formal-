@@ -18,7 +18,7 @@ NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false })
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  mode: 'hash',
+  mode: 'history',
   routes: [...fixedRoutes, ...pageHeaderRoutes]
 })
 

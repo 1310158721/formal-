@@ -1,6 +1,8 @@
 <template>
   <div class="check-article-wrapper" v-viewer>
-    <t-mavon-editor class="markdown-body" v-html="markdownRender" />
+    <div class="markdown-body-wrapper">
+      <t-mavon-editor class="markdown-body" v-html="markdownRender" />
+    </div>
   </div>
 </template>
 
@@ -50,12 +52,19 @@ export default {
   box-sizing: border-box;
   background-color: rgba(0,0,0,.9);
   overflow: auto;
+  .markdown-body-wrapper {
+    width: 720px;
+    height: 100%;
+    margin: 0 auto;
+  }
   .markdown-body {
     min-height: 100%;
     padding: 20px;
     box-sizing: border-box;
     border-radius: 0;
-    background-color: ghostwhite;
+    background-color: ghostwhite;border-left: 2px solid #abb2bf!important;
+    border-right: 2px solid #abb2bf!important;
+    box-sizing: border-box;
   }
 }
 </style>

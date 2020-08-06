@@ -41,7 +41,7 @@ module.exports = {
       vuex: 'Vuex',
       axios: 'axios',
       echarts: 'echarts',
-      'mavon-editor': 'MavonEditor',
+      // 'mavon-editor': 'MavonEditor',
       'vue-i18n': 'VueI18n',
       'element-ui': 'ELEMENT'
     }

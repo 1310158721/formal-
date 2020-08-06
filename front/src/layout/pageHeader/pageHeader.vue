@@ -6,11 +6,11 @@
     <div class="content">
       <router-view />
     </div>
-    <span id="footer">
+    <!-- <span id="footer">
       <a class="text" target="_blank" href="http://beian.miit.gov.cn/">
         粤ICP备19147981号-1
       </a>
-    </span>
+    </span> -->
   </div>
 </template>
 
@@ -65,7 +65,7 @@ export default {
     font-size: 12px;
     text-align: center;
     .text {
-      padding-left: 96px;
+      // padding-left: 96px;
       box-sizing: border-box;
       text-decoration: none;
       color: #939393;

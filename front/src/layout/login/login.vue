@@ -42,11 +42,11 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <span id="footer">
+    <!-- <span id="footer">
       <a class="text" target="_blank" href="http://beian.miit.gov.cn/">
         粤ICP备19147981号-1
       </a>
-    </span>
+    </span> -->
   </div>
 </template>
 
